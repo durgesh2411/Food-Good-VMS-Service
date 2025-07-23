@@ -29,7 +29,7 @@ const StarVolunteerVoting = () => {
 
   const fetchTopVolunteers = async () => {
     try {
-      const response = await axios.get(`${backendUrl}/star-votes/volunteers`, {
+      const response = await axios.get(`${backendUrl}/star-votes/volunteers/public`, {
         withCredentials: true,
       });
       if (response.data.success) {
