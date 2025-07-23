@@ -33,16 +33,21 @@ const allowedOrigins = [
 // Add production origins
 if (process.env.FRONTEND_URL) {
   allowedOrigins.push(process.env.FRONTEND_URL);
+  console.log("Added FRONTEND_URL to CORS:", process.env.FRONTEND_URL);
 }
 
 // Add common production domains
 if (!isDevelopment) {
-  allowedOrigins.push(
+  const productionDomains = [
     "https://volunteer-management-frontend.onrender.com",
     "https://vms-frontend.netlify.app",
     "https://vms-frontend.vercel.app"
-  );
+  ];
+  allowedOrigins.push(...productionDomains);
+  console.log("Added production domains to CORS:", productionDomains);
 }
+
+console.log("All allowed CORS origins:", allowedOrigins);
 
 app.use(
   cors({
