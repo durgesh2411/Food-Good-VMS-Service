@@ -55,9 +55,15 @@ export function SignUp() {
       email,
       password,
       number,
-      avatar: avatar?.name || 'No file selected',
+      avatar: avatar ? {
+        name: avatar.name,
+        size: avatar.size,
+        type: avatar.type
+      } : 'No file selected',
       role,
     });
+
+    console.log("Avatar file details:", avatar);
 
     axios
       .post(`${backendUrl}/users/register`, formData, {
@@ -67,7 +73,7 @@ export function SignUp() {
         withCredentials: true,
       })
       .then((response) => {
-        console.log(response.data);
+        console.log("Registration success:", response.data);
         toast.success("Registration successful! Please login.");
         setfullName("");
         setEmail("");
@@ -78,8 +84,13 @@ export function SignUp() {
       })
       .catch((error) => {
         console.error("Registration error:", error);
+        console.error("Error response:", error.response);
+        console.error("Error message:", error.message);
+        
         if (error.response?.data?.message) {
           toast.error(error.response.data.message);
+        } else if (error.response?.status === 500) {
+          toast.error("Server error during registration. Please check if avatar file is valid and try again.");
         } else {
           toast.error("Registration failed. Please try again.");
         }

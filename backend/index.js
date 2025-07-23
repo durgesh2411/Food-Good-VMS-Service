@@ -4,6 +4,7 @@ import { dirname, join } from "path";
 import { app } from "./src/app.js";
 import connectDB from "./src/db/index.js";
 import path from "path";
+import fs from "fs";
 
 // Get the directory of the current module
 const __filename = fileURLToPath(import.meta.url);
@@ -11,6 +12,15 @@ const __dirname = dirname(__filename);
 
 // Load environment variables
 dotenv.config({ path: join(__dirname, ".env") });
+
+// Ensure temp directory exists for file uploads
+const tempDir = path.join(__dirname, "public", "temp");
+if (!fs.existsSync(tempDir)) {
+  console.log("Creating temp directory:", tempDir);
+  fs.mkdirSync(tempDir, { recursive: true });
+} else {
+  console.log("Temp directory exists:", tempDir);
+}
 
 console.log("Environment check:");
 console.log("NODE_ENV:", process.env.NODE_ENV);

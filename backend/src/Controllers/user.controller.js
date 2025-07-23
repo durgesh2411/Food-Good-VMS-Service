@@ -90,6 +90,7 @@ const registerUser = asyncHandler(async (req, res) => {
   console.log("Registration attempt started");
   console.log("Request body:", req.body);
   console.log("Request files:", req.files);
+  console.log("Request headers content-type:", req.headers['content-type']);
 
   // details
   const { fullName, email, password, number, role } = req.body;
@@ -115,9 +116,11 @@ const registerUser = asyncHandler(async (req, res) => {
     existedUser ? "User exists" : "No existing user"
   );
 
-  // check for image and LocalPath
-  //   const avatarLocalPath = await req.files?.avatar[0].path;
+  // check for image and LocalPath with detailed logging
   let avatarLocalPath;
+  console.log("Checking avatar file upload...");
+  console.log("req.files structure:", JSON.stringify(req.files, null, 2));
+  
   if (
     req.files &&
     req.files.avatar &&
@@ -125,7 +128,15 @@ const registerUser = asyncHandler(async (req, res) => {
     req.files.avatar.length > 0
   ) {
     avatarLocalPath = req.files.avatar[0].path;
+    console.log("Avatar file found:", {
+      originalName: req.files.avatar[0].originalname,
+      size: req.files.avatar[0].size,
+      mimetype: req.files.avatar[0].mimetype,
+      path: avatarLocalPath
+    });
   } else {
+    console.log("Avatar file not found or invalid structure");
+    console.log("req.files:", req.files);
     avatarLocalPath = undefined;
   }
 
@@ -153,7 +164,9 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 
   if (!avatarLocalPath) {
-    throw new ApiError(400, "Avatar file is required in local");
+    console.log("Avatar validation failed: No file path found");
+    console.log("req.files:", req.files);
+    throw new ApiError(400, "Avatar file is required");
   }
 
   console.log("Uploading to cloudinary...");
@@ -161,7 +174,7 @@ const registerUser = asyncHandler(async (req, res) => {
   const avatar = await uploadOnCloudinary(avatarLocalPath);
 
   if (!avatar) {
-    throw new ApiError(400, "Avatar file is required");
+    throw new ApiError(400, "Failed to upload avatar to cloudinary");
   }
 
   console.log("Cloudinary upload successful:", avatar.url);
