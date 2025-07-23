@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build && cp public/_redirects dist/_redirects",
-    "build:render": "npm install && vite build && echo '/* /index.html 200' > dist/_redirects",
+    "build:render": "vite build && echo '/* /index.html 200' > dist/_redirects",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
