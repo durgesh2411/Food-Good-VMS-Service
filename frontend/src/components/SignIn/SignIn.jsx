@@ -37,7 +37,6 @@ axios
     }
     
     setData(userData);
-    toast.success("Login successful");
     setEmail("");
     setPassword("");
     // Navigate to home page after successful login

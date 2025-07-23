@@ -647,9 +647,7 @@ export default function Donation() {
             withCredentials: true
           });
           const verifyData = res.data;
-          if (verifyData.message) {
-            toast.success(verifyData.message);
-          }
+          // Success - no popup needed
         } catch (error) {
           toast.error(
             error?.response?.data?.message || "Payment verification failed"

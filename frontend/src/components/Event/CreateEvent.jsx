@@ -46,7 +46,6 @@ function CreateEvent() {
       })
       .then((response) => {
         if (response.data.success) {
-          toast.success("Event created successfully!");
           setEventData({
             title: "",
             description: "",

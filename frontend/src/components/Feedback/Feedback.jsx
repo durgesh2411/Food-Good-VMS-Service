@@ -83,7 +83,6 @@ const FeedbackForm = () => {
     if (!feedback) return;
     try {
       await axios.post("/api/v1/feedback", { message: feedback });
-      toast.success("Feedback submitted successfully!");
       setFeedback("");
     } catch (error) {
       toast.error("Error submitting feedback");

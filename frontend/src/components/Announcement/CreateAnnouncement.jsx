@@ -24,7 +24,6 @@ function CreateAnnouncement() {
       .post(`/api/v1/announcements`, announcementData)
       .then((response) => {
         if (response.data.success) {
-          toast.success("Announcement created successfully!");
           setAnnouncementData({
             announcement_type: "A",
             title: "",

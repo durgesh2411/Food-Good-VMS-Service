@@ -74,7 +74,6 @@ export function SignUp() {
       })
       .then((response) => {
         console.log("Registration success:", response.data);
-        toast.success("Registration successful! Please login.");
         setfullName("");
         setEmail("");
         setPassword("");

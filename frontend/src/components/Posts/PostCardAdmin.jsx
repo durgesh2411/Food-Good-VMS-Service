@@ -9,7 +9,6 @@ const PostCardAdmin = ({ posts }) => {
       .patch(`/api/v1/posts/admin/${postId}`)
       .then((response) => {
         if (response.data.success) {
-          toast.success("Post approved!");
           window.location.reload(0);
         } else {
           toast.error("Error approving post.");

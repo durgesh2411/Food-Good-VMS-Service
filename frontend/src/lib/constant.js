@@ -16,4 +16,3 @@ if (import.meta.env.DEV) {
   console.log('Backend URL:', backendUrl);
   console.log('Environment VITE_BACKEND_URL:', import.meta.env.VITE_BACKEND_URL);
 }
-//durgesh

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
@@ -12,6 +12,7 @@ export function Navbar() {
   const [language, setLanguage] = useState("en");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
   // Fetch user data to determine if they are admin
   useEffect(() => {
@@ -98,13 +99,8 @@ export function Navbar() {
       setIsLoggedIn(false);
       setUser(null);
       
-      // Show success message
-      toast.success("Logged out successfully");
-      
-      // Small delay to ensure logout completes before redirect
-      setTimeout(() => {
-        window.location.href = "/login";
-      }, 100);
+      // Use React Router navigation instead of window.location
+      navigate("/login");
       
     } catch (error) {
       console.error("Logout error:", error);
@@ -116,11 +112,8 @@ export function Navbar() {
       setIsLoggedIn(false);
       setUser(null);
       
-      toast.info("Logged out locally");
-      
-      setTimeout(() => {
-        window.location.href = "/login";
-      }, 100);
+      // Use React Router navigation instead of window.location
+      navigate("/login");
     }
   };
 

@@ -304,7 +304,6 @@ function Home() {
       axios
         .patch(`${backendUrl}/users/becomeVolunteer`)
         .then(() => {
-          toast.success("You are now a volunteer!");
           window.location.reload();
         })
         .catch((error) => {
@@ -335,7 +334,6 @@ function Home() {
       await axios.post(`${backendUrl}/feedback`, {
         message: `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nTitle: ${title}\nDescription: ${description}`,
       }, { withCredentials: true });
-      toast.success("Feedback submitted successfully!");
       setName("");
       setEmail("");
       setPhone("");
