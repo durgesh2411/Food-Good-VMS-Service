@@ -52,25 +52,37 @@ console.log("All allowed CORS origins:", allowedOrigins);
 app.use(
   cors({
     origin: function (origin, callback) {
+      console.log(`🌐 CORS Request from origin: ${origin}`);
+      
       // Allow requests with no origin (mobile apps, curl, postman, etc.)
-      if (!origin) return callback(null, true);
+      if (!origin) {
+        console.log("✅ CORS: Allowing request with no origin");
+        return callback(null, true);
+      }
 
       // In development, be more permissive with localhost origins
       if (isDevelopment) {
         if (origin.startsWith("http://localhost") || origin.startsWith("http://127.0.0.1")) {
+          console.log("✅ CORS: Allowing localhost origin in development");
           return callback(null, true);
         }
       }
 
       // Check if origin is in allowed origins
       if (allowedOrigins.includes(origin)) {
+        console.log("✅ CORS: Origin allowed");
         callback(null, true);
       } else {
-        console.log(`CORS blocked origin: ${origin}`);
+        console.log(`❌ CORS blocked origin: ${origin}`);
+        console.log(`📋 Allowed origins: ${JSON.stringify(allowedOrigins, null, 2)}`);
         callback(new Error(`Not allowed by CORS. Origin: ${origin}`));
       }
     },
     credentials: true,
+    optionsSuccessStatus: 200,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization', 'Cookie'],
+    exposedHeaders: ['Set-Cookie']
   })
 );
 
