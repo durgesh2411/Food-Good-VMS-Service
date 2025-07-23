@@ -1,0 +1,43 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Optimize browser rendering for smoother transitions */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeSpeed;
+}
+
+/* Smooth scrolling for the whole page */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Global smooth hover and focus transitions */
+a, button {
+  transition: all 0.15s ease-in-out;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* Loading animation improvements */
+.loader-spinner {
+  transition: opacity 0.2s ease-in-out;
+}
+
+/* Optimize all interactive elements */
+[role="button"], .interactive {
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Ensure all images load smoothly */
+img {
+  image-rendering: auto;
+  image-rendering: crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+}
