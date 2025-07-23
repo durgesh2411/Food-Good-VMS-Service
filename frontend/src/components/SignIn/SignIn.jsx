@@ -29,11 +29,11 @@ axios
       localStorage.setItem("user", JSON.stringify(userData));
     }
     setData(userData);
-    navigate("/donate");
     toast.success("Login successfull");
     setEmail("");
     setPassword("");
-    window.location.reload(0);
+    // Navigate to donate page after successful login
+    navigate("/donate");
   })
       .catch((error) => {
         // setError(error.response.data.message);

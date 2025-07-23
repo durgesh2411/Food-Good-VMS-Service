@@ -602,6 +602,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { backendUrl } from "../../lib/constant";
 
 export default function Donation() {
   const [amount, setAmount] = useState("");
@@ -614,7 +615,9 @@ export default function Donation() {
     }
     try {
       // 2. Create Razorpay order
-      const res = await axios.post('/api/v1/donations', { amount });
+      const res = await axios.post(`${backendUrl}/donations`, { amount }, {
+        withCredentials: true
+      });
       const order = res.data.data;
       handlePaymentVerify(order);
     } catch (error) {
@@ -636,10 +639,12 @@ export default function Donation() {
       order_id: order.id,
       handler: async (response) => {
         try {
-          const res = await axios.post('/api/v1/donations/verify', {
+          const res = await axios.post(`${backendUrl}/donations/verify`, {
             razorpay_order_id: response.razorpay_order_id,
             razorpay_payment_id: response.razorpay_payment_id,
             razorpay_signature: response.razorpay_signature,
+          }, {
+            withCredentials: true
           });
           const verifyData = res.data;
           if (verifyData.message) {
