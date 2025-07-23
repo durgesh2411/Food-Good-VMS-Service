@@ -17,17 +17,22 @@ export function Navbar() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
+        console.log("Attempting to fetch current user...");
         const response = await axios.get(`${backendUrl}/users/current-user`, {
           withCredentials: true,
         });
         if (response.data.success) {
+          console.log("User authenticated:", response.data.data);
           setUser(response.data.data);
           setIsLoggedIn(true);
         }
       } catch (error) {
-        console.log("User not logged in or error fetching user data");
+        console.log("User not logged in or error fetching user data:", error.response?.status);
         setIsLoggedIn(false);
         setUser(null);
+        // Clear any stale local storage if authentication fails
+        localStorage.removeItem("user");
+        localStorage.removeItem("accessToken");
       }
     };
 
@@ -77,24 +82,46 @@ export function Navbar() {
 
     return baseItems;
   };
-  const handleLogout = () => {
-    axios
-      .post(`${backendUrl}/users/logout`, {}, { withCredentials: true })
-      .then(() => {
-        toast.success("Logged out successfully");
-        setIsLoggedIn(false);
-        setUser(null);
-        localStorage.removeItem("user");
+  const handleLogout = async () => {
+    try {
+      console.log("Starting logout process...");
+      
+      // Call logout endpoint
+      await axios.post(`${backendUrl}/users/logout`, {}, { withCredentials: true });
+      console.log("Logout API call successful");
+      
+      // Clear all local storage items
+      localStorage.removeItem("user");
+      localStorage.removeItem("accessToken");
+      
+      // Clear state immediately
+      setIsLoggedIn(false);
+      setUser(null);
+      
+      // Show success message
+      toast.success("Logged out successfully");
+      
+      // Small delay to ensure logout completes before redirect
+      setTimeout(() => {
         window.location.href = "/";
-      })
-      .catch((error) => {
-        console.error("Logout error:", error);
-        // Even if the logout request fails, clear local state
-        setIsLoggedIn(false);
-        setUser(null);
-        localStorage.removeItem("user");
+      }, 100);
+      
+    } catch (error) {
+      console.error("Logout error:", error);
+      console.log("Clearing local state even after logout error");
+      
+      // Even if the logout request fails, clear local state
+      localStorage.removeItem("user");
+      localStorage.removeItem("accessToken");
+      setIsLoggedIn(false);
+      setUser(null);
+      
+      toast.info("Logged out locally");
+      
+      setTimeout(() => {
         window.location.href = "/";
-      });
+      }, 100);
+    }
   };
 
   const toggleMenu = () => {

@@ -337,6 +337,8 @@ const loginUser = asyncHandler(async (req, res) => {
 //logout logic
 const logoutUser = asyncHandler(async (req, res) => {
   try {
+    console.log("Logout attempt for user:", req.user._id);
+    
     await User.findByIdAndUpdate(
       req.user._id,
       {
@@ -347,18 +349,25 @@ const logoutUser = asyncHandler(async (req, res) => {
       }
     );
 
+    // Use same cookie options as login for proper clearing
     const options = {
       httpOnly: true,
-      secure: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      path: "/",
+      maxAge: 0, // Expire immediately
     };
+
+    console.log("Clearing cookies with options:", options);
 
     return res
       .status(200)
       .clearCookie("accessToken", options)
       .clearCookie("refreshToken", options)
-      .json(new ApiResponse(200, {}, "User logged out"));
+      .json(new ApiResponse(200, {}, "User logged out successfully"));
   } catch (error) {
-    throw new ApiError(501, "Something went wrong in logout func");
+    console.error("Logout error:", error);
+    throw new ApiError(501, "Something went wrong in logout function");
   }
 });
 
