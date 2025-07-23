@@ -103,7 +103,7 @@ export function Navbar() {
       
       // Small delay to ensure logout completes before redirect
       setTimeout(() => {
-        window.location.href = "/";
+        window.location.href = "/login";
       }, 100);
       
     } catch (error) {
@@ -119,7 +119,7 @@ export function Navbar() {
       toast.info("Logged out locally");
       
       setTimeout(() => {
-        window.location.href = "/";
+        window.location.href = "/login";
       }, 100);
     }
   };

@@ -42,6 +42,10 @@ axios
     setPassword("");
     // Navigate to home page after successful login
     navigate("/");
+    // Small delay then refresh to ensure all components get updated auth state
+    setTimeout(() => {
+      window.location.reload();
+    }, 100);
   })
       .catch((error) => {
         // setError(error.response.data.message);
