@@ -40,6 +40,7 @@ if (process.env.FRONTEND_URL) {
 if (!isDevelopment) {
   const productionDomains = [
     "https://volunteer-management-frontend.onrender.com",
+    "https://food-good-vms-frontend.onrender.com",
     "https://vms-frontend.netlify.app",
     "https://vms-frontend.vercel.app"
   ];
