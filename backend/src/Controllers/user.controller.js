@@ -55,7 +55,10 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
 
     const options = {
       httpOnly: true,
-      secure: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      path: "/",
+      maxAge: 24 * 60 * 60 * 1000, // 24 hours
     };
 
     const { accessToken, newrefreshToken } =
@@ -290,13 +293,16 @@ const loginUser = asyncHandler(async (req, res) => {
     "-password -refreshToken -accessToken"
   );
 
-  // --- UPDATED COOKIE OPTIONS FOR LOCALHOST ---
+  // --- PRODUCTION-READY COOKIE OPTIONS ---
   const options = {
     httpOnly: true,
-    secure: false, // false for localhost (true for HTTPS in production)
-    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production", // true for production HTTPS
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // "none" for cross-origin in production
     path: "/",
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
   };
+
+  console.log("Setting cookies with options:", options);
 
   // res sending
   return res

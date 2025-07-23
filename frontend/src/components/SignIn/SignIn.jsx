@@ -19,21 +19,29 @@ export function SignIn({ setData }) {
       password,
     };
 axios
-  .post(`${backendUrl}/users/login`, formData)
+  .post(`${backendUrl}/users/login`, formData, {
+    withCredentials: true,  // This is crucial for cookies
+  })
   .then((response) => {
     console.log(response.data);
     const data = response.data;
     const userData = data ? data.data.user : null;
-    // Save user info to localStorage for dashboard/admin checks
+    const accessToken = data ? data.data.accessToken : null;
+    
+    // Save user info and token to localStorage
     if (userData) {
       localStorage.setItem("user", JSON.stringify(userData));
     }
+    if (accessToken) {
+      localStorage.setItem("accessToken", accessToken);
+    }
+    
     setData(userData);
-    toast.success("Login successfull");
+    toast.success("Login successful");
     setEmail("");
     setPassword("");
-    // Navigate to donate page after successful login
-    navigate("/donate");
+    // Navigate to home page after successful login
+    navigate("/");
   })
       .catch((error) => {
         // setError(error.response.data.message);
