@@ -9,7 +9,13 @@ import {
 } from "../Controllers/starVote.controller.js";
 
 const router = Router();
-router.use(verifyJWT); // All routes require authentication
+
+// Public routes (no authentication required)
+// Get all volunteers with their vote counts (GET /star-votes/volunteers/public)
+router.route("/volunteers/public").get(getAllVolunteersWithVotes);
+
+// Protected routes (authentication required)
+router.use(verifyJWT); // Apply authentication to routes below
 
 // Cast a star vote for a volunteer (POST /star-votes)
 router.route("/").post(castStarVote);

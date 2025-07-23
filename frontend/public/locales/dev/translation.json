@@ -1,0 +1,26 @@
+{
+  "home.hero.title": "Nourishing Futures, One Meal at a Time",
+  "home.hero.button": "Donate Now",
+  "home.hero.description": "Food for Good is a non-profit organization dedicated to providing free, nutritious meals to underprivileged children across the country. Our mission is to ensure no child goes hungry and to give them the fuel they need to thrive.",
+  "home.hero.mid.title": "Our Impact",
+  "home.hero.mid.description": {
+    "line1": "Food for Good has been making a significant impact in the lives of underprivileged children across the country. Here are some of our key achievements:",
+    "line2": "Meals Served",
+    "line3": "Children Fed",
+    "line4": "Positive Feedback"
+  },
+  "home.hero.mid.second": {
+    "line1": "Nourishing Young Minds",
+    "line2": "Our free meal program ensures that underprivileged children receive the nutrition they need to grow, learn, and thrive. By providing them with healthy, balanced meals, we're giving them the fuel to pursue their dreams and reach their full potential."
+  },
+  "home.hero.mid.feedback": {
+    "title": "Share your feedback ",
+    "line1": "We value your feedback and suggestions. Please take a moment to share your thoughts and help us improve our services.",
+    "button": "Submit Feedback"
+  },
+  "home.hero.bottom.title": "Get Involved",
+  "home.hero.bottom.description": "Volunteering with Food for Good is a rewarding way to make a difference in the lives of underprivileged children. Join our team and help us continue to provide free, nutritious meals to those in need.",
+  "home.hero.volunteer.title": "Join Our Volunteer Team",
+  "home.hero.volunteer.description": "Whether you can spare a few hours a week or a few days a month, your time and effort can make a big difference. From serving meals to organizing food drives, there are many ways you can get involved and support our mission.",
+  "home.hero.volunteer.button": "Volunteer Now"
+}
