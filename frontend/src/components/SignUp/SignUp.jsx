@@ -10,9 +10,27 @@ export function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [avatar, setAvatar] = useState("");
+  const [avatarPreview, setAvatarPreview] = useState("");
   const [role, setRole] = useState("user");
   const [number, setNumber] = useState("");
   const navigate = useNavigate();
+
+  // Handle avatar file selection and preview
+  const handleAvatarChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setAvatar(file);
+      // Create preview URL
+      const previewUrl = URL.createObjectURL(file);
+      setAvatarPreview(previewUrl);
+    }
+  };
+
+  // Handle Google Sign Up
+  const handleGoogleSignUp = () => {
+    toast.info("Google Sign Up functionality is coming soon! Please use regular registration for now.");
+    // TODO: Implement Google OAuth integration
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -78,6 +96,7 @@ export function SignUp() {
         setEmail("");
         setPassword("");
         setAvatar("");
+        setAvatarPreview("");
         setNumber("");
         navigate("/login");
       })
@@ -207,7 +226,7 @@ export function SignUp() {
                       type="file"
                       id="avatar"
                       accept="image/*"
-                      onChange={(e) => setAvatar(e.target.files[0])}
+                      onChange={handleAvatarChange}
                     />
                     <label
                       htmlFor="avatar"
@@ -215,12 +234,17 @@ export function SignUp() {
                     >
                       Choose File
                     </label>
-                    {avatar && (
-                      <img
-                        src={avatar}
-                        alt="Avatar Preview"
-                        className="ml-4 h-16 w-16 rounded-full object-cover"
-                      />
+                    {avatarPreview && (
+                      <div className="ml-4 flex items-center space-x-2">
+                        <img
+                          src={avatarPreview}
+                          alt="Avatar Preview"
+                          className="h-16 w-16 rounded-full object-cover border-2 border-gray-300"
+                        />
+                        <span className="text-sm text-gray-600">
+                          {avatar?.name}
+                        </span>
+                      </div>
                     )}
                   </div>
                 </div>
@@ -252,6 +276,7 @@ export function SignUp() {
             <div className="mt-3 space-y-3">
               <button
                 type="button"
+                onClick={handleGoogleSignUp}
                 className="relative inline-flex w-full items-center justify-center rounded-md border border-gray-400 bg-white px-3.5 py-2.5 font-semibold text-gray-700 transition-all duration-200 hover:bg-gray-100 hover:text-black focus:bg-gray-100 focus:text-black focus:outline-none"
               >
                 <span className="mr-2 inline-block">
