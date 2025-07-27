@@ -3,6 +3,16 @@ import { DB_NAME } from "../constants.js";
 
 const connectDB = async () => {
   try {
+    // Debug environment variables
+    console.log("🔍 Environment Debug:");
+    console.log("MONGODB_URI exists:", !!process.env.MONGODB_URI);
+    console.log("MONGODB_URI value:", process.env.MONGODB_URI ? "Set (hidden for security)" : "NOT SET");
+    console.log("DB_NAME:", DB_NAME);
+    
+    if (!process.env.MONGODB_URI) {
+      throw new Error("❌ MONGODB_URI environment variable is not set. Please check your .env file.");
+    }
+
     // MongoDB connection options for production
     const connectionOptions = {
       // Remove retryWrites and w as they should be in connection string
@@ -15,10 +25,10 @@ const connectDB = async () => {
       `${process.env.MONGODB_URI}/${DB_NAME}`,
       connectionOptions
     );
-    
+
     console.log(`✅ MongoDB connected! DB Host: ${connectionInstance.connection.host}`);
     console.log(`📊 Database Name: ${DB_NAME}`);
-    
+
     // Handle connection events
     mongoose.connection.on('connected', () => {
       console.log('✅ MongoDB connected');

@@ -120,7 +120,7 @@ const registerUser = asyncHandler(async (req, res) => {
   let avatarLocalPath;
   console.log("Checking avatar file upload...");
   console.log("req.files structure:", JSON.stringify(req.files, null, 2));
-  
+
   if (
     req.files &&
     req.files.avatar &&
@@ -338,7 +338,7 @@ const loginUser = asyncHandler(async (req, res) => {
 const logoutUser = asyncHandler(async (req, res) => {
   try {
     console.log("Logout attempt for user:", req.user._id);
-    
+
     await User.findByIdAndUpdate(
       req.user._id,
       {

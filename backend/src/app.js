@@ -54,7 +54,7 @@ app.use(
   cors({
     origin: function (origin, callback) {
       console.log(`🌐 CORS Request from origin: ${origin}`);
-      
+
       // Allow requests with no origin (mobile apps, curl, postman, etc.)
       if (!origin) {
         console.log("✅ CORS: Allowing request with no origin");
@@ -160,7 +160,7 @@ app.use("/api/*", (req, res) => {
 // Global error handler
 app.use((err, req, res, next) => {
   console.error('Error:', err);
-  
+
   res.status(err.status || 500).json({
     success: false,
     message: err.message || 'Internal server error',

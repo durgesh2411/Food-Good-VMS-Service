@@ -29,7 +29,7 @@ volunteer-management-system/
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js 18+ 
+- Node.js 18+
 - MongoDB (Atlas recommended)
 - Git
 

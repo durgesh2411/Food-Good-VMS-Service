@@ -7,9 +7,9 @@ const BASE_URL = process.env.BASE_URL || 'http://localhost:8000';
 async function healthCheck() {
   try {
     console.log('🔍 Performing health check...');
-    
+
     const response = await axios.get(`${BASE_URL}/api/v1/health`);
-    
+
     if (response.status === 200 && response.data.success) {
       console.log('✅ Health check passed');
       console.log('📊 Server Status:', response.data.message);

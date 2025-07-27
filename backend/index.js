@@ -42,7 +42,7 @@ process.on('SIGINT', () => {
 connectDB()
   .then(() => {
     console.log("Database connected successfully");
-    
+
     app.on("error", (error) => {
       console.error("Express error:", error);
     });
@@ -67,4 +67,3 @@ connectDB()
     console.error("MongoDB connection failed:", err);
     process.exit(1);
   });
-

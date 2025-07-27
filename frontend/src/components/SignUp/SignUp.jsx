@@ -85,7 +85,7 @@ export function SignUp() {
         console.error("Registration error:", error);
         console.error("Error response:", error.response);
         console.error("Error message:", error.message);
-        
+
         if (error.response?.data?.message) {
           toast.error(error.response.data.message);
         } else if (error.response?.status === 500) {

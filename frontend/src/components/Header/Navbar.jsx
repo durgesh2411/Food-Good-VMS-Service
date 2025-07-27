@@ -71,6 +71,10 @@ export function Navbar() {
         name: "Leaderboard",
         to: "/leaderboard",
       },
+      {
+        name: "AI Support",
+        to: "/support",
+      },
     ];
 
     // Add "Vote Stars" for regular users only
@@ -86,32 +90,32 @@ export function Navbar() {
   const handleLogout = async () => {
     try {
       console.log("Starting logout process...");
-      
+
       // Call logout endpoint
       await axios.post(`${backendUrl}/users/logout`, {}, { withCredentials: true });
       console.log("Logout API call successful");
-      
+
       // Clear all local storage items
       localStorage.removeItem("user");
       localStorage.removeItem("accessToken");
-      
+
       // Clear state immediately
       setIsLoggedIn(false);
       setUser(null);
-      
+
       // Use React Router navigation instead of window.location
       navigate("/login");
-      
+
     } catch (error) {
       console.error("Logout error:", error);
       console.log("Clearing local state even after logout error");
-      
+
       // Even if the logout request fails, clear local state
       localStorage.removeItem("user");
       localStorage.removeItem("accessToken");
       setIsLoggedIn(false);
       setUser(null);
-      
+
       // Use React Router navigation instead of window.location
       navigate("/login");
     }

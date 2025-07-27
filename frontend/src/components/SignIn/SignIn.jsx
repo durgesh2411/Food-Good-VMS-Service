@@ -27,7 +27,7 @@ axios
     const data = response.data;
     const userData = data ? data.data.user : null;
     const accessToken = data ? data.data.accessToken : null;
-    
+
     // Save user info and token to localStorage
     if (userData) {
       localStorage.setItem("user", JSON.stringify(userData));
@@ -35,7 +35,7 @@ axios
     if (accessToken) {
       localStorage.setItem("accessToken", accessToken);
     }
-    
+
     setData(userData);
     setEmail("");
     setPassword("");
