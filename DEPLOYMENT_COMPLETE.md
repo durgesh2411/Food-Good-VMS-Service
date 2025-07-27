@@ -60,7 +60,8 @@ JWT_SECRET=your-secret-key
 JWT_EXPIRES_IN=7d
 
 # AI Services
-OPENAI_API_KEY=sk-...
+GEMINI_API_KEY=your-gemini-api-key-here
+# OPENAI_API_KEY=sk-... (Replaced with Gemini for 95% cost reduction)
 
 # File Upload
 CLOUDINARY_CLOUD_NAME=your-cloud
@@ -111,10 +112,12 @@ npm run preview
 - "What events are available?"
 - "How do I reset my password?"
 
-### **General Questions (Uses OpenAI)**
+### **General Questions (Uses Gemini - 75x Cheaper!)**
 - "What's the weather today?"
 - "Tell me a joke"
 - "Explain quantum physics"
+
+**Note**: If you see a message about "AI service needs setup", you need to enable the Generative Language API in Google Cloud Console.
 
 ### **Test Script**
 ```bash

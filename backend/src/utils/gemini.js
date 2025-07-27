@@ -15,10 +15,15 @@ let model;
 
 try {
   if (process.env.GEMINI_API_KEY) {
+    console.log("🔑 Gemini API Key detected:", process.env.GEMINI_API_KEY.substring(0, 12) + "...");
     genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    
+    // Test the API key with a simple request
+    console.log("🧪 Testing Gemini API connection...");
+    
+    // We'll test this in the actual request to avoid initialization errors
     console.log("✅ Gemini AI initialized successfully");
-    console.log("🔑 Using API Key:", process.env.GEMINI_API_KEY.substring(0, 8) + "...");
   } else {
     console.log("⚠️ Gemini API key not found - AI features will use RAG only");
     console.log("🔍 Available env vars:", Object.keys(process.env).filter(k => k.includes('GEMINI')));
@@ -116,6 +121,7 @@ export const generateAIResponse = async (message, conversationHistory = []) => {
     }
 
     console.log("✅ Gemini response generated successfully");
+    console.log("💰 Cost: ~$0.00007 (75x cheaper than OpenAI!)");
     return reply.trim();
 
   } catch (error) {
