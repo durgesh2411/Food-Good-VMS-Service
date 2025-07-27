@@ -1,4 +1,5 @@
 import { OpenAI } from "openai";
+import { searchKnowledgeBase, generateRAGResponse, shouldUseRAG } from "./rag.js";
 
 let openai = null;
 
@@ -13,48 +14,63 @@ if (process.env.OPENAI_API_KEY) {
 
 export const generateAIResponse = async (message, conversationHistory = []) => {
   console.log("🔧 generateAIResponse called");
+  console.log("User query:", message);
+
+  // Step 1: Try RAG first for platform-specific questions
+  if (shouldUseRAG(message)) {
+    console.log("🔍 Using RAG for platform-specific query");
+    
+    try {
+      const ragResults = await searchKnowledgeBase(message);
+      const ragResponse = generateRAGResponse(ragResults, message);
+      
+      if (ragResponse) {
+        console.log("✅ RAG provided response from knowledge base");
+        return ragResponse;
+      }
+      
+      console.log("📚 RAG didn't find sufficient information, falling back to OpenAI");
+    } catch (ragError) {
+      console.error("❌ RAG Error:", ragError);
+      console.log("🔄 Falling back to OpenAI due to RAG error");
+    }
+  } else {
+    console.log("🤖 Using OpenAI for general query (not platform-specific)");
+  }
+
+  // Step 2: Fallback to OpenAI for general questions or when RAG fails
   console.log("OpenAI instance exists:", !!openai);
   
   if (!openai) {
     console.log("❌ OpenAI not initialized");
     throw new Error(
-      "OpenAI is not configured. Please set OPENAI_API_KEY environment variable."
+      "AI service is not available. For platform-specific questions, I can help with information about volunteering, donations, events, and platform features. For other questions, please try again later."
     );
   }
 
-  console.log("📝 Building conversation context...");
-  // System prompt to make AI context-aware for Volunteer Management System
-  const systemPrompt = `You are a helpful AI assistant for "Food Good VMS" - a Volunteer Management System focused on food donation and community service. You specialize in helping users with:
+  console.log("📝 Building conversation context for OpenAI...");
+  
+  // Enhanced system prompt that includes knowledge about RAG
+  const systemPrompt = `You are a helpful AI assistant for "Food Good VMS" - a Volunteer Management System focused on food donation and community service. 
 
-**Core Services:**
-- Volunteer registration and onboarding
-- Food donation processes and campaigns
-- Event management and participation
-- Community feedback and support
-- User account management
+**Important**: For platform-specific questions (registration, donations, events, volunteering), our system first checks our knowledge base. You're being consulted because either:
+1. The question is general/conversational in nature, OR 
+2. Our knowledge base didn't have sufficient information
 
-**Your Capabilities:**
-- Answer questions about becoming a volunteer
-- Explain donation processes and payment methods
-- Provide information about upcoming events
-- Help with account-related issues
-- Guide users through platform features
-- Offer general support for community service activities
+**Your role**:
+- For general questions: Provide helpful, friendly responses
+- For platform questions: Provide general guidance and suggest checking platform documentation or contacting support
+- Always be encouraging about community service and volunteering
 
-**Tone & Style:**
-- Be friendly, helpful, and encouraging
-- Use clear, simple language
-- Show enthusiasm for community service
-- Provide step-by-step guidance when needed
-- Be empathetic and supportive
-
-**Platform Context:**
-- This is a web-based platform with user authentication
+**Platform Context**:
+- This is a web-based volunteer management system
 - Users can register as volunteers, donate money, participate in events
-- The platform connects volunteers with food donation opportunities
-- Community-focused with social impact goals
+- The platform focuses on food donation and community service
+- Has features like events, posts, announcements, leaderboards, and star voting
 
-Always try to be helpful and guide users to the right features of the platform. If you're unsure about specific technical details, acknowledge it and suggest they contact support.`;
+**Tone**: Be friendly, helpful, and encouraging. Show enthusiasm for community service.
+
+If you're unsure about specific platform details, acknowledge it and suggest they contact support or check the platform documentation.`;
 
   // Build messages array with system prompt, conversation history, and new message
   const messages = [
@@ -75,7 +91,7 @@ Always try to be helpful and guide users to the right features of the platform. 
     const response = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
       messages: messages,
-      max_tokens: 500,
+      max_tokens: 400,
       temperature: 0.7,
       presence_penalty: 0.1,
       frequency_penalty: 0.1,

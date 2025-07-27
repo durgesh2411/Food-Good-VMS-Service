@@ -6,8 +6,7 @@ export const getAIReply = async (req, res) => {
     
     console.log("🤖 AI Chat Request received");
     console.log("Message:", message);
-    console.log("OpenAI API Key exists:", !!process.env.OPENAI_API_KEY);
-    console.log("OpenAI API Key prefix:", process.env.OPENAI_API_KEY ? process.env.OPENAI_API_KEY.substring(0, 10) + "..." : "NOT SET");
+    console.log("Request timestamp:", new Date().toISOString());
     
     // Validate input
     if (!message || typeof message !== 'string') {
@@ -18,24 +17,16 @@ export const getAIReply = async (req, res) => {
       });
     }
 
-    // Check if OpenAI is configured
-    if (!process.env.OPENAI_API_KEY) {
-      console.log("❌ OpenAI API key not configured");
-      return res.status(500).json({ 
-        success: false, 
-        error: "AI service is not configured. Please contact support." 
-      });
-    }
-
-    console.log("🔄 Calling generateAIResponse...");
-    // Generate AI response with conversation context
+    console.log("🔄 Calling RAG + AI system...");
+    // Generate AI response with RAG + OpenAI fallback
     const reply = await generateAIResponse(message, conversationHistory);
     console.log("✅ AI response generated successfully");
     
     res.json({ 
       success: true, 
       reply,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
+      system: "RAG + OpenAI"
     });
   } catch (error) {
     console.error("❌ AI Controller Error:", error);
@@ -43,18 +34,20 @@ export const getAIReply = async (req, res) => {
     console.error("Error stack:", error.stack);
     
     // More specific error messages
-    let userMessage = "Failed to generate AI response";
-    if (error.message.includes("API key")) {
-      userMessage = "AI service configuration error. Please contact support.";
+    let userMessage = "I'm having trouble processing your request right now.";
+    
+    if (error.message.includes("API key") || error.message.includes("not available")) {
+      userMessage = "I can still help with basic platform questions! Try asking about volunteering, donations, events, or how to use specific features.";
     } else if (error.message.includes("quota")) {
-      userMessage = "AI service is temporarily unavailable. Please try again later.";
+      userMessage = "The AI service is temporarily at capacity. I can still help with platform-specific questions from our knowledge base!";
     } else if (error.message.includes("network") || error.message.includes("timeout")) {
-      userMessage = "Network error. Please check your connection and try again.";
+      userMessage = "There's a network issue right now. Please try again in a moment.";
     }
     
     res.status(500).json({ 
       success: false, 
       error: userMessage,
+      timestamp: new Date().toISOString(),
       details: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   }
