@@ -262,14 +262,28 @@ const rejectVolunteerWork = asyncHandler(async (req, res) => {
     );
 });
 
-// not checked
+// Admin route - get volunteers with worked hours for leaderboard
 const getVolunteersWithHours = asyncHandler(async (req, res) => {
+  // Check if user is admin
+  if (!req.user.isAdmin) {
+    throw new ApiError(403, "You are not authorized to access this route");
+  }
+
   const volunteers = await User.find(
     { totalWorkedHours: { $gt: 0 }, role: "volunteer" },
     "fullName avatar totalWorkedHours"
   ).sort({ totalWorkedHours: -1 });
-  if (!volunteers) {
-    throw new ApiError(404, "No volunteers found");
+  
+  if (!volunteers || volunteers.length === 0) {
+    return res
+      .status(200)
+      .json(
+        new ApiResponse(
+          200,
+          [],
+          "No volunteers with worked hours found"
+        )
+      );
   }
 
   return res
