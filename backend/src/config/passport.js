@@ -33,7 +33,7 @@ if (isValidOAuthCredentials) {
       fullName: profile.displayName,
       email: profile.emails[0].value,
       avatar: profile.photos[0].value,
-      number: '', // Will need to be filled later
+      number: '+000000000000', // Placeholder for Google OAuth users - can be updated later
       role: 'user',
       password: 'google-oauth-user', // Placeholder password for OAuth users
       isGoogleUser: true

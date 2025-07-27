@@ -37,7 +37,7 @@ router.get('/google/callback', (req, res, next) => {
 
     try {
       const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
-      
+
       if (err) {
         console.error('❌ OAuth authentication error:', err);
         return res.redirect(`${frontendUrl}?oauth=error&message=${encodeURIComponent('Authentication failed: ' + err.message)}`);
@@ -86,7 +86,7 @@ router.get('/google/callback', (req, res, next) => {
 
       console.log('✅ Redirecting to frontend with user info');
       res.redirect(`${frontendUrl}?oauth=success&user=${encodeURIComponent(JSON.stringify(userInfo))}`);
-      
+
     } catch (error) {
       console.error('❌ OAuth callback error:', error);
       const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
