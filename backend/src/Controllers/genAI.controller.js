@@ -1,4 +1,4 @@
-import { generateAIResponse } from "../utils/openai.js";
+import { generateAIResponse } from "../utils/gemini.js";
 
 export const getAIReply = async (req, res) => {
   try {
@@ -17,8 +17,8 @@ export const getAIReply = async (req, res) => {
       });
     }
 
-    console.log("🔄 Calling RAG + AI system...");
-    // Generate AI response with RAG + OpenAI fallback
+    console.log("🔄 Calling RAG + Gemini system...");
+    // Generate AI response with RAG + Gemini fallback
     const reply = await generateAIResponse(message, conversationHistory);
     console.log("✅ AI response generated successfully");
     
@@ -26,7 +26,7 @@ export const getAIReply = async (req, res) => {
       success: true, 
       reply,
       timestamp: new Date().toISOString(),
-      system: "RAG + OpenAI"
+      system: "RAG + Gemini AI"
     });
   } catch (error) {
     console.error("❌ AI Controller Error:", error);
