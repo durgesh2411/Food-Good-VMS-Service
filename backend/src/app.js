@@ -1,7 +1,9 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import session from "express-session";
 import axios from "axios";
+import passport from "./config/passport.js";
 import feedbackRoutes from "./Routes/feedback.routes.js";
 import userRouter from "./Routes/user.routes.js";
 import eventRouter from "./Routes/event.routes.js";
@@ -12,6 +14,7 @@ import donationRouter from "./Routes/donation.routes.js";
 import dashboardRouter from "./Routes/dashboard.routes.js";
 import starVoteRouter from "./Routes/starVote.routes.js";
 import genAIRouter from "./Routes/genAI.route.js";
+import authRouter from "./Routes/auth.routes.js";
 import { verifyJWT } from "./middlewares/auth.middleware.js";
 
 axios.defaults.withCredentials = true;
@@ -94,6 +97,21 @@ app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(express.static("public"));
 app.use(cookieParser());
 
+// Session middleware for OAuth
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'default-session-secret',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+  }
+}));
+
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Debug middleware to log requests
 app.use((req, res, next) => {
   console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
@@ -117,6 +135,7 @@ app.use("/api/v1/dashboard", dashboardRouter);
 app.use("/api/v1/volunteerWorks", volunteerWorkRouter);
 app.use("/api/v1/star-votes", starVoteRouter); // New star voting system
 app.use("/api/v1/ai", genAIRouter); // AI chat functionality
+app.use("/api/v1/auth", authRouter); // Google OAuth authentication
 
 // Health check endpoint
 app.get("/api/v1/health", (req, res) => {

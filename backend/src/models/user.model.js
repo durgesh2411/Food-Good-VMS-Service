@@ -38,6 +38,11 @@ const userSchema = new Schema(
       required: true,
     },
 
+    isGoogleUser: {
+      type: Boolean,
+      default: false,
+    },
+
     isAdmin: {
       type: Boolean,
       default: false,
