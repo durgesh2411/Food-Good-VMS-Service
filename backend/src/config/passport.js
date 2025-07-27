@@ -7,12 +7,19 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-// Google OAuth Strategy
-passport.use(new GoogleStrategy({
-  clientID: process.env.GOOGLE_CLIENT_ID,
-  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: "/api/v1/auth/google/callback"
-}, async (accessToken, refreshToken, profile, done) => {
+// Google OAuth Strategy - only configure if credentials are available and valid
+const isValidOAuthCredentials = process.env.GOOGLE_CLIENT_ID && 
+                               process.env.GOOGLE_CLIENT_SECRET && 
+                               process.env.GOOGLE_CLIENT_ID !== 'placeholder-client-id' &&
+                               process.env.GOOGLE_CLIENT_SECRET !== 'placeholder-client-secret';
+
+if (isValidOAuthCredentials) {
+  console.log('✅ Google OAuth credentials found, configuring strategy...');
+  passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: "/api/v1/auth/google/callback"
+  }, async (accessToken, refreshToken, profile, done) => {
   try {
     // Check if user already exists
     let existingUser = await User.findOne({ email: profile.emails[0].value });
@@ -39,17 +46,20 @@ passport.use(new GoogleStrategy({
   }
 }));
 
-passport.serializeUser((user, done) => {
-  done(null, user.id);
-});
+  passport.serializeUser((user, done) => {
+    done(null, user.id);
+  });
 
-passport.deserializeUser(async (id, done) => {
-  try {
-    const user = await User.findById(id);
-    done(null, user);
-  } catch (error) {
-    done(error, null);
-  }
-});
+  passport.deserializeUser(async (id, done) => {
+    try {
+      const user = await User.findById(id);
+      done(null, user);
+    } catch (error) {
+      done(error, null);
+    }
+  });
+} else {
+  console.log('⚠️ Google OAuth credentials not found. OAuth functionality will be disabled.');
+}
 
 export default passport;

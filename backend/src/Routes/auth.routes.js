@@ -6,16 +6,41 @@ import { ApiError } from "../utils/apiError.js";
 
 const router = Router();
 
-// Google OAuth routes
-router.get('/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] })
-);
+// Check if OAuth is configured
+const isOAuthConfigured = process.env.GOOGLE_CLIENT_ID && 
+                         process.env.GOOGLE_CLIENT_SECRET && 
+                         process.env.GOOGLE_CLIENT_ID !== 'placeholder-client-id' &&
+                         process.env.GOOGLE_CLIENT_SECRET !== 'placeholder-client-secret';
 
-router.get('/google/callback',
-  passport.authenticate('google', { session: false }),
-  async (req, res) => {
+// Google OAuth routes
+router.get('/google', (req, res, next) => {
+  if (!isOAuthConfigured) {
+    return res.status(503).json({
+      success: false,
+      message: 'Google OAuth is not configured. Please contact administrator.'
+    });
+  }
+  passport.authenticate('google', { scope: ['profile', 'email'] })(req, res, next);
+});
+
+router.get('/google/callback', (req, res, next) => {
+  if (!isOAuthConfigured) {
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+    return res.redirect(`${frontendUrl}?oauth=error&message=${encodeURIComponent('Google OAuth is not configured')}`);
+  }
+  
+  passport.authenticate('google', { session: false }, async (err, user) => {
     try {
-      const user = req.user;
+      if (err) {
+        console.error('OAuth authentication error:', err);
+        const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+        return res.redirect(`${frontendUrl}?oauth=error&message=${encodeURIComponent('Authentication failed')}`);
+      }
+
+      if (!user) {
+        const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+        return res.redirect(`${frontendUrl}?oauth=error&message=${encodeURIComponent('User not found')}`);
+      }
 
       // Generate tokens
       const accessToken = user.generateAccessToken();
@@ -50,8 +75,8 @@ router.get('/google/callback',
       const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
       res.redirect(`${frontendUrl}?oauth=error&message=${encodeURIComponent('Authentication failed')}`);
     }
-  }
-);
+  })(req, res, next);
+});
 
 // Get current user (for OAuth flow verification)
 router.get('/user', async (req, res) => {
