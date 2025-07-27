@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 import { backendUrl } from "../../lib/constant";
 
 export function SignUp() {
@@ -13,6 +14,7 @@ export function SignUp() {
   const [avatarPreview, setAvatarPreview] = useState("");
   const [role, setRole] = useState("user");
   const [number, setNumber] = useState("");
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   // Handle avatar file selection and preview
@@ -122,15 +124,15 @@ export function SignUp() {
         <div className="flex items-center justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8 lg:py-24">
           <div className="xl:mx-auto xl:w-full xl:max-w-sm 2xl:max-w-md">
             <h2 className="text-3xl font-bold leading-tight text-black sm:text-4xl">
-              Sign up
+              {t("auth.register.title")}
             </h2>
             <p className="mt-2 text-base text-gray-600">
-              Already have an account?{" "}
+              {t("auth.register.hasAccount")}{" "}
               <Link
                 to="/login"
                 className="font-medium text-black transition-all duration-200 hover:underline"
               >
-                Sign In
+                {t("auth.register.signIn")}
               </Link>
             </p>
             <form action="#" method="POST" className="mt-8">
@@ -140,14 +142,13 @@ export function SignUp() {
                     htmlFor="name"
                     className="text-base font-medium text-gray-900"
                   >
-                    {" "}
-                    Full Name{" "}
+                    {t("auth.register.fullName")}
                   </label>
                   <div className="mt-2">
                     <input
                       className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                       type="text"
-                      placeholder="Full Name"
+                      placeholder={t("auth.register.fullName")}
                       id="name"
                       value={fullName}
                       onChange={(e) => setfullName(e.target.value)}
@@ -159,14 +160,13 @@ export function SignUp() {
                     htmlFor="email"
                     className="text-base font-medium text-gray-900"
                   >
-                    {" "}
-                    Email address{" "}
+                    {t("auth.register.email")}
                   </label>
                   <div className="mt-2">
                     <input
                       className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                       type="email"
-                      placeholder="Email"
+                      placeholder={t("auth.register.email")}
                       id="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
@@ -178,14 +178,13 @@ export function SignUp() {
                     htmlFor="phone-number"
                     className="text-base font-medium text-gray-900"
                   >
-                    {" "}
-                    Phone Number{" "}
+                    {t("auth.register.phone")}
                   </label>
                   <div className="mt-2">
                     <input
                       className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                       type="tel"
-                      placeholder="Phone Number"
+                      placeholder={t("auth.register.phone")}
                       id="phone-number"
                       value={number}
                       onChange={(e) => setNumber(e.target.value)}

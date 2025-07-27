@@ -453,7 +453,7 @@ function Home() {
               <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
                 <input
                   type="text"
-                  placeholder="Name"
+                  placeholder={t("forms.name")}
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
@@ -461,7 +461,7 @@ function Home() {
                 />
                 <input
                   type="email"
-                  placeholder="Email"
+                  placeholder={t("forms.email")}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -469,7 +469,7 @@ function Home() {
                 />
                 <input
                   type="tel"
-                  placeholder="Phone Number"
+                  placeholder={t("forms.phone")}
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   required
@@ -477,14 +477,14 @@ function Home() {
                 />
                 <input
                   type="text"
-                  placeholder="Title"
+                  placeholder={t("forms.title")}
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   required
                   className="max-w-lg flex-1 rounded-md border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
                 />
                 <textarea
-                  placeholder="Description"
+                  placeholder={t("forms.description")}
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   required

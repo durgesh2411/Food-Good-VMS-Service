@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { AnnouncementCard } from "./AnnouncementCard";
+import { useTranslation } from "react-i18next";
 import { backendUrl } from "../../lib/constant";
 
 function Announcement() {
   const [announcements, setAnnouncements] = useState([]);
+  const { t } = useTranslation();
 
   useEffect(() => {
     axios
@@ -29,10 +31,10 @@ function Announcement() {
           to="/announcements/create"
           className="bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#f2b705] hover:text-black transition duration-300 self-start"
         >
-          Create Announcement
+          {t("announcements.create")}
         </Link>
         <h2 className="text-3xl font-bold text-gray-800 border-b-2 border-gray-300 pb-2">
-          Announcements
+          {t("announcements.title")}
         </h2>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

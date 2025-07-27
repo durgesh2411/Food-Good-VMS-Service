@@ -40,35 +40,37 @@ export function Navbar() {
     fetchUser();
   }, []);
 
+  const { i18n, t } = useTranslation();
+
   // Dynamic menu items based on user role
   const getMenuItems = () => {
     const baseItems = [
       {
-        name: "Home",
+        name: t("nav.home"),
         to: "/",
       },
       {
-        name: "Events",
+        name: t("nav.events"),
         to: "/events",
       },
       {
-        name: "Donate Us",
+        name: t("nav.donate"),
         to: "/donate",
       },
       {
-        name: "Dashboard",
+        name: t("nav.dashboard"),
         to: "/dashboard",
       },
       {
-        name: "Announcements",
+        name: t("nav.announcements"),
         to: "/announcements",
       },
       {
-        name: "Posts",
+        name: t("nav.posts"),
         to: user?.isAdmin ? "/posts/admin" : "/posts",
       },
       {
-        name: "Leaderboard",
+        name: t("nav.leaderboard"),
         to: "/leaderboard",
       },
     ];
@@ -76,7 +78,7 @@ export function Navbar() {
     // Add "Vote Stars" for regular users only
     if (user && user.role === "user") {
       baseItems.splice(-1, 0, {
-        name: "Vote Stars",
+        name: t("nav.vote"),
         to: "/vote-stars",
       });
     }
@@ -120,8 +122,6 @@ export function Navbar() {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-
-  const { i18n } = useTranslation();
 
   const handleLanguageChange = (event) => {
     const newLanguage = event.target.value;

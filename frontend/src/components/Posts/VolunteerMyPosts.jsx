@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { backendUrl } from "../../lib/constant";
 
 const VolunteerMyPosts = () => {
@@ -8,6 +9,7 @@ const VolunteerMyPosts = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [expandedPosts, setExpandedPosts] = useState(new Set());
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -93,7 +95,7 @@ const VolunteerMyPosts = () => {
           onClick={() => toggleExpanded(postId)}
           className="text-blue-600 hover:text-blue-800 font-medium text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded"
         >
-          {isExpanded ? 'Read Less' : 'Read More'}
+          {isExpanded ? t("posts.readLess") : t("posts.readMore")}
         </button>
       </div>
     );

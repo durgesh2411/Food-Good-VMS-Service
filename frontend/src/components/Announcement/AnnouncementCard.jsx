@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Card,
   CardHeader,
@@ -9,6 +10,7 @@ import {
 
 export function AnnouncementCard({ announcement }) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const { t } = useTranslation();
   const createdAtDate = new Date(announcement.createdAt);
   const formattedDate = createdAtDate.toLocaleString();
   
@@ -42,7 +44,7 @@ export function AnnouncementCard({ announcement }) {
                   onClick={toggleExpanded}
                   className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium text-sm mt-3 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded inline-block"
                 >
-                  {isExpanded ? 'Read Less' : 'Read More'}
+                  {isExpanded ? t("posts.readLess") : t("posts.readMore")}
                 </button>
               )}
             </CardDescription>
