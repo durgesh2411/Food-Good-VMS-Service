@@ -1,5 +1,13 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { generateRAGResponse, searchKnowledgeBase, shouldUseRAG } from './rag.js';
+import dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
+import path from 'path';
+
+// Load environment variables
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+dotenv.config({ path: path.join(__dirname, '..', '..', '.env') });
 
 // Initialize Gemini AI
 let genAI;
@@ -10,8 +18,10 @@ try {
     genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
     console.log("✅ Gemini AI initialized successfully");
+    console.log("🔑 Using API Key:", process.env.GEMINI_API_KEY.substring(0, 8) + "...");
   } else {
     console.log("⚠️ Gemini API key not found - AI features will use RAG only");
+    console.log("🔍 Available env vars:", Object.keys(process.env).filter(k => k.includes('GEMINI')));
   }
 } catch (error) {
   console.error("❌ Gemini initialization error:", error.message);
@@ -127,7 +137,9 @@ export const generateAIResponse = async (message, conversationHistory = []) => {
     }
 
     // Final fallback message
-    if (error.message.includes("API_KEY")) {
+    if (error.message.includes("API_KEY_INVALID") || error.message.includes("API key not valid")) {
+      return "I can help with platform questions right now! For general questions, our AI service needs a quick setup. Try asking about registration, volunteering, donations, events, or any platform features.";
+    } else if (error.message.includes("API_KEY")) {
       return "I'm currently unable to access the AI service due to configuration issues. However, I can still help with basic platform questions! Try asking about registration, volunteering, donations, or events.";
     } else if (error.message.includes("quota") || error.message.includes("limit")) {
       return "The AI service is temporarily at capacity. I can still help with platform-specific questions from our knowledge base! Try asking about how to register, volunteer opportunities, or donation processes.";
