@@ -264,17 +264,31 @@ const rejectVolunteerWork = asyncHandler(async (req, res) => {
 
 // Admin route - get volunteers with worked hours for leaderboard
 const getVolunteersWithHours = asyncHandler(async (req, res) => {
-  // Check if user is admin
-  if (!req.user.isAdmin) {
-    throw new ApiError(403, "You are not authorized to access this route");
+  console.log("🏆 Leaderboard request received");
+  console.log("👤 User from request:", req.user ? `${req.user.fullName} (${req.user.role}, admin: ${req.user.isAdmin})` : "No user");
+  
+  // Allow all authenticated users to view leaderboard data (changed from admin-only)
+  if (!req.user) {
+    console.log("❌ Access denied - no user authenticated");
+    throw new ApiError(401, "Please login to view leaderboard");
   }
+
+  console.log("🔍 Fetching volunteers with worked hours...");
+  
+  // First, let's see all volunteers
+  const allVolunteers = await User.find({ role: "volunteer" }, "fullName totalWorkedHours role");
+  console.log("📊 All volunteers:", allVolunteers.map(v => ({ name: v.fullName, hours: v.totalWorkedHours })));
 
   const volunteers = await User.find(
     { totalWorkedHours: { $gt: 0 }, role: "volunteer" },
     "fullName avatar totalWorkedHours"
   ).sort({ totalWorkedHours: -1 });
 
+  console.log("📈 Volunteers with hours > 0:", volunteers.length);
+  console.log("📋 Volunteer data:", volunteers.map(v => ({ name: v.fullName, hours: v.totalWorkedHours })));
+
   if (!volunteers || volunteers.length === 0) {
+    console.log("⚠️ No volunteers with worked hours found");
     return res
       .status(200)
       .json(
@@ -286,6 +300,7 @@ const getVolunteersWithHours = asyncHandler(async (req, res) => {
       );
   }
 
+  console.log("✅ Returning volunteers data");
   return res
     .status(200)
     .json(

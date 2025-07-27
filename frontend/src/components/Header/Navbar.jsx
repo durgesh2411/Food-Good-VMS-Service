@@ -79,14 +79,6 @@ export function Navbar() {
       },
     ];
 
-    // Add "Vote Stars" for regular users only
-    if (user && user.role === "user") {
-      baseItems.splice(-1, 0, {
-        name: t("nav.vote"),
-        to: "/vote-stars",
-      });
-    }
-
     return baseItems;
   };
   const handleLogout = async () => {

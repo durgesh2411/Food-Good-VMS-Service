@@ -63,19 +63,31 @@ const getTotalEvents = asyncHandler(async (req, res) => {
 });
 
 const getLastSixEventsUserCounts = asyncHandler(async (req, res) => {
+  console.log("🔐 Dashboard request received");
+  console.log("👤 User from request:", req.user ? `${req.user.fullName} (${req.user.role}, admin: ${req.user.isAdmin})` : "No user");
+  
   // Allow volunteers and admins to see event data
   if (req.user.role !== "volunteer" && !req.user.isAdmin) {
+    console.log("❌ Access denied - user role:", req.user.role, "isAdmin:", req.user.isAdmin);
     throw new ApiError(
       400,
       "You do not have permission to view this information"
     );
   }
 
+  console.log("🔍 Fetching last six events for dashboard...");
   const lastSixEvents = await Event.find({}).sort({ createdAt: -1 }).limit(6);
-  const eventData = lastSixEvents.map((event) => ({
-    title: event.title,
-    userCount: event.participants.length,
-  }));
+  console.log("📊 Found events:", lastSixEvents.length);
+  
+  const eventData = lastSixEvents.map((event) => {
+    console.log(`📈 Event: ${event.title}, Participants: ${event.participants.length}`);
+    return {
+      title: event.title,
+      userCount: event.participants.length,
+    };
+  });
+
+  console.log("📋 Final event data:", eventData);
 
   res.status(200).json({
     success: true,

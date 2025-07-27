@@ -92,7 +92,77 @@ export function LeaderBoard() {
       );
 
       if (response.data.success && response.data.data.length > 0) {
-        setVolunteers(response.data.data);
+        // First, fetch all posts once to count approved posts per volunteer
+        let allPosts = [];
+        try {
+          const postsResponse = await axios.get(
+            `${backendUrl}/posts/volunteer/allPosts`,
+            { withCredentials: true }
+          );
+          if (postsResponse.data.success) {
+            allPosts = postsResponse.data.data.posts;
+            console.log("All posts fetched:", allPosts.length, "posts");
+            console.log("Sample post structure:", allPosts[0]);
+          }
+        } catch (error) {
+          console.log("Could not fetch posts data", error);
+        }
+
+        // Map the backend data to the frontend format and fetch additional data
+        const mappedVolunteers = await Promise.all(
+          response.data.data.map(async (volunteer) => {
+            const mappedVolunteer = {
+              ...volunteer,
+              hoursWorked: volunteer.totalWorkedHours || 0,
+              starVotes: 0, // Will be fetched below
+              approvedPosts: 0, // Will be calculated below
+              totalScore: (volunteer.totalWorkedHours || 0) * 100 // Base score from hours
+            };
+
+            // Count approved posts by this volunteer
+            const userApprovedPosts = allPosts.filter(post => 
+              post.status === 'approved' && post.owner === volunteer._id
+            ).length;
+            mappedVolunteer.approvedPosts = userApprovedPosts;
+            console.log(`${volunteer.fullName}: ${userApprovedPosts} approved posts`);
+
+            // Fetch star votes for this volunteer
+            try {
+              const votesResponse = await axios.get(
+                `${backendUrl}/star-votes/volunteer/${volunteer._id}`,
+                { withCredentials: true }
+              );
+              if (votesResponse.data.success) {
+                mappedVolunteer.starVotes = votesResponse.data.data.totalVotes || 0;
+              }
+            } catch (error) {
+              console.log("Could not fetch star votes for", volunteer.fullName);
+              mappedVolunteer.starVotes = 0;
+            }
+
+            // Recalculate total score with all data
+            // Priority: Hours (100 points each) > Star Votes (10 points each) > Posts (1 point each)
+            mappedVolunteer.totalScore = (mappedVolunteer.hoursWorked * 100) + (mappedVolunteer.starVotes * 10) + mappedVolunteer.approvedPosts;
+
+            return mappedVolunteer;
+          })
+        );
+
+        // Sort by priority: Hours worked > Star votes > Posts
+        mappedVolunteers.sort((a, b) => {
+          // First priority: Hours worked
+          if (a.hoursWorked !== b.hoursWorked) {
+            return b.hoursWorked - a.hoursWorked;
+          }
+          // Second priority: Star votes
+          if (a.starVotes !== b.starVotes) {
+            return b.starVotes - a.starVotes;
+          }
+          // Third priority: Posts
+          return b.approvedPosts - a.approvedPosts;
+        });
+
+        setVolunteers(mappedVolunteers);
       } else {
         // Fallback: Get volunteers based on approved posts count
         await fetchVolunteersByPosts();
@@ -267,21 +337,21 @@ export function LeaderBoard() {
                   <div className="space-y-2">
                     <div className="flex items-center justify-center gap-4">
                       <div className="text-center">
-                        <div className="text-lg font-bold text-blue-600">{volunteer.hoursWorked}</div>
+                        <div className="text-lg font-bold text-blue-600">{volunteer.hoursWorked || volunteer.totalWorkedHours || 0}</div>
                         <div className="text-xs text-gray-500">Hours</div>
                       </div>
                       <div className="text-center">
-                        <div className="text-lg font-bold text-yellow-600">{volunteer.starVotes}</div>
+                        <div className="text-lg font-bold text-yellow-600">{volunteer.starVotes || 0}</div>
                         <div className="text-xs text-gray-500">Stars</div>
                       </div>
                       <div className="text-center">
-                        <div className="text-lg font-bold text-green-600">{volunteer.approvedPosts}</div>
+                        <div className="text-lg font-bold text-green-600">{volunteer.approvedPosts || 0}</div>
                         <div className="text-xs text-gray-500">Posts</div>
                       </div>
                     </div>
 
                     <div className="bg-gray-100 px-3 py-1 rounded-full text-sm font-medium text-gray-700">
-                      {volunteer.totalScore} points
+                      {volunteer.totalScore || (volunteer.totalWorkedHours || 0) * 100} points
                     </div>
                   </div>
                 </div>
@@ -378,28 +448,35 @@ export function LeaderBoard() {
                             )}
                           </div>
                           <div className="text-sm text-gray-500">
-                            Total Score: {volunteer.totalScore} pts
+                            Total Score: {volunteer.totalScore || (volunteer.totalWorkedHours || volunteer.hoursWorked || 0) * 100} pts
                           </div>
                         </div>
                       </div>
                     </TableCell>
                     <TableCell className="font-bold text-lg text-blue-600 text-center">
-                      {volunteer.hoursWorked} hrs
+                      {volunteer.hoursWorked || volunteer.totalWorkedHours || 0} hrs
                     </TableCell>
                     <TableCell className="font-bold text-lg text-yellow-600 text-center">
-                      ⭐ {volunteer.starVotes}
+                      ⭐ {volunteer.starVotes || 0}
                     </TableCell>
                     <TableCell className="font-bold text-lg text-green-600 text-center">
-                      📝 {volunteer.approvedPosts}
+                      📝 {volunteer.approvedPosts || 0}
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center gap-2">
                         <Progress
-                          value={Math.min((volunteer.totalScore / Math.max(volunteers[0].totalScore, 10)) * 100, 100)}
+                          value={Math.min(
+                            ((volunteer.totalScore || (volunteer.totalWorkedHours || volunteer.hoursWorked || 0) * 100) / 
+                            Math.max((volunteers[0].totalScore || (volunteers[0].totalWorkedHours || volunteers[0].hoursWorked || 0) * 100), 10)) * 100, 
+                            100
+                          )}
                           className="flex-1"
                         />
                         <span className="text-sm text-gray-500 min-w-[40px]">
-                          {Math.round((volunteer.totalScore / Math.max(volunteers[0].totalScore, 10)) * 100)}%
+                          {Math.round(
+                            ((volunteer.totalScore || (volunteer.totalWorkedHours || volunteer.hoursWorked || 0) * 100) / 
+                            Math.max((volunteers[0].totalScore || (volunteers[0].totalWorkedHours || volunteers[0].hoursWorked || 0) * 100), 10)) * 100
+                          )}%
                         </span>
                       </div>
                     </TableCell>

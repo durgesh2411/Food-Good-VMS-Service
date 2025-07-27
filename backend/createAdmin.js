@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { User } from "./src/models/user.model.js";
 import connectDB from "./src/db/index.js";
 import dotenv from "dotenv";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 // Load environment variables
 dotenv.config();
@@ -16,8 +16,8 @@ const createAdminUser = async () => {
     // Check if admin already exists
     const existingAdmin = await User.findOne({ email: "admin@example.com" });
     if (existingAdmin) {
-      console.log("Admin user already exists!");
-      process.exit(0);
+      console.log("Admin user already exists! Deleting and recreating...");
+      await User.deleteOne({ email: "admin@example.com" });
     }
 
     // Hash password
