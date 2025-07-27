@@ -120,6 +120,7 @@ import PostCardAdmin from "./components/Posts/PostCardAdmin";
 import PostCard from "./components/Posts/PostCard";
 import StarVotingPage from "./components/StarVoting/StarVotingPage";
 import ChatAI from "./components/ChatAI";
+import ChatbotWidget from "./components/ChatbotWidget";
 
 // --- Ensure axios sends cookies with every request ---
 axios.defaults.withCredentials = true;
@@ -196,6 +197,7 @@ function App() {
     <>
       <Loader show={loading} />
       <RouterProvider router={route} />
+      <ChatbotWidget />
     </>
   );
 }
