@@ -12,12 +12,17 @@ if (process.env.OPENAI_API_KEY) {
 }
 
 export const generateAIResponse = async (message, conversationHistory = []) => {
+  console.log("🔧 generateAIResponse called");
+  console.log("OpenAI instance exists:", !!openai);
+  
   if (!openai) {
+    console.log("❌ OpenAI not initialized");
     throw new Error(
       "OpenAI is not configured. Please set OPENAI_API_KEY environment variable."
     );
   }
 
+  console.log("📝 Building conversation context...");
   // System prompt to make AI context-aware for Volunteer Management System
   const systemPrompt = `You are a helpful AI assistant for "Food Good VMS" - a Volunteer Management System focused on food donation and community service. You specialize in helping users with:
 
@@ -63,14 +68,38 @@ Always try to be helpful and guide users to the right features of the platform. 
   // Add the current user message
   messages.push({ role: "user", content: message });
 
-  const response = await openai.chat.completions.create({
-    model: "gpt-3.5-turbo",
-    messages: messages,
-    max_tokens: 500,
-    temperature: 0.7,
-    presence_penalty: 0.1,
-    frequency_penalty: 0.1,
-  });
+  console.log("🚀 Calling OpenAI API...");
+  console.log("Messages count:", messages.length);
 
-  return response.choices[0].message.content;
+  try {
+    const response = await openai.chat.completions.create({
+      model: "gpt-3.5-turbo",
+      messages: messages,
+      max_tokens: 500,
+      temperature: 0.7,
+      presence_penalty: 0.1,
+      frequency_penalty: 0.1,
+    });
+
+    console.log("✅ OpenAI API call successful");
+    const aiResponse = response.choices[0].message.content;
+    console.log("Response length:", aiResponse.length);
+    
+    return aiResponse;
+  } catch (error) {
+    console.error("❌ OpenAI API Error:", error);
+    console.error("Error type:", error.constructor.name);
+    console.error("Error message:", error.message);
+    
+    // Re-throw with more context
+    if (error.message.includes("401")) {
+      throw new Error("Invalid OpenAI API key. Please check your configuration.");
+    } else if (error.message.includes("429")) {
+      throw new Error("OpenAI API quota exceeded. Please try again later.");
+    } else if (error.message.includes("503") || error.message.includes("502")) {
+      throw new Error("OpenAI service temporarily unavailable. Please try again.");
+    } else {
+      throw new Error(`OpenAI API error: ${error.message}`);
+    }
+  }
 };
