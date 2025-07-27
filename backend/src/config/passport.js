@@ -8,8 +8,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 // Google OAuth Strategy - only configure if credentials are available and valid
-const isValidOAuthCredentials = process.env.GOOGLE_CLIENT_ID && 
-                               process.env.GOOGLE_CLIENT_SECRET && 
+const isValidOAuthCredentials = process.env.GOOGLE_CLIENT_ID &&
+                               process.env.GOOGLE_CLIENT_SECRET &&
                                process.env.GOOGLE_CLIENT_ID !== 'placeholder-client-id' &&
                                process.env.GOOGLE_CLIENT_SECRET !== 'placeholder-client-secret';
 

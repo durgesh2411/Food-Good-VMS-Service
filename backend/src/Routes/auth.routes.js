@@ -7,8 +7,8 @@ import { ApiError } from "../utils/apiError.js";
 const router = Router();
 
 // Check if OAuth is configured
-const isOAuthConfigured = process.env.GOOGLE_CLIENT_ID && 
-                         process.env.GOOGLE_CLIENT_SECRET && 
+const isOAuthConfigured = process.env.GOOGLE_CLIENT_ID &&
+                         process.env.GOOGLE_CLIENT_SECRET &&
                          process.env.GOOGLE_CLIENT_ID !== 'placeholder-client-id' &&
                          process.env.GOOGLE_CLIENT_SECRET !== 'placeholder-client-secret';
 
@@ -28,7 +28,7 @@ router.get('/google/callback', (req, res, next) => {
     const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
     return res.redirect(`${frontendUrl}?oauth=error&message=${encodeURIComponent('Google OAuth is not configured')}`);
   }
-  
+
   passport.authenticate('google', { session: false }, async (err, user) => {
     try {
       if (err) {

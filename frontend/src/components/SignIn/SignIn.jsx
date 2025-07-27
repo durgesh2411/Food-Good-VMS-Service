@@ -15,14 +15,9 @@ export function SignIn({ setData }) {
 
   // Handle Google Sign In
   const handleGoogleSignIn = () => {
-    // Check if backend OAuth is configured
+    // Redirect to backend OAuth endpoint
     const backendOAuthUrl = `${backendUrl}/auth/google`;
-
-    // For now, show info message until OAuth is fully configured
-    toast.info("Google Sign In is available! Setting up requires Google Cloud credentials. See GOOGLE_OAUTH_SETUP.md for instructions.");
-
-    // Uncomment when OAuth credentials are configured:
-    // window.location.href = backendOAuthUrl;
+    window.location.href = backendOAuthUrl;
   };
 
   const handleSignIn = (e) => {
