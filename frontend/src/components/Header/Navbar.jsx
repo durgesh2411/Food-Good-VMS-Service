@@ -70,6 +70,10 @@ export function Navbar() {
         to: user?.isAdmin ? "/posts/admin" : "/posts",
       },
       {
+        name: t("nav.hallOfFame"),
+        to: "/hall-of-fame",
+      },
+      {
         name: t("nav.leaderboard"),
         to: "/leaderboard",
       },
@@ -153,28 +157,31 @@ export function Navbar() {
           : ""
       }`}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2 sm:px-6 lg:px-8">
-        <div className="inline-flex items-center space-x-2">
-          <span>
-            <Link to="/">
+      <div className="mx-auto flex max-w-7xl items-center px-4 py-2 sm:px-6 lg:px-8">
+        {/* Logo Section */}
+        <div className="inline-flex items-center space-x-2 px-2 py-1">
+          <span className="flex items-center">
+            <Link to="/" className="block">
               <img
                 src="/logo.png"
-                width="80"
-                height="66"
+                width="85"
+                height="70"
                 alt="Logo"
-                className="h-[4rem]"
+                className="h-[3.5rem] w-auto object-contain rounded-lg"
               />
             </Link>
           </span>
         </div>
-        <div className="hidden lg:block">
-          <ul className="inline-flex space-x-8">
+
+        {/* Main Navigation Group */}
+        <div className="hidden lg:flex flex-1 justify-center">
+          <ul className="flex items-center space-x-3">
             {getMenuItems().map((item) => (
               <li key={item.name}>
                 <NavLink
                   to={item.to}
                   className={({ isActive }) =>
-                    `-m-3 flex items-center rounded-md p-3 text-sm font-semibold hover:text-[#f2b705]
+                    `flex items-center rounded-md px-2 py-2 text-sm font-semibold hover:text-[#f2b705] whitespace-nowrap transition-colors duration-200
                   ${
                     isActive
                       ? "font-semibold text-[#f2b705]"
@@ -186,44 +193,44 @@ export function Navbar() {
                 </NavLink>
               </li>
             ))}
-            <div className=" lg:block flex items-center -m-3 rounded-md p-3 text-sm font-semibold hover:text-[#f2b705]">
-              <select
-                value={language}
-                onChange={handleLanguageChange}
-                className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#f2b705] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black transition-all ease-in-out duration-300 hover:text-black"
-              >
-                <option value="en">English</option>
-                <option value="hi">Hindi</option>
-              </select>
-            </div>
           </ul>
         </div>
-        <div className="hidden lg:block">
+
+        {/* User Actions Group */}
+        <div className="hidden lg:flex items-center space-x-3">
           {isLoggedIn ? (
-            <div className="flex items-center gap-3">
+            <>
               {user && (
-                <span className="text-sm text-white">
+                <span className="text-sm text-white max-w-[180px] truncate">
                   Welcome, {user.fullName || user.email}
                 </span>
               )}
               <button
                 type="button"
                 onClick={handleLogout}
-                className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#f2b705] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black transition-all ease-in-out duration-300 hover:text-black"
+                className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#f2b705] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black transition-all ease-in-out duration-300 hover:text-black whitespace-nowrap"
               >
                 Log Out
               </button>
-            </div>
+            </>
           ) : (
             <Link to="/login">
               <button
                 type="button"
-                className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#f2b705] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black transition-all ease-in-out duration-300 hover:text-black"
+                className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#f2b705] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black transition-all ease-in-out duration-300 hover:text-black whitespace-nowrap"
               >
                 Log In
               </button>
             </Link>
           )}
+          <select
+            value={language}
+            onChange={handleLanguageChange}
+            className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#f2b705] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black transition-all ease-in-out duration-300 hover:text-black"
+          >
+            <option value="en">English</option>
+            <option value="hi">Hindi</option>
+          </select>
         </div>
         <div className="lg:hidden">
           <Menu onClick={toggleMenu} className="h-6 w-6 cursor-pointer" />

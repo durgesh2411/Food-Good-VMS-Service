@@ -13,13 +13,13 @@ export function AnnouncementCard({ announcement }) {
   const { t } = useTranslation();
   const createdAtDate = new Date(announcement.createdAt);
   const formattedDate = createdAtDate.toLocaleString();
-  
+
   // Character limit for truncation
   const charLimit = 200;
   const shouldTruncate = announcement.content && announcement.content.length > charLimit;
-  
-  const displayContent = shouldTruncate && !isExpanded 
-    ? announcement.content.substring(0, charLimit) + "..." 
+
+  const displayContent = shouldTruncate && !isExpanded
+    ? announcement.content.substring(0, charLimit) + "..."
     : announcement.content;
 
   const toggleExpanded = () => {
@@ -38,7 +38,7 @@ export function AnnouncementCard({ announcement }) {
               <div className="whitespace-pre-wrap break-words leading-relaxed">
                 {displayContent}
               </div>
-              
+
               {shouldTruncate && (
                 <button
                   onClick={toggleExpanded}

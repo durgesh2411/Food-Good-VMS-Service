@@ -119,6 +119,7 @@ import PostAdmin from "./components/Posts/PostAdmin";
 import PostCardAdmin from "./components/Posts/PostCardAdmin";
 import PostCard from "./components/Posts/PostCard";
 import StarVotingPage from "./components/StarVoting/StarVotingPage";
+import HallOfFame from "./components/HallOfFame/HallOfFame";
 import ChatbotWidget from "./components/ChatbotWidget";
 import { toast } from "react-toastify";
 
@@ -140,17 +141,17 @@ function App() {
       try {
         const userData = JSON.parse(decodeURIComponent(userParam));
         console.log('✅ OAuth success, user data:', userData);
-        
+
         // Save user data to localStorage and state
         localStorage.setItem("user", JSON.stringify(userData));
         setData(userData);
-        
+
         // Show success message
         toast.success(`Welcome back, ${userData.fullName}! Login successful.`);
-        
+
         // Clean up URL parameters
         window.history.replaceState({}, document.title, window.location.pathname);
-        
+
       } catch (error) {
         console.error('❌ Error parsing OAuth user data:', error);
         toast.error('Login successful but failed to parse user data');
@@ -158,7 +159,7 @@ function App() {
     } else if (oauthResult === 'error') {
       console.error('❌ OAuth error:', errorMessage);
       toast.error(errorMessage || 'Google Sign-In failed');
-      
+
       // Clean up URL parameters
       window.history.replaceState({}, document.title, window.location.pathname);
     }
@@ -217,6 +218,7 @@ function App() {
         <Route path="/posts/my-posts" element={<VolunteerMyPosts />} />
         <Route path="/posts/admin" element={<PostAdmin />} />
         <Route path="/vote-stars" element={<StarVotingPage />} />
+        <Route path="/hall-of-fame" element={<HallOfFame />} />
         <Route path="/announcements" element={<Announcement />} />
         <Route path="/events/:eventId" element={<EventDetails />} />
         <Route path="/events/create" element={<CreateEvent />} />

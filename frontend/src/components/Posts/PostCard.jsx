@@ -12,13 +12,13 @@ const PostCard = ({ post }) => {
   const { t } = useTranslation();
   const convertedDate = new Date(post.createdAt);
   const formattedDate = convertedDate.toLocaleString();
-  
+
   // Character limit for truncation
   const charLimit = 150;
   const shouldTruncate = post.content && post.content.length > charLimit;
-  
-  const displayContent = shouldTruncate && !isExpanded 
-    ? post.content.substring(0, charLimit) + "..." 
+
+  const displayContent = shouldTruncate && !isExpanded
+    ? post.content.substring(0, charLimit) + "..."
     : post.content;
 
   const toggleExpanded = () => {
@@ -35,12 +35,12 @@ const PostCard = ({ post }) => {
         </div>
         <h2 className="ml-3 font-bold text-gray-800 dark:text-gray-200">{post.fullName}</h2>
       </div>
-      
+
       <div className={textClasses}>
         <p className="whitespace-pre-wrap break-words">
           {displayContent}
         </p>
-        
+
         {shouldTruncate && (
           <button
             onClick={toggleExpanded}
@@ -50,7 +50,7 @@ const PostCard = ({ post }) => {
           </button>
         )}
       </div>
-      
+
       <p className={dateClasses}>{t("posts.postedOn")} {formattedDate}</p>
     </div>
   );
