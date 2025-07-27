@@ -34,13 +34,13 @@ async function testGeminiRAG() {
   for (const test of testQueries) {
     console.log(`🔍 Query: "${test.message}"`);
     console.log(`Expected: ${test.expected}`);
-    
+
     try {
       const startTime = Date.now();
       const response = await generateAIResponse(test.message, []);
       const endTime = Date.now();
-      
-      console.log(`✅ Response (${endTime - startTime}ms):`, 
+
+      console.log(`✅ Response (${endTime - startTime}ms):`,
         response.substring(0, 150) + "...");
       console.log("─────────────────────────────────────\n");
     } catch (error) {
@@ -48,7 +48,7 @@ async function testGeminiRAG() {
       console.log("─────────────────────────────────────\n");
     }
   }
-  
+
   console.log("✅ Test Complete!");
   console.log("==================");
   console.log("Benefits of Gemini + RAG:");

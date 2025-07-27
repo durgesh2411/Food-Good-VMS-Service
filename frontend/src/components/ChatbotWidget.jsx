@@ -54,7 +54,7 @@ const ChatbotWidget = () => {
       });
 
       const data = await response.json();
-      
+
       if (data.success) {
         const botMessage = {
           id: Date.now() + 1,
@@ -120,15 +120,15 @@ const ChatbotWidget = () => {
           aria-label="Open chat support"
         >
           <MessageCircle className="h-6 w-6" />
-          
+
           {/* Pulsing ring animation */}
           <div className="absolute inset-0 rounded-full bg-blue-600 animate-ping opacity-75"></div>
-          
+
           {/* Notification dot */}
           <div className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center animate-pulse font-bold z-10">
             !
           </div>
-          
+
           {/* Tooltip */}
           <div className="absolute bottom-full right-0 mb-2 px-3 py-2 bg-gray-800 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap shadow-lg">
             💬 Need help? Ask me anything!
@@ -186,8 +186,8 @@ const ChatbotWidget = () => {
                     message.sender === 'user' ? 'flex-row-reverse space-x-reverse' : ''
                   }`}>
                     <div className={`flex-shrink-0 rounded-full p-2 ${
-                      message.sender === 'user' 
-                        ? 'bg-blue-600 text-white' 
+                      message.sender === 'user'
+                        ? 'bg-blue-600 text-white'
                         : 'bg-white border border-gray-200'
                     }`}>
                       {message.sender === 'user' ? (
@@ -271,7 +271,7 @@ const ChatbotWidget = () => {
                   </button>
                 </div>
               </div>
-              
+
               {messages.length > 1 && (
                 <button
                   onClick={clearChat}

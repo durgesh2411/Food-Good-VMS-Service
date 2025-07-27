@@ -61,15 +61,15 @@ async function createTestData() {
     }
 
     console.log('Test data created successfully!');
-    
+
     // Check the results
     const volunteers = await User.find(
       { totalWorkedHours: { $gt: 0 }, role: "volunteer" },
       "fullName email totalWorkedHours"
     ).sort({ totalWorkedHours: -1 });
-    
+
     console.log('Volunteers with hours:', volunteers);
-    
+
   } catch (error) {
     console.error('Error creating test data:', error);
   } finally {

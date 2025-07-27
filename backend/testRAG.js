@@ -24,17 +24,17 @@ const testQueries = [
 
 for (const query of testQueries) {
   console.log(`\n🔍 Query: "${query}"`);
-  
+
   const shouldUse = shouldUseRAG(query);
   console.log(`Should use RAG: ${shouldUse}`);
-  
+
   if (shouldUse) {
     try {
       const results = await searchKnowledgeBase(query);
       console.log(`Found: ${results.found ? 'Yes' : 'No'}`);
-      
+
       if (results.found && results.content.length > 0) {
-        console.log(`Best match preview:`, 
+        console.log(`Best match preview:`,
           results.content[0].substring(0, 100) + "...");
       }
     } catch (error) {
@@ -55,14 +55,14 @@ const ragTestQueries = [
 
 for (const query of ragTestQueries) {
   console.log(`\n🔍 Generating RAG response for: "${query}"`);
-  
+
   try {
     // First search the knowledge base
     const searchResults = await searchKnowledgeBase(query);
-    
+
     // Then generate response from results
     const response = generateRAGResponse(searchResults, query);
-    
+
     if (response) {
       console.log("✅ RAG Response:", response.substring(0, 150) + "...");
     } else {

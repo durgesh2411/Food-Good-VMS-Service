@@ -19,16 +19,16 @@ export const generateAIResponse = async (message, conversationHistory = []) => {
   // Step 1: Try RAG first for platform-specific questions
   if (shouldUseRAG(message)) {
     console.log("🔍 Using RAG for platform-specific query");
-    
+
     try {
       const ragResults = await searchKnowledgeBase(message);
       const ragResponse = generateRAGResponse(ragResults, message);
-      
+
       if (ragResponse) {
         console.log("✅ RAG provided response from knowledge base");
         return ragResponse;
       }
-      
+
       console.log("📚 RAG didn't find sufficient information, falling back to OpenAI");
     } catch (ragError) {
       console.error("❌ RAG Error:", ragError);
@@ -40,7 +40,7 @@ export const generateAIResponse = async (message, conversationHistory = []) => {
 
   // Step 2: Fallback to OpenAI for general questions or when RAG fails
   console.log("OpenAI instance exists:", !!openai);
-  
+
   if (!openai) {
     console.log("❌ OpenAI not initialized");
     throw new Error(
@@ -49,12 +49,12 @@ export const generateAIResponse = async (message, conversationHistory = []) => {
   }
 
   console.log("📝 Building conversation context for OpenAI...");
-  
+
   // Enhanced system prompt that includes knowledge about RAG
-  const systemPrompt = `You are a helpful AI assistant for "Food Good VMS" - a Volunteer Management System focused on food donation and community service. 
+  const systemPrompt = `You are a helpful AI assistant for "Food Good VMS" - a Volunteer Management System focused on food donation and community service.
 
 **Important**: For platform-specific questions (registration, donations, events, volunteering), our system first checks our knowledge base. You're being consulted because either:
-1. The question is general/conversational in nature, OR 
+1. The question is general/conversational in nature, OR
 2. Our knowledge base didn't have sufficient information
 
 **Your role**:
@@ -100,13 +100,13 @@ If you're unsure about specific platform details, acknowledge it and suggest the
     console.log("✅ OpenAI API call successful");
     const aiResponse = response.choices[0].message.content;
     console.log("Response length:", aiResponse.length);
-    
+
     return aiResponse;
   } catch (error) {
     console.error("❌ OpenAI API Error:", error);
     console.error("Error type:", error.constructor.name);
     console.error("Error message:", error.message);
-    
+
     // Re-throw with more context
     if (error.message.includes("401")) {
       throw new Error("Invalid OpenAI API key. Please check your configuration.");

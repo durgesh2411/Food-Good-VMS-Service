@@ -18,10 +18,10 @@ try {
     console.log("🔑 Gemini API Key detected:", process.env.GEMINI_API_KEY.substring(0, 12) + "...");
     genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-    
+
     // Test the API key with a simple request
     console.log("🧪 Testing Gemini API connection...");
-    
+
     // We'll test this in the actual request to avoid initialization errors
     console.log("✅ Gemini AI initialized successfully");
   } else {
@@ -33,11 +33,11 @@ try {
 }
 
 // Enhanced system prompt for volunteer management context
-const SYSTEM_PROMPT = `You are a helpful AI assistant for the Food Good Volunteer Management System (VMS). 
+const SYSTEM_PROMPT = `You are a helpful AI assistant for the Food Good Volunteer Management System (VMS).
 
 CONTEXT: You're helping users with a platform focused on:
 - Volunteer registration and management
-- Food donation coordination  
+- Food donation coordination
 - Community events and activities
 - User account management
 - Volunteer work opportunities
@@ -59,58 +59,69 @@ Please respond helpfully to the user's question.`;
 export const generateAIResponse = async (message, conversationHistory = []) => {
   try {
     console.log("🤖 Processing AI request with RAG + Gemini system");
-    
+
     // Step 1: Check if we should use RAG for this query
     if (shouldUseRAG(message)) {
       console.log("🔍 Query suitable for RAG - searching knowledge base first");
-      
+
       // Search local knowledge base
       const ragResults = await searchKnowledgeBase(message);
-      
+
       if (ragResults.found && ragResults.content.length > 0) {
         console.log("✅ Found answer in knowledge base - generating RAG response");
         const ragResponse = generateRAGResponse(ragResults, message);
-        
+
         if (ragResponse) {
           console.log("🎯 Returning RAG response (cost: $0.00)");
           return ragResponse;
         }
       }
-      
+
       console.log("❌ RAG didn't find sufficient answer - falling back to Gemini");
     } else {
       console.log("🌐 General query detected - using Gemini directly");
     }
 
     // Step 2: Use Gemini for general questions or RAG fallback
-    if (!model) {
-      // If no Gemini available, try to provide a helpful RAG-only response
-      console.log("⚠️ Gemini not available - attempting RAG-only response");
+    if (!model || process.env.GEMINI_API_KEY === 'your-actual-gemini-api-key-here' || process.env.GEMINI_API_KEY === 'your-gemini-api-key-here') {
+      // If no Gemini available or placeholder API key, try to provide a helpful RAG-only response
+      console.log("⚠️ Gemini not available or placeholder API key - attempting comprehensive RAG response");
       const ragResults = await searchKnowledgeBase(message);
-      
+
       if (ragResults.found && ragResults.content.length > 0) {
         const ragResponse = generateRAGResponse(ragResults, message);
         if (ragResponse) {
-          return ragResponse + "\n\n*Note: For more detailed assistance, please contact our support team.*";
+          console.log("✅ Generated RAG-only response successfully");
+          return ragResponse;
         }
       }
-      
-      return "I'm currently having trouble accessing my full AI capabilities. However, I can still help with basic platform questions! Try asking about registration, volunteering, donations, or events. For complex queries, please contact our support team.";
+
+      // Try broader search for any kind of help
+      const broadResults = await searchKnowledgeBase(message.split(' ').slice(0, 3).join(' '));
+      if (broadResults.found && broadResults.content.length > 0) {
+        const broadResponse = generateRAGResponse(broadResults, message);
+        if (broadResponse) {
+          console.log("✅ Generated broad RAG response");
+          return broadResponse + "\n\n*Note: For more specific help, please be more detailed in your question.*";
+        }
+      }
+
+      return "I can help you with platform-specific questions! Try asking about:\n\n• How to register or login\n• Becoming a volunteer\n• Making donations\n• Finding events\n• Creating posts\n• Using the star voting system\n\nWhat would you like to know?";
     }
 
     // Build conversation context for Gemini
     let conversationContext = SYSTEM_PROMPT + "\n\nCONVERSATION HISTORY:\n";
-    
+
     // Add recent conversation history (last 6 messages to keep within limits)
     const recentHistory = conversationHistory.slice(-6);
     recentHistory.forEach(msg => {
       conversationContext += `${msg.role}: ${msg.content}\n`;
     });
-    
+
     conversationContext += `\nUser: ${message}\nAssistant:`;
 
     console.log("🔄 Calling Gemini API...");
-    
+
     // Generate response with Gemini
     const result = await model.generateContent(conversationContext);
     const response = await result.response;
@@ -126,12 +137,12 @@ export const generateAIResponse = async (message, conversationHistory = []) => {
 
   } catch (error) {
     console.error("❌ AI Response Generation Error:", error);
-    
+
     // Enhanced error handling with RAG fallback
     try {
       console.log("🔄 Attempting RAG fallback due to Gemini error...");
       const ragResults = await searchKnowledgeBase(message);
-      
+
       if (ragResults.found && ragResults.content.length > 0) {
         const ragResponse = generateRAGResponse(ragResults, message);
         if (ragResponse) {

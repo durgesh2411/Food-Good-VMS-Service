@@ -273,7 +273,7 @@ const getVolunteersWithHours = asyncHandler(async (req, res) => {
     { totalWorkedHours: { $gt: 0 }, role: "volunteer" },
     "fullName avatar totalWorkedHours"
   ).sort({ totalWorkedHours: -1 });
-  
+
   if (!volunteers || volunteers.length === 0) {
     return res
       .status(200)

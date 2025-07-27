@@ -9,18 +9,18 @@ const __dirname = path.dirname(__filename);
 function calculateSimilarity(text1, text2) {
   const words1 = text1.toLowerCase().split(/\s+/);
   const words2 = text2.toLowerCase().split(/\s+/);
-  
+
   const intersection = words1.filter(word => words2.includes(word));
   const union = [...new Set([...words1, ...words2])];
-  
+
   // Boost similarity for exact keyword matches
-  const exactMatches = words1.filter(word => 
+  const exactMatches = words1.filter(word =>
     word.length > 3 && words2.includes(word)
   ).length;
-  
+
   const baseSimilarity = intersection.length / union.length;
   const boostFactor = exactMatches * 0.1; // 10% boost per exact match
-  
+
   return Math.min(1.0, baseSimilarity + boostFactor);
 }
 
@@ -28,7 +28,7 @@ function calculateSimilarity(text1, text2) {
 function extractRelevantSections(knowledgeBase, query, threshold = 0.08) {
   const sections = knowledgeBase.split(/#{1,3}\s+/);
   const relevantSections = [];
-  
+
   // Also split by major topic breaks for better granularity
   const allSections = [];
   sections.forEach(section => {
@@ -65,13 +65,13 @@ function findKeywordMatches(knowledgeBase, query) {
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i].toLowerCase();
     const keywordMatches = keywords.filter(keyword => line.includes(keyword));
-    
+
     if (keywordMatches.length > 0) {
       // Include more context for better answers
       const contextStart = Math.max(0, i - 2);
       const contextEnd = Math.min(lines.length - 1, i + 3);
       const context = lines.slice(contextStart, contextEnd + 1).join('\n');
-      
+
       matches.push({
         content: context.trim(),
         relevance: keywordMatches.length / keywords.length,
@@ -83,7 +83,7 @@ function findKeywordMatches(knowledgeBase, query) {
 
   // Remove duplicates and sort by relevance
   const uniqueMatches = matches
-    .filter((match, index, self) => 
+    .filter((match, index, self) =>
       index === self.findIndex(m => Math.abs(m.lineNumber - match.lineNumber) < 3)
     )
     .sort((a, b) => b.relevance - a.relevance)
@@ -143,10 +143,10 @@ export const generateRAGResponse = (searchResults, originalQuery) => {
   }
 
   const relevantContent = searchResults.content.join('\n\n');
-  
+
   // Create a more focused response based on query intent
   let response = "Based on our platform information:\n\n";
-  
+
   // Clean up and format the content
   const cleanContent = relevantContent
     .replace(/#{1,4}\s*/g, '') // Remove markdown headers
@@ -157,7 +157,7 @@ export const generateRAGResponse = (searchResults, originalQuery) => {
     .trim();
 
   response += cleanContent;
-  
+
   // Add helpful closing based on query type
   const queryLower = originalQuery.toLowerCase();
   if (queryLower.includes('register') || queryLower.includes('sign up')) {
@@ -169,7 +169,7 @@ export const generateRAGResponse = (searchResults, originalQuery) => {
   } else {
     response += "\n\n💬 Need more help? Feel free to ask follow-up questions!";
   }
-  
+
   return response;
 };
 
