@@ -13,7 +13,7 @@
 3. Choose **Web application**
 4. Configure:
    - **Name**: Food Good VMS
-   - **Authorized JavaScript origins**: 
+   - **Authorized JavaScript origins**:
      - `http://localhost:8000`
      - `https://food-good-vms-service.onrender.com`
    - **Authorized redirect URIs**:
@@ -24,7 +24,7 @@
 Add to your `.env` file:
 ```
 GOOGLE_CLIENT_ID=your_google_client_id_here
-GOOGLE_CLIENT_SECRET=your_google_client_secret_here  
+GOOGLE_CLIENT_SECRET=your_google_client_secret_here
 SESSION_SECRET=your_random_session_secret_here
 ```
 
@@ -42,7 +42,7 @@ In Render dashboard, add the same variables:
 
 ## 🚨 Current Status
 - ✅ Avatar preview functionality is working
-- ✅ Google OAuth infrastructure is set up  
+- ✅ Google OAuth infrastructure is set up
 - ⚠️ Requires Google Cloud credentials to be fully functional
 - 💡 Placeholder message shows until credentials are configured
 

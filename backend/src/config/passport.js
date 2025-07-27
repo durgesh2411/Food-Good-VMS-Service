@@ -16,7 +16,7 @@ passport.use(new GoogleStrategy({
   try {
     // Check if user already exists
     let existingUser = await User.findOne({ email: profile.emails[0].value });
-    
+
     if (existingUser) {
       return done(null, existingUser);
     }

@@ -16,11 +16,11 @@ router.get('/google/callback',
   async (req, res) => {
     try {
       const user = req.user;
-      
+
       // Generate tokens
       const accessToken = user.generateAccessToken();
       const refreshToken = user.generateRefreshToken();
-      
+
       // Save refresh token
       user.refreshToken = refreshToken;
       await user.save({ validateBeforeSave: false });
