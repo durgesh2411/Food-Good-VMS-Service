@@ -24,9 +24,12 @@ const createVolunteerWork = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Volunteer not found");
   }
 
-  // console.log(owner.role);
+  // Auto-update user role to volunteer if they're creating volunteer work
   if (volunteer.role !== "volunteer") {
-    throw new ApiError(400, "Only volunteers can upload volunteer work");
+    await User.findByIdAndUpdate(volunteer._id, {
+      $set: { role: "volunteer" }
+    });
+    volunteer.role = "volunteer"; // Update the current user object
   }
   if (!(title && numberOfHours && description)) {
     throw new ApiError(400, "All fields are required");
@@ -190,6 +193,10 @@ const approveVolunteerWork = asyncHandler(async (req, res) => {
   }
   console.log("Volunteer Work number of hrs ", volunteerWork.numberOfHours);
 
+  // Ensure user role is set to volunteer and update worked hours
+  if (volunteer.role !== "volunteer") {
+    volunteer.role = "volunteer";
+  }
   volunteer.totalWorkedHours += volunteerWork.numberOfHours;
   await volunteer.save();
 
