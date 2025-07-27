@@ -120,6 +120,7 @@ import PostCardAdmin from "./components/Posts/PostCardAdmin";
 import PostCard from "./components/Posts/PostCard";
 import StarVotingPage from "./components/StarVoting/StarVotingPage";
 import ChatbotWidget from "./components/ChatbotWidget";
+import { toast } from "react-toastify";
 
 // --- Ensure axios sends cookies with every request ---
 axios.defaults.withCredentials = true;
@@ -127,6 +128,41 @@ axios.defaults.withCredentials = true;
 function App() {
   const [data, setData] = useState("");
   const [loading, setLoading] = useState(false);
+
+  // Handle OAuth callback
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const oauthResult = urlParams.get('oauth');
+    const userParam = urlParams.get('user');
+    const errorMessage = urlParams.get('message');
+
+    if (oauthResult === 'success' && userParam) {
+      try {
+        const userData = JSON.parse(decodeURIComponent(userParam));
+        console.log('✅ OAuth success, user data:', userData);
+        
+        // Save user data to localStorage and state
+        localStorage.setItem("user", JSON.stringify(userData));
+        setData(userData);
+        
+        // Show success message
+        toast.success(`Welcome back, ${userData.fullName}! Login successful.`);
+        
+        // Clean up URL parameters
+        window.history.replaceState({}, document.title, window.location.pathname);
+        
+      } catch (error) {
+        console.error('❌ Error parsing OAuth user data:', error);
+        toast.error('Login successful but failed to parse user data');
+      }
+    } else if (oauthResult === 'error') {
+      console.error('❌ OAuth error:', errorMessage);
+      toast.error(errorMessage || 'Google Sign-In failed');
+      
+      // Clean up URL parameters
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }, []);
 
   // Disable global loading for better navigation experience
   // Each page component will handle its own loading state
