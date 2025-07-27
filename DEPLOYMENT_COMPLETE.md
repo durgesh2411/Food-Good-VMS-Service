@@ -154,6 +154,7 @@ node testRAG.js
 - ✅ **AI-powered support chat**
 
 ### **AI-Specific Features**
+- ✅ **Floating chatbot widget** (always accessible)
 - ✅ Local knowledge base search
 - ✅ Context-aware responses
 - ✅ Conversation history

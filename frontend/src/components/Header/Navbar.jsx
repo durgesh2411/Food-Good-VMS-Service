@@ -71,10 +71,6 @@ export function Navbar() {
         name: "Leaderboard",
         to: "/leaderboard",
       },
-      {
-        name: "AI Support",
-        to: "/support",
-      },
     ];
 
     // Add "Vote Stars" for regular users only

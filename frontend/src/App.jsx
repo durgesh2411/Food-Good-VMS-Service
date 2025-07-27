@@ -119,7 +119,6 @@ import PostAdmin from "./components/Posts/PostAdmin";
 import PostCardAdmin from "./components/Posts/PostCardAdmin";
 import PostCard from "./components/Posts/PostCard";
 import StarVotingPage from "./components/StarVoting/StarVotingPage";
-import ChatAI from "./components/ChatAI";
 import ChatbotWidget from "./components/ChatbotWidget";
 
 // --- Ensure axios sends cookies with every request ---
@@ -187,7 +186,6 @@ function App() {
         <Route path="/events/create" element={<CreateEvent />} />
         <Route path="/announcements/create" element={<CreateAnnouncement />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/support" element={<ChatAI />} />
         <Route path="*" element={<Error />} />
       </Route>
     )
