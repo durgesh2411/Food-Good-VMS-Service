@@ -15,12 +15,12 @@ const testLeaderboardEndpoint = async () => {
       console.log("✅ Admin login successful");
       console.log("📋 Login response:", loginResponse.data);
       console.log("🍪 Cookies:", loginResponse.headers['set-cookie']);
-      
+
       // Now test the leaderboard endpoint
       console.log("📊 Fetching leaderboard data...");
       const leaderboardResponse = await axios.get(
         "http://localhost:8000/api/v1/volunteerWorks/admin/approvedVolunteerWorkWithHours",
-        { 
+        {
           withCredentials: true,
           headers: {
             'Cookie': loginResponse.headers['set-cookie']?.join('; ') || ''

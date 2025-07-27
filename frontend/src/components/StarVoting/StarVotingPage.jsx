@@ -283,17 +283,17 @@ const StarVotingPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white py-16">
+      <div className="bg-gradient-to-r from-[#2b3359] to-[#3d4373] text-white py-16">
         <div className="max-w-6xl mx-auto px-4 text-center">
           <div className="flex items-center justify-center gap-3 mb-4">
             <Trophy className="h-12 w-12" />
             <h1 className="text-4xl font-bold">Star Volunteer Voting</h1>
           </div>
-          <p className="text-xl text-yellow-100 max-w-3xl mx-auto">
+          <p className="text-xl text-blue-100 max-w-3xl mx-auto">
             Recognize outstanding volunteers in our community! Your vote helps highlight
             volunteers who go above and beyond in their service.
           </p>
-          <div className="mt-6 bg-yellow-400 text-yellow-900 inline-block px-6 py-2 rounded-full font-medium">
+          <div className="mt-6 bg-blue-400 text-blue-900 inline-block px-6 py-2 rounded-full font-medium">
             💫 Your votes contribute to the leaderboard rankings
           </div>
         </div>
@@ -317,7 +317,7 @@ const StarVotingPage = () => {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+              className="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
               <option value="name">Sort by Name</option>
               <option value="votes">Sort by Star Votes</option>
@@ -409,7 +409,7 @@ const StarVotingPage = () => {
                   ) : (
                     <button
                       onClick={() => handleVoteClick(volunteer)}
-                      className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-6 py-3 rounded-lg hover:from-yellow-600 hover:to-orange-600 transition-all duration-300 font-medium flex items-center justify-center gap-2 group"
+                      className="w-full bg-gradient-to-r from-[#2b3359] to-[#3d4373] text-white px-6 py-3 rounded-lg hover:from-[#3d4373] hover:to-[#4a5282] transition-all duration-300 font-medium flex items-center justify-center gap-2 group"
                     >
                       <Heart className="h-5 w-5 group-hover:scale-110 transition-transform" />
                       Vote as Star Volunteer
@@ -429,7 +429,7 @@ const StarVotingPage = () => {
           <div className="bg-white rounded-lg max-w-md w-full p-6 max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-xl font-bold text-gray-800 flex items-center gap-2">
-                <Star className="h-6 w-6 text-yellow-500" />
+                <Star className="h-6 w-6 text-blue-600" />
                 Vote for {selectedVolunteer.fullName}
               </h3>
               <button
@@ -470,7 +470,7 @@ const StarVotingPage = () => {
                 value={voteReason}
                 onChange={(e) => setVoteReason(e.target.value)}
                 placeholder="Share why this volunteer is outstanding... (e.g., 'Always helpful during events', 'Goes above and beyond in their work', etc.)"
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent resize-none"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                 rows="4"
                 maxLength="500"
                 disabled={voting}
@@ -492,7 +492,7 @@ const StarVotingPage = () => {
               <button
                 onClick={submitVote}
                 disabled={voting}
-                className="flex-1 px-4 py-2 bg-gradient-to-r from-yellow-500 to-orange-500 text-white rounded-lg hover:from-yellow-600 hover:to-orange-600 disabled:opacity-50 flex items-center justify-center gap-2 transition-all"
+                className="flex-1 px-4 py-2 bg-gradient-to-r from-[#2b3359] to-[#3d4373] text-white rounded-lg hover:from-[#3d4373] hover:to-[#4a5282] disabled:opacity-50 flex items-center justify-center gap-2 transition-all"
               >
                 {voting ? (
                   <>

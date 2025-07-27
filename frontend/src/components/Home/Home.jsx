@@ -350,83 +350,91 @@ function Home() {
       <main className="flex-1">
         {/* Hero Section */}
         <section className="w-full py-12 md:py-24 lg:py-32 bg-primary">
-          <div className="container px-4 md:px-6 grid gap-6 lg:grid-cols-2 lg:gap-12">
-            <div className="flex flex-col justify-center space-y-4 text-primary-foreground">
-              <div className="space-y-2">
-                <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
+          <div className="max-w-[1600px] mx-auto px-4 md:px-6 lg:px-8 grid gap-8 lg:grid-cols-2 lg:gap-12">
+            <div className="flex flex-col justify-between h-full min-h-[400px] text-primary-foreground">
+              <div className="space-y-6">
+                <h1 className="text-2xl font-bold tracking-tighter sm:text-4xl xl:text-5xl/none text-justify">
                   {t("home.hero.title")}
                 </h1>
-                <p className="max-w-[600px] text-primary-foreground/80 md:text-xl">
+                <p className="max-w-[600px] text-primary-foreground/80 md:text-xl leading-relaxed text-justify">
                   {t("home.hero.description")}
                 </p>
               </div>
-              <Link
-                to={"/donate"}
-                className="inline-flex h-10 items-center justify-center rounded-md bg-primary-foreground px-8 text-sm font-medium text-primary shadow transition-colors hover:bg-primary-foreground/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-              >
-                {t("home.hero.button")}
-              </Link>
+              <div className="mt-8">
+                <Link
+                  to={"/donate"}
+                  className="inline-flex h-12 items-center justify-center rounded-md bg-primary-foreground px-8 text-sm font-medium text-primary shadow transition-colors hover:bg-primary-foreground/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+                >
+                  {t("home.hero.button")}
+                </Link>
+              </div>
             </div>
-            <img
-              src="/main_image.jpg"
-              width="550"
-              height="550"
-              alt="Children eating a meal"
-              className="mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last lg:aspect-square"
-            />
+            <div className="flex items-center justify-center">
+              <div className="w-full max-w-[850px] aspect-[4/3] rounded-xl overflow-hidden shadow-lg">
+                <img
+                  src="/main_image.jpg"
+                  width="900"
+                  height="700"
+                  alt="Medical students studying for NEET examination"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
           </div>
         </section>
 
         {/* Impact Section */}
         <section className="w-full py-12 md:py-24 lg:py-32" id="impact">
-          <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center justify-center space-y-4 text-center">
-              <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+          <div className="max-w-[1600px] mx-auto px-4 md:px-6 lg:px-8">
+            <div className="flex flex-col items-center justify-center text-center mb-12">
+              <div className="space-y-6">
+                <h2 className="text-2xl font-bold tracking-tighter sm:text-4xl xl:text-5xl/none">
                   {t("home.hero.mid.title")}
                 </h2>
-                <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                <p className="max-w-[900px] text-muted-foreground md:text-xl leading-relaxed">
                   {t("home.hero.mid.description.line1")}
                 </p>
               </div>
             </div>
-            <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-3 lg:gap-12">
-              <div className="grid gap-1 text-center">
-                <h3 className="text-3xl font-bold text-primary">100,000+</h3>
-                <p className="text-muted-foreground">
+            <div className="grid max-w-5xl mx-auto items-center gap-6 lg:grid-cols-3 lg:gap-8 mb-12">
+              <div className="text-center space-y-3">
+                <h3 className="text-3xl font-bold text-primary">500+</h3>
+                <p className="text-muted-foreground md:text-lg">
                   {t("home.hero.mid.description.line2")}
                 </p>
               </div>
-              <div className="grid gap-1 text-center">
-                <h3 className="text-3xl font-bold text-primary">5,000+</h3>
-                <p className="text-muted-foreground">
+              <div className="text-center space-y-3">
+                <h3 className="text-3xl font-bold text-primary">150+</h3>
+                <p className="text-muted-foreground md:text-lg">
                   {t("home.hero.mid.description.line3")}
                 </p>
               </div>
-              <div className="grid gap-1 text-center">
-                <h3 className="text-3xl font-bold text-primary">95%</h3>
-                <p className="text-muted-foreground">
+              <div className="text-center space-y-3">
+                <h3 className="text-3xl font-bold text-primary">200+</h3>
+                <p className="text-muted-foreground md:text-lg">
                   {t("home.hero.mid.description.line4")}
                 </p>
               </div>
             </div>
-            <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12">
-              <img
-                src="/food_eat.jpg"
-                width="550"
-                height="310"
-                alt="Children eating a meal"
-                className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
-              />
-              <div className="flex flex-col justify-center space-y-4">
-                <div className="space-y-2">
-                  <h3 className="text-2xl font-bold">
-                    {t("home.hero.mid.second.line1")}
-                  </h3>
-                  <p className="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                    {t("home.hero.mid.second.line2")}
-                  </p>
+            <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
+              <div className="flex items-center justify-center">
+                <div className="w-full max-w-[650px] aspect-[4/3] rounded-xl overflow-hidden shadow-lg">
+                  <img
+                    src="/food_eat.jpg"
+                    width="700"
+                    height="525"
+                    alt="Students from underprivileged backgrounds attending NEET coaching classes"
+                    className="w-full h-full object-cover object-center"
+                  />
                 </div>
+              </div>
+              <div className="flex flex-col justify-center space-y-6">
+                <h3 className="text-2xl font-bold tracking-tighter sm:text-3xl xl:text-4xl/none text-justify">
+                  {t("home.hero.mid.second.line1")}
+                </h3>
+                <p className="max-w-[600px] text-muted-foreground md:text-xl leading-relaxed text-justify">
+                  {t("home.hero.mid.second.line2")}
+                </p>
               </div>
             </div>
           </div>
@@ -440,99 +448,122 @@ function Home() {
           className="w-full py-12 md:py-24 lg:py-32 bg-muted"
           id="donate"
         >
-          <div className="container px-4 md:px-6 grid items-center gap-6 lg:grid-cols-2 lg:gap-10">
-            <div className="space-y-2">
-              <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
-                {t("home.hero.mid.feedback.title")}
-              </h2>
-              <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                {t("home.hero.mid.feedback.line1")}
-              </p>
+          <div className="max-w-[1600px] mx-auto px-4 md:px-6 lg:px-8">
+            <div className="flex flex-col items-center justify-center text-center mb-12">
+              <div className="space-y-6">
+                <h2 className="text-2xl font-bold tracking-tighter sm:text-4xl xl:text-5xl/none">
+                  {t("home.hero.mid.feedback.title")}
+                </h2>
+                <p className="max-w-[900px] text-muted-foreground md:text-xl leading-relaxed">
+                  {t("home.hero.mid.feedback.line1")}
+                </p>
+              </div>
             </div>
-            <div className="mx-auto w-full max-w-sm space-y-2">
-              <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-                <input
-                  type="text"
-                  placeholder={t("forms.name")}
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                  className="max-w-lg flex-1 rounded-md border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
-                />
-                <input
-                  type="email"
-                  placeholder={t("forms.email")}
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  className="max-w-lg flex-1 rounded-md border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
-                />
-                <input
-                  type="tel"
-                  placeholder={t("forms.phone")}
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  required
-                  className="max-w-lg flex-1 rounded-md border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
-                />
-                <input
-                  type="text"
-                  placeholder={t("forms.title")}
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  required
-                  className="max-w-lg flex-1 rounded-md border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
-                />
-                <textarea
-                  placeholder={t("forms.description")}
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  required
-                  className="max-w-lg flex-1 rounded-md border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
-                ></textarea>
-                <button
-                  type="submit"
-                  className="bg-primary text-primary-foreground hover:bg-primary/90 py-2 rounded-md"
-                >
-                  {t("home.hero.mid.feedback.button")}
-                </button>
-              </form>
+            <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
+              <div className="flex items-center justify-center">
+                <div className="w-full max-w-[650px] aspect-[4/3] rounded-xl overflow-hidden shadow-lg">
+                  <img
+                    src="/donation_main.jpg"
+                    width="700"
+                    height="525"
+                    alt="Students sharing feedback about NEET coaching program"
+                    className="w-full h-full object-cover object-center"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col justify-center">
+                <div className="w-full max-w-lg mx-auto space-y-6">
+                  <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
+                    <input
+                      type="text"
+                      placeholder={t("forms.name")}
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      required
+                      className="w-full flex-1 rounded-md border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 h-12 px-4"
+                    />
+                    <input
+                      type="email"
+                      placeholder={t("forms.email")}
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      className="w-full flex-1 rounded-md border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 h-12 px-4"
+                    />
+                    <input
+                      type="tel"
+                      placeholder={t("forms.phone")}
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      required
+                      className="w-full flex-1 rounded-md border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 h-12 px-4"
+                    />
+                    <input
+                      type="text"
+                      placeholder={t("forms.title")}
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
+                      required
+                      className="w-full flex-1 rounded-md border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 h-12 px-4"
+                    />
+                    <textarea
+                      placeholder={t("forms.description")}
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
+                      required
+                      className="w-full flex-1 rounded-md border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 min-h-[140px] px-4 py-3"
+                    ></textarea>
+                    <button
+                      type="submit"
+                      className="inline-flex h-12 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+                    >
+                      {t("home.hero.mid.feedback.button")}
+                    </button>
+                  </form>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
         {/* Volunteer Section */}
         <section className="w-full py-12 md:py-24 lg:py-32" id="volunteer">
-          <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center justify-center space-y-4 text-center">
-              <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+          <div className="max-w-[1600px] mx-auto px-4 md:px-6 lg:px-8">
+            <div className="flex flex-col items-center justify-center text-center mb-12">
+              <div className="space-y-6">
+                <h2 className="text-2xl font-bold tracking-tighter sm:text-4xl xl:text-5xl/none">
                   {t("home.hero.bottom.title")}
                 </h2>
-                <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                <p className="max-w-[900px] text-muted-foreground md:text-xl leading-relaxed">
                   {t("home.hero.bottom.description")}
                 </p>
               </div>
             </div>
-            <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12">
-              <img
-                src="/volunteer_image.jpg"
-                width="550"
-                height="310"
-                alt="Volunteers serving meals"
-                className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
-              />
-              <div className="flex flex-col justify-center space-y-4">
-                <div className="space-y-2">
-                  <h3 className="text-2xl font-bold">
+            <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
+              <div className="flex items-center justify-center">
+                <div className="w-full max-w-[650px] aspect-[4/3] rounded-xl overflow-hidden shadow-lg">
+                  <img
+                    src="/volunteer_image.jpg"
+                    width="700"
+                    height="525"
+                    alt="Medical professionals volunteering to teach NEET coaching"
+                    className="w-full h-full object-cover object-center"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col justify-between h-full min-h-[400px]">
+                <div className="space-y-6">
+                  <h3 className="text-2xl font-bold tracking-tighter sm:text-3xl xl:text-4xl/none text-justify">
                     {t("home.hero.volunteer.title")}
                   </h3>
-                  <p className="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                  <p className="max-w-[600px] text-muted-foreground md:text-xl leading-relaxed text-justify">
                     {t("home.hero.volunteer.description")}
                   </p>
+                </div>
+                <div className="mt-8">
                   <button
                     onClick={handleVolunteerClick}
-                    className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+                    className="inline-flex h-12 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
                   >
                     {t("home.hero.volunteer.button")}
                   </button>

@@ -26,6 +26,12 @@ const eventSchema = new Schema(
       type: String,
       req: true,
     },
+    status: {
+      type: String,
+      enum: ["active", "completed", "cancelled"],
+      default: "active",
+      required: true,
+    },
     participants: [
       {
         type: Schema.Types.ObjectId,

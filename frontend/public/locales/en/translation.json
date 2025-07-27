@@ -1,34 +1,34 @@
-   {
-   "home.hero.title": "Nourishing Futures, One Meal at a Time",
-   "home.hero.button": "Donate Now",
-   "home.hero.description": "Food for Good is a non-profit organization dedicated to providing free, nutritious meals to underprivileged children across the country. Our mission is to ensure no child goes hungry and to give them the fuel they need to thrive.",
-   "home.hero.mid.title": "Our Impact",
+{
+   "home.hero.title":"Lift for Upliftment: A Beacon of Hope for Aspiring Doctors from Underprivileged Backgrounds",
+   "home.hero.button": "Support Our Mission",
+   "home.hero.description": "Lift for Upliftment (LFU) is a Pune-based NGO dedicated to breaking down financial barriers in medical education. Founded in 2015 by passionate medical students from B. J. Medical College, LFU provides free, high-quality coaching for the National Eligibility cum Entrance Test (NEET) to bright, deserving students from underprivileged and tribal backgrounds. This transformative initiative empowers aspiring doctors to overcome their circumstances, successfully pursue a medical career, and achieve their dreams of serving their communities.",
+   "home.hero.mid.title": "Our Impact in Medical Education",
    "home.hero.mid.description": {
-      "line1": "Food for Good has been making a significant impact in the lives of underprivileged children across the country. Here are some of our key achievements:",
-      "line2": "Meals Served",
-      "line3": "Children Fed",
-      "line4": "Positive Feedback"
+      "line1": "LFU's primary program is its intensive and free NEET coaching. The organization meticulously selects students based on their academic merit and socio-economic background. Here are some of our key achievements:",
+      "line2": "Students Coached",
+      "line3": "Medical Seats Secured",
+      "line4": "Success Stories"
    },
    "home.hero.mid.second": {
-      "line1": "Nourishing Young Minds",
-      "line2": "Our free meal program ensures that underprivileged children receive the nutrition they need to grow, learn, and thrive. By providing them with healthy, balanced meals, we're giving them the fuel to pursue their dreams and reach their full potential."
+      "line1": "Empowering Future Doctors",
+      "line2": "Our comprehensive NEET coaching program ensures that talented students from underprivileged backgrounds receive the academic support they need to crack the highly competitive medical entrance exam. Through expert mentorship and quality education, we're creating a new generation of doctors who will serve their communities with dedication and compassion."
    },
    "home.hero.mid.feedback": {
-      "title": "Share your feedback ",
-      "line1": "We value your feedback and suggestions. Please take a moment to share your thoughts and help us improve our services.",
+      "title": "Share your experience with us",
+      "line1": "We value feedback from our students, volunteers, and supporters. Please take a moment to share your thoughts and help us improve our NEET coaching program and support services.",
       "button": "Submit Feedback"
    },
-   "home.hero.bottom.title": "Get Involved",
-   "home.hero.bottom.description": "Volunteering with Food for Good is a rewarding way to make a difference in the lives of underprivileged children. Join our team and help us continue to provide free, nutritious meals to those in need.",
-   "home.hero.volunteer.title": "Join Our Volunteer Team",
-   "home.hero.volunteer.description": "Whether you can spare a few hours a week or a few days a month, your time and effort can make a big difference. From serving meals to organizing food drives, there are many ways you can get involved and support our mission.",
-   "home.hero.volunteer.button": "Volunteer Now",
+   "home.hero.bottom.title": "Join Our Mission",
+   "home.hero.bottom.description": "Volunteering with Lift for Upliftment is a rewarding way to make a difference in the lives of aspiring doctors from underprivileged backgrounds. Join our team of dedicated volunteers and help us continue to provide free, quality NEET coaching to deserving students.",
+   "home.hero.volunteer.title": "Become a Volunteer Mentor",
+   "home.hero.volunteer.description": "Ignite a Dream: Become a Volunteer Mentor\n\nYour journey and knowledge can be the spark that ignites a future in medicine. We are seeking dedicated medical professionals, ambitious students, and inspiring educators to help us forge the next generation of healers. For every bright student from an underprivileged community with the passion to succeed, there are immense barriers standing in their way. By offering your expertise—whether teaching crucial NEET subjects, providing one-on-one mentorship, or sharing invaluable career guidance—you become the pivotal force that helps them overcome those odds. You won't just be a tutor; you'll be a role model, a guide, and a testament to the power of giving back, directly shaping a future doctor who will uplift their community.",
+   "home.hero.volunteer.button": "Join as Volunteer",
 
    "nav.home": "Home",
    "nav.events": "Events",
    "nav.posts": "Posts",
    "nav.announcements": "Announcements",
-   "nav.donate": "Donate",
+   "nav.donate": "Support Us",
    "nav.leaderboard": "Leaderboard",
    "nav.hallOfFame": "Hall of Fame",
    "nav.login": "Login",
@@ -38,24 +38,24 @@
    "nav.profile": "Profile",
    "nav.vote": "Vote Stars",
 
-   "posts.title": "Community Posts",
-   "posts.description": "Discover stories and updates from our volunteer community",
-   "posts.create": "Create Post",
+   "posts.title": "Student & Volunteer Stories",
+   "posts.description": "Discover inspiring stories and updates from our NEET coaching community",
+   "posts.create": "Share Your Story",
    "posts.myPosts": "My Posts",
-   "posts.noPosts": "No posts yet",
-   "posts.noPostsDesc": "Be the first to share your volunteer experience!",
-   "posts.loading": "Loading posts...",
+   "posts.noPosts": "No stories yet",
+   "posts.noPostsDesc": "Be the first to share your journey with LFU!",
+   "posts.loading": "Loading stories...",
    "posts.postedOn": "Posted on:",
    "posts.readMore": "Read More",
    "posts.readLess": "Read Less",
 
-   "announcements.title": "Announcements",
+   "announcements.title": "Program Announcements",
    "announcements.create": "Create Announcement",
    "announcements.noAnnouncements": "No announcements yet",
 
-   "events.title": "Events",
+   "events.title": "NEET Coaching Events",
    "events.create": "Create Event",
-   "events.upcoming": "Upcoming Events",
+   "events.upcoming": "Upcoming Sessions",
    "events.past": "Past Events",
    "events.details": "Event Details",
    "events.noEvents": "No events found",
@@ -64,14 +64,14 @@
    "events.location": "Location",
    "events.description": "Description",
 
-   "donation.title": "Make a Donation",
-   "donation.description": "Support our mission to feed underprivileged children",
-   "donation.amount": "Donation Amount",
-   "donation.donate": "Donate Now",
-   "donation.success": "Thank you for your donation!",
+   "donation.title": "Support Our Mission",
+   "donation.description": "Help us provide free NEET coaching to aspiring doctors from underprivileged backgrounds",
+   "donation.amount": "Contribution Amount",
+   "donation.donate": "Contribute Now",
+   "donation.success": "Thank you for supporting our mission!",
 
    "auth.login.title": "Sign In",
-   "auth.login.subtitle": "Welcome back to Food for Good",
+   "auth.login.subtitle": "Welcome back to Lift for Upliftment",
    "auth.login.email": "Email",
    "auth.login.password": "Password",
    "auth.login.button": "Sign In",
@@ -79,8 +79,8 @@
    "auth.login.noAccount": "Don't have an account?",
    "auth.login.signUp": "Sign up",
 
-   "auth.register.title": "Create Account",
-   "auth.register.subtitle": "Join Food for Good community",
+   "auth.register.title": "Join Our Community",
+   "auth.register.subtitle": "Become part of the LFU family",
    "auth.register.fullName": "Full Name",
    "auth.register.email": "Email",
    "auth.register.phone": "Phone Number",
@@ -95,8 +95,8 @@
    "dashboard.overview": "Overview",
    "dashboard.stats": "Statistics",
 
-   "leaderboard.title": "Volunteer Leaderboard",
-   "leaderboard.description": "Recognizing our top volunteers",
+   "leaderboard.title": "Top Contributors Leaderboard",
+   "leaderboard.description": "Recognizing our outstanding volunteers and mentors",
    "leaderboard.rank": "Rank",
    "leaderboard.name": "Name",
    "leaderboard.points": "Points",
@@ -128,26 +128,22 @@
    "forms.invalidPhone": "Invalid phone number",
 
    "hallOfFame.title": "Hall of Fame",
-   "hallOfFame.subtitle": "Celebrating the heroes who make a difference and the success stories that inspire us all",
+   "hallOfFame.subtitle": "Celebrating the heroes who make dreams possible and the success stories of students who've become doctors through LFU",
 
-   "hallOfFame.achievements.title": "Our Impact at a Glance",
-   "hallOfFame.achievements.subtitle": "Numbers that tell the story of our collective impact",
+   "hallOfFame.achievements.title": "Our Medical Education Impact",
+   "hallOfFame.achievements.subtitle": "Numbers that tell the story of our collective success in creating doctors from underprivileged backgrounds",
 
    "hallOfFame.founders.title": "Meet Our Founders",
-   "hallOfFame.founders.subtitle": "The visionaries who started this journey of hope and transformation",
+   "hallOfFame.founders.subtitle": "The visionary medical students from B. J. Medical College who started this transformative journey in 2015",
 
-   "hallOfFame.volunteers.title": "Our Lead Volunteers",
-   "hallOfFame.volunteers.subtitle": "Dedicated individuals who go above and beyond to serve our community",
+   "hallOfFame.volunteers.title": "Our Dedicated Mentors",
+   "hallOfFame.volunteers.subtitle": "Doctors, medical students, and educators who volunteer their time to coach and guide aspiring medical professionals",
 
-   "hallOfFame.successStories.title": "Success Stories",
-   "hallOfFame.successStories.subtitle": "From hunger to success - inspiring journeys of students who overcame challenges with proper nutrition and achieved their dreams",
+   "hallOfFame.successStories.title": "From Dreams to White Coats",
+   "hallOfFame.successStories.subtitle": "Inspiring journeys of students from underprivileged and tribal backgrounds who overcame financial barriers and are now pursuing their medical careers",
 
-   "hallOfFame.cta.title": "Be Part of This Journey",
-   "hallOfFame.cta.subtitle": "Join us in creating more success stories and transforming lives through nutrition and care",
-   "hallOfFame.cta.volunteer": "Become a Volunteer",
-   "hallOfFame.cta.donate": "Make a Donation"
+   "hallOfFame.cta.title": "Join Our Mission",
+   "hallOfFame.cta.subtitle": "Help us create more doctors from underprivileged communities and transform lives through quality medical education",
+   "hallOfFame.cta.volunteer": "Become a Mentor",
+   "hallOfFame.cta.donate": "Support Our Cause"
    }
-
-
-
-

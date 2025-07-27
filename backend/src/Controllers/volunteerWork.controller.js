@@ -266,7 +266,7 @@ const rejectVolunteerWork = asyncHandler(async (req, res) => {
 const getVolunteersWithHours = asyncHandler(async (req, res) => {
   console.log("🏆 Leaderboard request received");
   console.log("👤 User from request:", req.user ? `${req.user.fullName} (${req.user.role}, admin: ${req.user.isAdmin})` : "No user");
-  
+
   // Allow all authenticated users to view leaderboard data (changed from admin-only)
   if (!req.user) {
     console.log("❌ Access denied - no user authenticated");
@@ -274,7 +274,7 @@ const getVolunteersWithHours = asyncHandler(async (req, res) => {
   }
 
   console.log("🔍 Fetching volunteers with worked hours...");
-  
+
   // First, let's see all volunteers
   const allVolunteers = await User.find({ role: "volunteer" }, "fullName totalWorkedHours role");
   console.log("📊 All volunteers:", allVolunteers.map(v => ({ name: v.fullName, hours: v.totalWorkedHours })));

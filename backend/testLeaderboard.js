@@ -31,7 +31,7 @@ const testLeaderboardData = async () => {
       { totalWorkedHours: { $gt: 0 }, role: "volunteer" },
       "fullName avatar totalWorkedHours"
     ).sort({ totalWorkedHours: -1 });
-    
+
     console.log("\n⏰ Volunteers with hours > 0:");
     volunteersWithHours.forEach(volunteer => {
       console.log(`- ${volunteer.fullName}: ${volunteer.totalWorkedHours} hours`);

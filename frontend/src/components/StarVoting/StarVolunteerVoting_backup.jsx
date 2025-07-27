@@ -29,7 +29,7 @@ const StarVolunteerVoting = () => {
 
   const fetchTopVolunteers = async () => {
     try {
-      const response = await axios.get(`${backendUrl}/star-votes/volunteers/public`, {
+      const response = await axios.get(`${backendUrl}/star-votes/volunteers`, {
         withCredentials: true,
       });
       if (response.data.success) {
@@ -52,11 +52,11 @@ const StarVolunteerVoting = () => {
   }
 
   return (
-    <div className="bg-gradient-to-r from-blue-50 to-indigo-50 py-12 px-4">
+    <div className="bg-gradient-to-r from-yellow-50 to-orange-50 py-12 px-4">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold text-gray-800 mb-4 flex items-center justify-center gap-2">
-            <Award className="h-8 w-8 text-blue-600" />
+            <Award className="h-8 w-8 text-yellow-500" />
             Star Volunteers Spotlight
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto mb-6">
@@ -66,7 +66,7 @@ const StarVolunteerVoting = () => {
 
           <Link
             to="/vote-stars"
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-[#2b3359] to-[#3d4373] text-white px-8 py-3 rounded-full hover:from-[#3d4373] hover:to-[#4a5282] transition-all duration-300 font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-105"
+            className="inline-flex items-center gap-2 bg-[#2b3359] text-white px-8 py-3 rounded-full hover:bg-[#3d4373] transition-all duration-300 font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-105"
           >
             <Heart className="h-5 w-5" />
             Vote for Star Volunteers
@@ -76,7 +76,7 @@ const StarVolunteerVoting = () => {
 
         {loading ? (
           <div className="flex items-center justify-center py-8">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-yellow-600"></div>
             <span className="ml-2 text-gray-600">Loading top volunteers...</span>
           </div>
         ) : topVolunteers.length > 0 ? (
@@ -147,7 +147,7 @@ const StarVolunteerVoting = () => {
             </p>
             <Link
               to="/vote-stars"
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-[#2b3359] to-[#3d4373] text-white px-6 py-2 rounded-full hover:from-[#3d4373] hover:to-[#4a5282] transition-all duration-300 font-medium"
+              className="inline-flex items-center gap-2 bg-[#2b3359] text-white px-6 py-2 rounded-full hover:bg-[#3d4373] transition-all duration-300 font-medium"
             >
               <Heart className="h-4 w-4" />
               Start Voting
@@ -159,7 +159,7 @@ const StarVolunteerVoting = () => {
           <div className="text-center mt-8">
             <Link
               to="/vote-stars"
-              className="text-blue-600 hover:text-blue-700 font-medium flex items-center justify-center gap-1 hover:gap-2 transition-all"
+              className="text-yellow-600 hover:text-yellow-700 font-medium flex items-center justify-center gap-1 hover:gap-2 transition-all"
             >
               View all volunteers and vote
               <ArrowRight className="h-4 w-4" />

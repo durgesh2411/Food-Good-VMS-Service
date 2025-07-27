@@ -8,6 +8,7 @@ import {
   getRegisteredUsers,
   registerForEvent,
   updateEvent,
+  terminateEvent,
 } from "../Controllers/event.controller.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 
@@ -28,6 +29,8 @@ router.route("/getEvents").get(getAllEvents);
 router.route("/getEvents/:eventId").get(getEventById).post(registerForEvent); //button
 
 router.route("/getRegisteredUsers/:eventId").get(getRegisteredUsers); //admin
+
+router.route("/:eventId/terminate").patch(terminateEvent); //admin terminate event
 
 router
   .route("/:eventId")

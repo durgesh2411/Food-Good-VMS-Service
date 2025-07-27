@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { ArrowRight } from "lucide-react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import { backendUrl } from "../../lib/constant";
+import { useAuth } from "../../contexts/AuthContext";
 
 axios.defaults.withCredentials = true;
 
@@ -12,8 +13,9 @@ export function SignIn({ setData }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { t } = useTranslation();
-
+  const { login } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   // Handle Google Sign In
   const handleGoogleSignIn = () => {
@@ -32,29 +34,22 @@ axios
   .post(`${backendUrl}/users/login`, formData, {
     withCredentials: true,  // This is crucial for cookies
   })
-  .then((response) => {
+  .then(async (response) => {
     console.log(response.data);
     const data = response.data;
     const userData = data ? data.data.user : null;
     const accessToken = data ? data.data.accessToken : null;
 
-    // Save user info and token to localStorage
-    if (userData) {
-      localStorage.setItem("user", JSON.stringify(userData));
-    }
-    if (accessToken) {
-      localStorage.setItem("accessToken", accessToken);
-    }
+    // Use the authentication context to handle login
+    await login(userData, accessToken);
 
     setData(userData);
     setEmail("");
     setPassword("");
-    // Navigate to home page after successful login
-    navigate("/");
-    // Small delay then refresh to ensure all components get updated auth state
-    setTimeout(() => {
-      window.location.reload();
-    }, 100);
+
+    // Get the intended destination from location state, or default to home
+    const from = location.state?.from?.pathname || '/';
+    navigate(from);
   })
       .catch((error) => {
         // setError(error.response.data.message);

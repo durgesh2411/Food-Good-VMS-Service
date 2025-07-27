@@ -94,6 +94,7 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
+  useNavigate,
 } from "react-router-dom";
 import Donation from "./components/Donation/Donation";
 import "./App.css";
@@ -122,6 +123,8 @@ import StarVotingPage from "./components/StarVoting/StarVotingPage";
 import HallOfFame from "./components/HallOfFame/HallOfFame";
 import ChatbotWidget from "./components/ChatbotWidget";
 import { toast } from "react-toastify";
+import { AuthProvider } from "./contexts/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 // --- Ensure axios sends cookies with every request ---
 axios.defaults.withCredentials = true;
@@ -193,6 +196,23 @@ function App() {
       },
       (error) => {
         setLoading(false);
+
+        // Handle 401 errors globally for automatic logout and redirect
+        if (error.response?.status === 401) {
+          console.log("401 Unauthorized - Redirecting to login");
+
+          // Clear local storage
+          localStorage.removeItem("user");
+          localStorage.removeItem("accessToken");
+
+          // Only redirect to login if not already on login/register pages
+          const currentPath = window.location.pathname;
+          if (currentPath !== '/login' && currentPath !== '/register') {
+            // Use window.location for global redirects since we don't have navigate here
+            window.location.href = '/login';
+          }
+        }
+
         return Promise.reject(error);
       }
     );
@@ -207,34 +227,151 @@ function App() {
   const route = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<Layout />}>
+        {/* Public routes */}
         <Route path="" element={<Home />} />
-        <Route path="/login" element={<SignIn setData={setData} />} />
-        <Route path="/register" element={<SignUp />} />
-        <Route path="/events" element={<Event />} />
-        <Route path="/donate" element={<Donation />} />
-        <Route path="/leaderboard" element={<LeaderBoard />} />
-        <Route path="/posts" element={<Post />} />
-        <Route path="/posts/create" element={<CreatePost />} />
-        <Route path="/posts/my-posts" element={<VolunteerMyPosts />} />
-        <Route path="/posts/admin" element={<PostAdmin />} />
-        <Route path="/vote-stars" element={<StarVotingPage />} />
-        <Route path="/hall-of-fame" element={<HallOfFame />} />
-        <Route path="/announcements" element={<Announcement />} />
-        <Route path="/events/:eventId" element={<EventDetails />} />
-        <Route path="/events/create" element={<CreateEvent />} />
-        <Route path="/announcements/create" element={<CreateAnnouncement />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+
+        {/* Authentication routes - only accessible when NOT logged in */}
+        <Route
+          path="/login"
+          element={
+            <ProtectedRoute requireAuth={false}>
+              <SignIn setData={setData} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <ProtectedRoute requireAuth={false}>
+              <SignUp />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Protected routes - only accessible when logged in */}
+        <Route
+          path="/events"
+          element={
+            <ProtectedRoute>
+              <Event />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/donate"
+          element={
+            <ProtectedRoute>
+              <Donation />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/leaderboard"
+          element={
+            <ProtectedRoute>
+              <LeaderBoard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/posts"
+          element={
+            <ProtectedRoute>
+              <Post />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/posts/create"
+          element={
+            <ProtectedRoute>
+              <CreatePost />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/posts/my-posts"
+          element={
+            <ProtectedRoute>
+              <VolunteerMyPosts />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/posts/admin"
+          element={
+            <ProtectedRoute>
+              <PostAdmin />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/vote-stars"
+          element={
+            <ProtectedRoute>
+              <StarVotingPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/hall-of-fame"
+          element={
+            <ProtectedRoute>
+              <HallOfFame />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/announcements"
+          element={
+            <ProtectedRoute>
+              <Announcement />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/events/:eventId"
+          element={
+            <ProtectedRoute>
+              <EventDetails />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/events/create"
+          element={
+            <ProtectedRoute>
+              <CreateEvent />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/announcements/create"
+          element={
+            <ProtectedRoute>
+              <CreateAnnouncement />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
         <Route path="*" element={<Error />} />
       </Route>
     )
   );
 
   return (
-    <>
+    <AuthProvider>
       <Loader show={loading} />
       <RouterProvider router={route} />
       <ChatbotWidget />
-    </>
+    </AuthProvider>
   );
 }
 

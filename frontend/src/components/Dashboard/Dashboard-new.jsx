@@ -360,7 +360,7 @@ export default function Dashboard() {
   return (
     <div className="flex flex-col space-y-6 p-8 pt-6">
       {/* Welcome Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg p-6">
+      <div className="bg-gradient-to-r from-[#2b3359] to-[#3d4373] text-white rounded-lg p-6">
         <h1 className="text-2xl font-bold mb-2">
           Welcome back, {user.fullName}!
         </h1>
@@ -403,7 +403,7 @@ export default function Dashboard() {
           </p>
           <a
             href="/vote-stars"
-            className="inline-block bg-yellow-500 text-white px-6 py-3 rounded-lg hover:bg-yellow-600 transition-colors font-semibold"
+            className="inline-block bg-gradient-to-r from-[#2b3359] to-[#3d4373] text-white px-6 py-3 rounded-lg hover:from-[#3d4373] hover:to-[#4a5282] transition-colors font-semibold"
           >
             Vote for Volunteers →
           </a>

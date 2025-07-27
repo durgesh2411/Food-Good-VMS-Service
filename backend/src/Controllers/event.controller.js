@@ -224,6 +224,49 @@ const getRegisteredUsers = asyncHandler(async (req, res) => {
     );
 });
 
+//terminate/complete event (admin only)
+const terminateEvent = asyncHandler(async (req, res) => {
+  const { eventId } = req.params;
+  const { status } = req.body; // 'completed' or 'cancelled'
+
+  if (!isValidObjectId(eventId)) {
+    throw new ApiError(400, "Event Id is not valid");
+  }
+
+  if (!req.user.isAdmin) {
+    throw new ApiError(400, "You do not have permission to terminate the event");
+  }
+
+  if (!status || !['completed', 'cancelled'].includes(status)) {
+    throw new ApiError(400, "Status must be either 'completed' or 'cancelled'");
+  }
+
+  const event = await Event.findById(eventId);
+  if (!event) {
+    throw new ApiError(400, "Event not found");
+  }
+
+  if (event.status !== 'active') {
+    throw new ApiError(400, `Event is already ${event.status}`);
+  }
+
+  const updatedEvent = await Event.findByIdAndUpdate(
+    eventId,
+    { status },
+    { new: true }
+  );
+
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        { event: updatedEvent },
+        `Event ${status} successfully`
+      )
+    );
+});
+
 export {
   createEvent,
   updateEvent,
@@ -232,4 +275,5 @@ export {
   registerForEvent,
   getRegisteredUsers,
   getEventById,
+  terminateEvent,
 };

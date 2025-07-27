@@ -634,7 +634,7 @@ export default function Donation() {
       key: "rzp_test_4wGzNF8FkTu0Ht", // Replace with your Razorpay public key
       amount: order.amount,
       currency: order.currency,
-      name: "Food for Good",
+      name: "Lift for Upliftment",
       description: "Donation",
       order_id: order.id,
       handler: async (response) => {
@@ -669,13 +669,13 @@ export default function Donation() {
         <section className="grid grid-cols-1 gap-8 md:grid-cols-2">
           <div className="space-y-4">
             <h1 className="text-4xl font-bold tracking-tight">
-              Donate to Food for Good
+              Support Lift for Upliftment
             </h1>
             <p className="text-lg text-muted-foreground">
-              Food for Good is a non-profit organization dedicated to providing
-              free, nutritious meals to children in need. Your donation can make
-              a real difference in the lives of those who struggle with food
-              insecurity.
+              Lift for Upliftment (LFU) is a non-profit organization dedicated to providing
+              free NEET coaching and medical education support to talented students from
+              underprivileged and tribal communities. Your contribution can help break
+              financial barriers and create future doctors who will serve their communities.
             </p>
             <div className="flex flex-col gap-4 sm:flex-row">
               {/* Input field for donation amount */}
@@ -690,33 +690,35 @@ export default function Donation() {
                 onClick={handlePayment}
                 className="flex-1 bg-black text-white"
               >
-                Donate Now
+                Support Now
               </button>
             </div>
           </div>
           <div>
-            <img
-              src="/donation_main.jpg"
-              width="600"
-              height="400"
-              alt="Children eating a meal"
-              className="mx-auto rounded-lg object-cover"
-            />
+            <div className="mx-auto w-full max-w-[650px] aspect-[4/3] rounded-lg overflow-hidden">
+              <img
+                src="/donation_main.jpg"
+                width="700"
+                height="500"
+                alt="Students from underprivileged backgrounds studying for medical entrance"
+                className="w-full h-full object-cover"
+              />
+            </div>
           </div>
         </section>
         <section className="mt-12">
-          <h2 className="text-3xl font-bold tracking-tight">Our Impact</h2>
+          <h2 className="text-3xl font-bold tracking-tight">Our Medical Education Impact</h2>
           <div className="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
             <div className="rounded-lg border bg-card p-6 shadow-sm">
               <div className="flex items-center space-x-4">
                 <HandPlatterIcon className="h-10 w-10 text-primary" />
                 <div>
                   <h3 className="text-xl font-semibold">
-                    1 Million Meals Served
+                    500+ Students Coached
                   </h3>
                   <p className="text-muted-foreground">
-                    We've provided over 1 million nutritious meals to children
-                    in need.
+                    We've provided free NEET coaching to over 500 talented students
+                    from underprivileged backgrounds.
                   </p>
                 </div>
               </div>
@@ -726,10 +728,11 @@ export default function Donation() {
                 <BabyIcon className="h-10 w-10 text-primary" />
                 <div>
                   <h3 className="text-xl font-semibold">
-                    20,000 Children Served
+                    150+ Medical Seats Secured
                   </h3>
                   <p className="text-muted-foreground">
-                    We've provided meals to over 20,000 children in need.
+                    Our students have successfully secured admission in government
+                    and private medical colleges across the country.
                   </p>
                 </div>
               </div>
@@ -738,10 +741,10 @@ export default function Donation() {
               <div className="flex items-center space-x-4">
                 <VoteIcon className="h-10 w-10 text-primary" />
                 <div>
-                  <h3 className="text-xl font-semibold">500+ Volunteers</h3>
+                  <h3 className="text-xl font-semibold">100+ Medical Mentors</h3>
                   <p className="text-muted-foreground">
-                    Our work is supported by a dedicated team of over 500
-                    volunteers.
+                    Our mission is supported by dedicated doctors and medical
+                    students who volunteer their time and expertise.
                   </p>
                 </div>
               </div>
@@ -749,70 +752,76 @@ export default function Donation() {
           </div>
         </section>
         <section className="mt-12">
-          <h2 className="text-3xl font-bold tracking-tight">Testimonials</h2>
+          <h2 className="text-3xl font-bold tracking-tight">Success Stories</h2>
           <div className="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
             <div className="rounded-lg border bg-card p-6 shadow-sm">
               <blockquote className="space-y-2">
                 <p className="text-muted-foreground">
-                  "Food for Good has been a lifeline for my family. The meals
-                  they provide have helped us get through some very difficult
-                  times."
+                  "LFU transformed my life completely. Coming from a remote village,
+                  I never thought I could crack NEET. Thanks to their free coaching
+                  and mentorship, I'm now pursuing MBBS at a government medical college."
                 </p>
                 <cite className="text-sm font-medium">
-                  - Sarah, Beneficiary
+                  - Priya, NEET Qualifier 2023
                 </cite>
               </blockquote>
             </div>
             <div className="rounded-lg border bg-card p-6 shadow-sm">
               <blockquote className="space-y-2">
                 <p className="text-muted-foreground">
-                  "I'm so grateful for the work Food for Good does. Seeing the
-                  joy on the children's faces when they receive a hot meal is
-                  truly heartwarming."
+                  "As a volunteer doctor with LFU, I've witnessed the determination
+                  of these students. Their dedication to becoming doctors despite
+                  financial challenges is truly inspiring."
                 </p>
                 <cite className="text-sm font-medium">
-                  - Michael, Volunteer
+                  - Dr. Ashwin, Volunteer Mentor
                 </cite>
               </blockquote>
             </div>
             <div className="rounded-lg border bg-card p-6 shadow-sm">
               <blockquote className="space-y-2">
                 <p className="text-muted-foreground">
-                  "Food for Good has been a game-changer for our community. The
-                  impact they've had on the lives of children in need is truly
-                  remarkable."
+                  "LFU's Ulgulaan project gave tribal students like my son a
+                  real chance at medical education. Today, he's in his 3rd year
+                  of MBBS and will serve our community as a doctor."
                 </p>
                 <cite className="text-sm font-medium">
-                  - Samantha, Community Leader
+                  - Ramesh, Parent
                 </cite>
               </blockquote>
             </div>
           </div>
         </section>
         <section className="mt-12">
-          <h2 className="text-3xl font-bold tracking-tight">Our Work</h2>
+          <h2 className="text-3xl font-bold tracking-tight">Our NEET Coaching Programs</h2>
           <div className="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            <img
-              src="/donation_work_1.jpg"
-              width="400"
-              height="300"
-              alt="Children eating a meal"
-              className="rounded-lg object-cover"
-            />
-            <img
-              src="/donation_work_2.jpg"
-              width="400"
-              height="300"
-              alt="Volunteers serving food"
-              className="rounded-lg object-cover"
-            />
-            <img
-              src="/donation_work_3.jpg"
-              width="400"
-              height="300"
-              alt="Children smiling"
-              className="rounded-lg object-cover"
-            />
+            <div className="w-full max-w-[400px] mx-auto aspect-[4/3] rounded-lg overflow-hidden">
+              <img
+                src="/donation_work_1.jpg"
+                width="450"
+                height="350"
+                alt="Students attending free NEET coaching classes"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="w-full max-w-[400px] mx-auto aspect-[4/3] rounded-lg overflow-hidden">
+              <img
+                src="/donation_work_2.jpg"
+                width="450"
+                height="350"
+                alt="Medical professionals mentoring students"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="w-full max-w-[400px] mx-auto aspect-[4/3] rounded-lg overflow-hidden">
+              <img
+                src="/donation_work_3.jpg"
+                width="450"
+                height="350"
+                alt="Successful students celebrating medical college admission"
+                className="w-full h-full object-cover"
+              />
+            </div>
           </div>
         </section>
       </main>

@@ -1,144 +1,145 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export function Footer() {
   return (
-    <section className="relative overflow-hidden py-10">
+    <section className="relative overflow-hidden py-12 bg-gray-50">
       <div className="relative z-10 mx-auto max-w-7xl px-4">
         <div className="-m-6 flex flex-wrap">
           <div className="w-full p-6 md:w-1/2 lg:w-5/12">
             <div className="flex h-full flex-col justify-between">
-              <div className="mb-4 inline-flex items-center">
-                {/* <svg
-                  width="40"
-                  height="46"
-                  viewBox="0 0 50 56"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                > */}
-                <img src="/logo.png" width="80" height="66" alt="" />
-
-                <span className="ml-4 text-lg font-bold">FoodGood</span>
+              <div className="mb-6 inline-flex items-center">
+                <img src="/logo.png" width="80" height="66" alt="Lift for Upliftment Logo" />
+                <span className="ml-4 text-xl font-bold text-primary">Lift for Upliftment</span>
               </div>
               <div>
-                <p className="mb-4  text-base font-medium">
-                  FoodGood is a NGO that helps people by providing them food
+                <p className="mb-4 text-base font-medium text-gray-700 leading-relaxed">
+                  Empowering aspiring doctors from underprivileged backgrounds through free, high-quality NEET coaching. Breaking financial barriers to create the next generation of medical professionals.
                 </p>
                 <p className="text-sm text-gray-600">
-                  &copy; Copyright by FoodGood
+                  &copy; 2025 Lift for Upliftment. All rights reserved.
                 </p>
               </div>
             </div>
           </div>
           <div className="w-full p-6 md:w-1/2 lg:w-2/12">
             <div className="h-full">
-              <h3 className="tracking-px mb-9  text-xs font-semibold uppercase text-gray-500">
-                Company
+              <h3 className="tracking-px mb-6 text-xs font-semibold uppercase text-gray-500">
+                Programs
               </h3>
               <ul>
                 <li className="mb-4">
-                  <a
-                    className=" text-base font-medium text-gray-900 hover:text-gray-700"
-                    href="#"
+                  <Link
+                    className="text-base font-medium text-gray-900 hover:text-primary transition-colors"
+                    to="/#impact"
                   >
-                    Features
-                  </a>
+                    NEET Coaching
+                  </Link>
                 </li>
                 <li className="mb-4">
-                  <a
-                    className=" text-base font-medium text-gray-900 hover:text-gray-700"
-                    href="#"
+                  <Link
+                    className="text-base font-medium text-gray-900 hover:text-primary transition-colors"
+                    to="/events"
                   >
-                    Pricing
-                  </a>
+                    Events
+                  </Link>
                 </li>
                 <li className="mb-4">
-                  <a
-                    className=" text-base font-medium text-gray-900 hover:text-gray-700"
-                    href="#"
+                  <Link
+                    className="text-base font-medium text-gray-900 hover:text-primary transition-colors"
+                    to="/hallOffame"
                   >
-                    Affiliate Program
-                  </a>
+                    Success Stories
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    className=" text-base font-medium text-gray-900 hover:text-gray-700"
-                    href="#"
+                  <Link
+                    className="text-base font-medium text-gray-900 hover:text-primary transition-colors"
+                    to="/leaderboard"
                   >
-                    Press Kit
-                  </a>
+                    Mentors
+                  </Link>
                 </li>
               </ul>
             </div>
           </div>
           <div className="w-full p-6 md:w-1/2 lg:w-2/12">
             <div className="h-full">
-              <h3 className="tracking-px mb-9  text-xs font-semibold uppercase text-gray-500">
-                Support
+              <h3 className="tracking-px mb-6 text-xs font-semibold uppercase text-gray-500">
+                Get Involved
               </h3>
               <ul>
                 <li className="mb-4">
-                  <a
-                    className=" text-base font-medium text-gray-900 hover:text-gray-700"
-                    href="#"
+                  <Link
+                    className="text-base font-medium text-gray-900 hover:text-primary transition-colors"
+                    to="/#volunteer"
                   >
-                    Account
-                  </a>
+                    Become a Mentor
+                  </Link>
                 </li>
                 <li className="mb-4">
-                  <a
-                    className=" text-base font-medium text-gray-900 hover:text-gray-700"
-                    href="#"
+                  <Link
+                    className="text-base font-medium text-gray-900 hover:text-primary transition-colors"
+                    to="/donate"
                   >
-                    Help
-                  </a>
+                    Support Us
+                  </Link>
                 </li>
                 <li className="mb-4">
-                  <a
-                    className=" text-base font-medium text-gray-900 hover:text-gray-700"
-                    href="#"
+                  <Link
+                    className="text-base font-medium text-gray-900 hover:text-primary transition-colors"
+                    to="/posts"
                   >
-                    Contact Us
-                  </a>
+                    Share Your Story
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    className=" text-base font-medium text-gray-900 hover:text-gray-700"
-                    href="#"
+                  <Link
+                    className="text-base font-medium text-gray-900 hover:text-primary transition-colors"
+                    to="/#donate"
                   >
-                    Customer Support
-                  </a>
+                    Give Feedback
+                  </Link>
                 </li>
               </ul>
             </div>
           </div>
           <div className="w-full p-6 md:w-1/2 lg:w-3/12">
             <div className="h-full">
-              <h3 className="tracking-px mb-9  text-xs font-semibold uppercase text-gray-500">
-                Legals
+              <h3 className="tracking-px mb-6 text-xs font-semibold uppercase text-gray-500">
+                About Us
               </h3>
               <ul>
                 <li className="mb-4">
-                  <a
-                    className=" text-base font-medium text-gray-900 hover:text-gray-700"
-                    href="#"
+                  <Link
+                    className="text-base font-medium text-gray-900 hover:text-primary transition-colors"
+                    to="/hallOffame"
                   >
-                    Terms &amp; Conditions
-                  </a>
+                    Our Mission
+                  </Link>
+                </li>
+                <li className="mb-4">
+                  <Link
+                    className="text-base font-medium text-gray-900 hover:text-primary transition-colors"
+                    to="/announcements"
+                  >
+                    Announcements
+                  </Link>
                 </li>
                 <li className="mb-4">
                   <a
-                    className=" text-base font-medium text-gray-900 hover:text-gray-700"
-                    href="#"
+                    className="text-base font-medium text-gray-900 hover:text-primary transition-colors"
+                    href="mailto:contact@liftforupliftment.org"
                   >
-                    Privacy Policy
+                    Contact Us
                   </a>
                 </li>
                 <li>
                   <a
-                    className=" text-base font-medium text-gray-900 hover:text-gray-700"
-                    href="#"
+                    className="text-base font-medium text-gray-900 hover:text-primary transition-colors"
+                    href="tel:+91-9876543210"
                   >
-                    Licensing
+                    +91-9876543210
                   </a>
                 </li>
               </ul>

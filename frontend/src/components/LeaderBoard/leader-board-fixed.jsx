@@ -270,7 +270,7 @@ export function LeaderBoard() {
 
       {/* Main Leaderboard */}
       <div className="border rounded-lg w-full">
-        <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 rounded-t-lg">
+        <div className="bg-gradient-to-r from-[#2b3359] to-[#3d4373] text-white p-4 rounded-t-lg">
           <h2 className="text-2xl font-bold flex items-center gap-2">
             <Trophy className="h-6 w-6" />
             Volunteer Leaderboard

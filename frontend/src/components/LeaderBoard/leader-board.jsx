@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import {
   Table,
   TableHeader,
@@ -14,6 +15,7 @@ import { Trophy, Star, Award, MessageSquare, Eye, Calendar, X } from "lucide-rea
 import { backendUrl } from "../../lib/constant";
 
 export function LeaderBoard() {
+  const navigate = useNavigate();
   const [volunteers, setVolunteers] = useState([]);
   const [loading, setLoading] = useState(false); // Start with false for smoother navigation
   const [error, setError] = useState("");
@@ -41,6 +43,7 @@ export function LeaderBoard() {
       }
     } catch (error) {
       console.log("User not logged in");
+      // Note: Authentication redirects are now handled by ProtectedRoute wrapper
     }
   };
 
@@ -55,6 +58,7 @@ export function LeaderBoard() {
       }
     } catch (error) {
       console.error("Error fetching feedbacks:", error);
+      // Note: Authentication redirects are now handled by ProtectedRoute wrapper
     } finally {
       setFeedbackLoading(false);
     }
@@ -74,6 +78,7 @@ export function LeaderBoard() {
       }
     } catch (error) {
       console.error("Error dismissing feedback:", error);
+      // Note: Authentication redirects are now handled by ProtectedRoute wrapper
       alert("Failed to dismiss feedback. Please try again.");
     } finally {
       setDismissingFeedback(null);
@@ -120,7 +125,7 @@ export function LeaderBoard() {
             };
 
             // Count approved posts by this volunteer
-            const userApprovedPosts = allPosts.filter(post => 
+            const userApprovedPosts = allPosts.filter(post =>
               post.status === 'approved' && post.owner === volunteer._id
             ).length;
             mappedVolunteer.approvedPosts = userApprovedPosts;
@@ -169,6 +174,7 @@ export function LeaderBoard() {
       }
     } catch (error) {
       console.error("Error fetching volunteer hours:", error);
+      // Note: Authentication redirects are now handled by ProtectedRoute wrapper and global axios interceptor
       // Fallback: Get volunteers based on approved posts count
       await fetchVolunteersByPosts();
     } finally {
@@ -282,6 +288,7 @@ export function LeaderBoard() {
       }
     } catch (error) {
       console.error("Error fetching posts for leaderboard:", error);
+      // Note: Authentication redirects are now handled by ProtectedRoute wrapper and global axios interceptor
       setError("Failed to load leaderboard data");
     }
   };
@@ -363,7 +370,7 @@ export function LeaderBoard() {
 
       {/* Main Leaderboard */}
       <div className="border rounded-lg w-full">
-        <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 rounded-t-lg">
+        <div className="bg-gradient-to-r from-[#2b3359] to-[#3d4373] text-white p-4 rounded-t-lg">
           <h2 className="text-2xl font-bold flex items-center gap-2">
             <Trophy className="h-6 w-6" />
             Volunteer Leaderboard
@@ -466,15 +473,15 @@ export function LeaderBoard() {
                       <div className="flex items-center gap-2">
                         <Progress
                           value={Math.min(
-                            ((volunteer.totalScore || (volunteer.totalWorkedHours || volunteer.hoursWorked || 0) * 100) / 
-                            Math.max((volunteers[0].totalScore || (volunteers[0].totalWorkedHours || volunteers[0].hoursWorked || 0) * 100), 10)) * 100, 
+                            ((volunteer.totalScore || (volunteer.totalWorkedHours || volunteer.hoursWorked || 0) * 100) /
+                            Math.max((volunteers[0].totalScore || (volunteers[0].totalWorkedHours || volunteers[0].hoursWorked || 0) * 100), 10)) * 100,
                             100
                           )}
                           className="flex-1"
                         />
                         <span className="text-sm text-gray-500 min-w-[40px]">
                           {Math.round(
-                            ((volunteer.totalScore || (volunteer.totalWorkedHours || volunteer.hoursWorked || 0) * 100) / 
+                            ((volunteer.totalScore || (volunteer.totalWorkedHours || volunteer.hoursWorked || 0) * 100) /
                             Math.max((volunteers[0].totalScore || (volunteers[0].totalWorkedHours || volunteers[0].hoursWorked || 0) * 100), 10)) * 100
                           )}%
                         </span>
