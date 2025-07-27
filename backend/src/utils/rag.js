@@ -13,16 +13,32 @@ function calculateSimilarity(text1, text2) {
   const intersection = words1.filter(word => words2.includes(word));
   const union = [...new Set([...words1, ...words2])];
   
-  return intersection.length / union.length;
+  // Boost similarity for exact keyword matches
+  const exactMatches = words1.filter(word => 
+    word.length > 3 && words2.includes(word)
+  ).length;
+  
+  const baseSimilarity = intersection.length / union.length;
+  const boostFactor = exactMatches * 0.1; // 10% boost per exact match
+  
+  return Math.min(1.0, baseSimilarity + boostFactor);
 }
 
 // Extract relevant sections from knowledge base
-function extractRelevantSections(knowledgeBase, query, threshold = 0.1) {
+function extractRelevantSections(knowledgeBase, query, threshold = 0.08) {
   const sections = knowledgeBase.split(/#{1,3}\s+/);
   const relevantSections = [];
+  
+  // Also split by major topic breaks for better granularity
+  const allSections = [];
+  sections.forEach(section => {
+    // Split large sections by FAQ patterns
+    const faqSplit = section.split(/\n\*\*Q:/);
+    allSections.push(...faqSplit);
+  });
 
-  for (const section of sections) {
-    if (section.trim().length > 50) { // Skip very short sections
+  for (const section of allSections) {
+    if (section.trim().length > 30) { // Skip very short sections
       const similarity = calculateSimilarity(section, query);
       if (similarity > threshold) {
         relevantSections.push({
@@ -42,7 +58,7 @@ function extractRelevantSections(knowledgeBase, query, threshold = 0.1) {
 
 // Advanced keyword matching for better search
 function findKeywordMatches(knowledgeBase, query) {
-  const keywords = query.toLowerCase().split(/\s+/).filter(word => word.length > 3);
+  const keywords = query.toLowerCase().split(/\s+/).filter(word => word.length > 2);
   const lines = knowledgeBase.split('\n');
   const matches = [];
 
@@ -51,15 +67,16 @@ function findKeywordMatches(knowledgeBase, query) {
     const keywordMatches = keywords.filter(keyword => line.includes(keyword));
     
     if (keywordMatches.length > 0) {
-      // Include context: previous line, current line, next line
-      const contextStart = Math.max(0, i - 1);
-      const contextEnd = Math.min(lines.length - 1, i + 1);
+      // Include more context for better answers
+      const contextStart = Math.max(0, i - 2);
+      const contextEnd = Math.min(lines.length - 1, i + 3);
       const context = lines.slice(contextStart, contextEnd + 1).join('\n');
       
       matches.push({
         content: context.trim(),
         relevance: keywordMatches.length / keywords.length,
-        matchedKeywords: keywordMatches
+        matchedKeywords: keywordMatches,
+        lineNumber: i
       });
     }
   }
@@ -67,7 +84,7 @@ function findKeywordMatches(knowledgeBase, query) {
   // Remove duplicates and sort by relevance
   const uniqueMatches = matches
     .filter((match, index, self) => 
-      index === self.findIndex(m => m.content === match.content)
+      index === self.findIndex(m => Math.abs(m.lineNumber - match.lineNumber) < 3)
     )
     .sort((a, b) => b.relevance - a.relevance)
     .slice(0, 5);
@@ -127,8 +144,8 @@ export const generateRAGResponse = (searchResults, originalQuery) => {
 
   const relevantContent = searchResults.content.join('\n\n');
   
-  // Create a contextual response
-  let response = "Based on our platform documentation, here's what I found:\n\n";
+  // Create a more focused response based on query intent
+  let response = "Based on our platform information:\n\n";
   
   // Clean up and format the content
   const cleanContent = relevantContent
@@ -136,12 +153,22 @@ export const generateRAGResponse = (searchResults, originalQuery) => {
     .replace(/\*\*(.*?)\*\*/g, '$1') // Remove bold formatting
     .replace(/\*(.*?)\*/g, '$1') // Remove italic formatting
     .replace(/- /g, '• ') // Convert dashes to bullets
+    .replace(/\n{3,}/g, '\n\n') // Remove excessive line breaks
     .trim();
 
   response += cleanContent;
   
-  // Add helpful closing
-  response += "\n\nIf you need more specific help or have other questions, feel free to ask!";
+  // Add helpful closing based on query type
+  const queryLower = originalQuery.toLowerCase();
+  if (queryLower.includes('register') || queryLower.includes('sign up')) {
+    response += "\n\n💡 Tip: Make sure to have a clear profile picture ready for upload during registration!";
+  } else if (queryLower.includes('volunteer')) {
+    response += "\n\n🌟 Ready to make a difference? Your volunteer journey starts with just one click!";
+  } else if (queryLower.includes('donate') || queryLower.includes('donation')) {
+    response += "\n\n❤️ Every donation, no matter the size, helps feed families in need.";
+  } else {
+    response += "\n\n💬 Need more help? Feel free to ask follow-up questions!";
+  }
   
   return response;
 };
