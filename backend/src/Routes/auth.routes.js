@@ -29,26 +29,38 @@ router.get('/google/callback', (req, res, next) => {
     return res.redirect(`${frontendUrl}?oauth=error&message=${encodeURIComponent('Google OAuth is not configured')}`);
   }
 
-  passport.authenticate('google', { session: false }, async (err, user) => {
+  passport.authenticate('google', { session: false }, async (err, user, info) => {
+    console.log('🔍 OAuth Callback Debug:');
+    console.log('Error:', err);
+    console.log('User:', user ? 'Found' : 'Not found');
+    console.log('Info:', info);
+
     try {
+      const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+      
       if (err) {
-        console.error('OAuth authentication error:', err);
-        const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
-        return res.redirect(`${frontendUrl}?oauth=error&message=${encodeURIComponent('Authentication failed')}`);
+        console.error('❌ OAuth authentication error:', err);
+        return res.redirect(`${frontendUrl}?oauth=error&message=${encodeURIComponent('Authentication failed: ' + err.message)}`);
       }
 
       if (!user) {
-        const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
-        return res.redirect(`${frontendUrl}?oauth=error&message=${encodeURIComponent('User not found')}`);
+        console.error('❌ No user returned from OAuth');
+        return res.redirect(`${frontendUrl}?oauth=error&message=${encodeURIComponent('User authentication failed')}`);
       }
 
+      console.log('✅ User authenticated:', user.email);
+
       // Generate tokens
-      const accessToken = user.generateAccessToken();
-      const refreshToken = user.generateRefreshToken();
+      const accessToken = await user.generateAccessToken();
+      const refreshToken = await user.generateRefreshToken();
+
+      console.log('✅ Tokens generated successfully');
 
       // Save refresh token
       user.refreshToken = refreshToken;
       await user.save({ validateBeforeSave: false });
+
+      console.log('✅ User saved with refresh token');
 
       // Set cookies
       const options = {
@@ -61,19 +73,24 @@ router.get('/google/callback', (req, res, next) => {
       res.cookie("accessToken", accessToken, options);
       res.cookie("refreshToken", refreshToken, options);
 
+      console.log('✅ Cookies set successfully');
+
       // Redirect to frontend with success
-      const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
-      res.redirect(`${frontendUrl}?oauth=success&user=${encodeURIComponent(JSON.stringify({
+      const userInfo = {
         _id: user._id,
         fullName: user.fullName,
         email: user.email,
         avatar: user.avatar,
         role: user.role
-      }))}`);
+      };
+
+      console.log('✅ Redirecting to frontend with user info');
+      res.redirect(`${frontendUrl}?oauth=success&user=${encodeURIComponent(JSON.stringify(userInfo))}`);
+      
     } catch (error) {
-      console.error('OAuth callback error:', error);
+      console.error('❌ OAuth callback error:', error);
       const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
-      res.redirect(`${frontendUrl}?oauth=error&message=${encodeURIComponent('Authentication failed')}`);
+      res.redirect(`${frontendUrl}?oauth=error&message=${encodeURIComponent('Server error: ' + error.message)}`);
     }
   })(req, res, next);
 });
