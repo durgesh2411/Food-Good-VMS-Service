@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { backendUrl } from "../../lib/constant";
 
 const PostCardAdmin = ({ posts }) => {
+  const [expandedPosts, setExpandedPosts] = useState(new Set());
+
   const handleApprove = (postId) => {
     axios
       .patch(`/api/v1/posts/admin/${postId}`)
@@ -18,6 +20,39 @@ const PostCardAdmin = ({ posts }) => {
         toast.error("Error approving post.");
         console.error("Error approving post:", error);
       });
+  };
+
+  const toggleExpanded = (postId) => {
+    const newExpanded = new Set(expandedPosts);
+    if (newExpanded.has(postId)) {
+      newExpanded.delete(postId);
+    } else {
+      newExpanded.add(postId);
+    }
+    setExpandedPosts(newExpanded);
+  };
+
+  const truncateContent = (content, postId, limit = 100) => {
+    if (!content || content.length <= limit) {
+      return content;
+    }
+
+    const isExpanded = expandedPosts.has(postId);
+    const displayContent = isExpanded ? content : content.substring(0, limit) + "...";
+
+    return (
+      <div className="space-y-2">
+        <span className="text-gray-600 break-words whitespace-pre-wrap">
+          {displayContent}
+        </span>
+        <button
+          onClick={() => toggleExpanded(postId)}
+          className="block text-blue-600 hover:text-blue-800 font-medium text-xs transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded"
+        >
+          {isExpanded ? 'Show Less' : 'Show More'}
+        </button>
+      </div>
+    );
   };
 
   return (
@@ -47,8 +82,8 @@ const PostCardAdmin = ({ posts }) => {
                   {post.fullName}
                 </span>
               </td>
-              <td className="px-6 py-4 border-b border-gray-200 bg-white text-sm">
-                <span className="text-gray-600">{post.content}</span>
+              <td className="px-6 py-4 border-b border-gray-200 bg-white text-sm max-w-xs">
+                {truncateContent(post.content, post._id, 100)}
               </td>
               <td className="px-6 py-4 border-b border-gray-200 bg-white text-sm">
                 <span className="text-gray-600">

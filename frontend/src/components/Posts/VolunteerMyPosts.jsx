@@ -7,6 +7,7 @@ const VolunteerMyPosts = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [expandedPosts, setExpandedPosts] = useState(new Set());
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -63,6 +64,39 @@ const VolunteerMyPosts = () => {
         </span>
       );
     }
+  };
+
+  const toggleExpanded = (postId) => {
+    const newExpanded = new Set(expandedPosts);
+    if (newExpanded.has(postId)) {
+      newExpanded.delete(postId);
+    } else {
+      newExpanded.add(postId);
+    }
+    setExpandedPosts(newExpanded);
+  };
+
+  const truncateContent = (content, postId, limit = 300) => {
+    if (!content || content.length <= limit) {
+      return content;
+    }
+
+    const isExpanded = expandedPosts.has(postId);
+    const displayContent = isExpanded ? content : content.substring(0, limit) + "...";
+
+    return (
+      <div className="space-y-3">
+        <p className="text-gray-700 whitespace-pre-wrap break-words leading-relaxed">
+          {displayContent}
+        </p>
+        <button
+          onClick={() => toggleExpanded(postId)}
+          className="text-blue-600 hover:text-blue-800 font-medium text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded"
+        >
+          {isExpanded ? 'Read Less' : 'Read More'}
+        </button>
+      </div>
+    );
   };
 
   if (loading) {
@@ -147,7 +181,7 @@ const VolunteerMyPosts = () => {
                 </div>
 
                 <div className="prose prose-sm max-w-none">
-                  <p className="text-gray-700 whitespace-pre-wrap">{post.content}</p>
+                  {truncateContent(post.content, post._id, 300)}
                 </div>
 
                 {post.status === "pending" && (
