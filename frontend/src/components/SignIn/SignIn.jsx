@@ -80,7 +80,7 @@ axios
         <div className="h-full w-full">
           <img
             className="mx-auto h-full w-full rounded-md object-cover"
-            src="https://media.istockphoto.com/id/524903696/photo/poor-indian-children-asking-for-food-india.webp?a=1&b=1&s=612x612&w=0&k=20&c=DqMSvVaXQxISjdvfNizw6F9ZkaCBMy42Yk6agRcJUE8="
+            src="https://img-cdn.thepublive.com/fit-in/1280x960/filters:format(webp)/30-stades/media/post_banners/VO2u4vBKOQWKLVDn1OpO.jpg"
             alt=""
           />
         </div>

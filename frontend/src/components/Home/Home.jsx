@@ -92,7 +92,7 @@
 //           <div className="container px-4 md:px-6 grid gap-6 lg:grid-cols-2 lg:gap-12">
 //             <div className="flex flex-col justify-center space-y-4 text-primary-foreground">
 //               <div className="space-y-2">
-//                 <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
+//                 <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-center">
 //                   {t("home.hero.title")}
 //                 </h1>
 //                 <p className="max-w-[600px] text-primary-foreground/80 md:text-xl">
@@ -353,7 +353,7 @@ function Home() {
           <div className="max-w-[1600px] mx-auto px-4 md:px-6 lg:px-8 grid gap-8 lg:grid-cols-2 lg:gap-12">
             <div className="flex flex-col justify-between h-full min-h-[400px] text-primary-foreground">
               <div className="space-y-6">
-                <h1 className="text-2xl font-bold tracking-tighter sm:text-4xl xl:text-5xl/none text-justify">
+                <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-left">
                   {t("home.hero.title")}
                 </h1>
                 <p className="max-w-[600px] text-primary-foreground/80 md:text-xl leading-relaxed text-justify">
