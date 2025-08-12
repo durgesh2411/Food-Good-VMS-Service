@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MessageCircle, X, Send, Bot, User, Minimize2 } from 'lucide-react';
+import { backendUrl } from '../lib/constant.js';
 
 const ChatbotWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -7,7 +8,7 @@ const ChatbotWidget = () => {
   const [messages, setMessages] = useState([
     {
       id: 1,
-      text: "Hi! I'm your VMS Assistant. I can help you with volunteering, donations, events, and general questions. How can I assist you today?",
+      text: "Hi! I'm your Lift for Upliftment Assistant. I specialize in NEET preparation guidance, volunteer opportunities, and platform support. Ask me about our free NEET coaching, study resources, or how to get involved!",
       sender: 'bot',
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     }
@@ -39,11 +40,14 @@ const ChatbotWidget = () => {
     setIsTyping(true);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000'}/api/v1/ai/chat`, {
+      const apiUrl = `${backendUrl}/ai/chat`;
+
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include', // Add credentials for CORS
         body: JSON.stringify({
           message: inputMessage,
           conversationHistory: messages.slice(-6).map(msg => ({
@@ -52,6 +56,10 @@ const ChatbotWidget = () => {
           }))
         }),
       });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
       const data = await response.json();
 
@@ -67,7 +75,6 @@ const ChatbotWidget = () => {
         throw new Error(data.error || 'Failed to get response');
       }
     } catch (error) {
-      console.error('Chat error:', error);
       const errorMessage = {
         id: Date.now() + 1,
         text: "I'm sorry, I'm having trouble connecting right now. Please try again in a moment or contact our support team.",
@@ -91,7 +98,7 @@ const ChatbotWidget = () => {
     setMessages([
       {
         id: 1,
-        text: "Hi! I'm your VMS Assistant. I can help you with volunteering, donations, events, and general questions. How can I assist you today?",
+        text: "Hi! I'm your Lift for Upliftment Assistant. I specialize in NEET preparation guidance, volunteer opportunities, and platform support. Ask me about our free NEET coaching, study resources, or how to get involved!",
         sender: 'bot',
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       }
@@ -100,11 +107,11 @@ const ChatbotWidget = () => {
 
   // Quick suggestion buttons
   const quickSuggestions = [
-    "How do I register?",
-    "What volunteer opportunities are available?",
-    "How can I make a donation?",
-    "What events are coming up?",
-    "How do I reset my password?"
+    "How to register for free NEET coaching?",
+    "What subjects do you cover?",
+    "How can I volunteer as a tutor?",
+    "Tell me about your success rate",
+    "How do I access study materials?"
   ];
 
   const handleSuggestionClick = (suggestion) => {
@@ -122,16 +129,16 @@ const ChatbotWidget = () => {
           <MessageCircle className="h-6 w-6" />
 
           {/* Pulsing ring animation */}
-          <div className="absolute inset-0 rounded-full bg-blue-600 animate-ping opacity-75"></div>
+          <div className="absolute inset-0 rounded-full bg-indigo-600 animate-ping opacity-75"></div>
 
           {/* Notification dot */}
-          <div className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center animate-pulse font-bold z-10">
+          <div className="absolute -top-1 -right-1 bg-rose-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center animate-pulse font-bold z-10">
             !
           </div>
 
           {/* Tooltip */}
           <div className="absolute bottom-full right-0 mb-2 px-3 py-2 bg-gray-800 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap shadow-lg">
-            💬 Need help? Ask me anything!
+            Need help? Ask me anything!
             <div className="absolute top-full right-4 border-4 border-transparent border-t-gray-800"></div>
           </div>
         </button>
@@ -151,8 +158,8 @@ const ChatbotWidget = () => {
               <Bot className="h-5 w-5" />
             </div>
             <div>
-              <h3 className="font-semibold text-lg">VMS Assistant</h3>
-              <p className="text-blue-100 text-xs">Always here to help!</p>
+              <h3 className="font-semibold text-lg">Lift for Upliftment</h3>
+              <p className="text-blue-100 text-xs">NEET prep support & guidance!</p>
             </div>
           </div>
           <div className="flex items-center space-x-2">
@@ -187,23 +194,23 @@ const ChatbotWidget = () => {
                   }`}>
                     <div className={`flex-shrink-0 rounded-full p-2 ${
                       message.sender === 'user'
-                        ? 'bg-blue-600 text-white'
+                        ? 'bg-indigo-600 text-white'
                         : 'bg-white border border-gray-200'
                     }`}>
                       {message.sender === 'user' ? (
                         <User className="h-3 w-3" />
                       ) : (
-                        <Bot className="h-3 w-3 text-blue-600" />
+                        <Bot className="h-3 w-3 text-indigo-600" />
                       )}
                     </div>
                     <div className={`rounded-lg p-3 ${
                       message.sender === 'user'
-                        ? 'bg-blue-600 text-white'
+                        ? 'bg-indigo-600 text-white'
                         : 'bg-white border border-gray-200 text-gray-800'
                     }`}>
                       <p className="text-sm whitespace-pre-wrap">{message.text}</p>
                       <p className={`text-xs mt-1 ${
-                        message.sender === 'user' ? 'text-blue-100' : 'text-gray-500'
+                        message.sender === 'user' ? 'text-indigo-100' : 'text-gray-500'
                       }`}>
                         {message.timestamp}
                       </p>
@@ -240,7 +247,7 @@ const ChatbotWidget = () => {
                     <button
                       key={index}
                       onClick={() => handleSuggestionClick(suggestion)}
-                      className="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded-full hover:bg-blue-100 transition-colors"
+                      className="text-xs bg-indigo-50 text-indigo-700 px-2 py-1 rounded-full hover:bg-indigo-100 transition-colors"
                     >
                       {suggestion}
                     </button>
@@ -265,7 +272,7 @@ const ChatbotWidget = () => {
                   <button
                     onClick={handleSendMessage}
                     disabled={!inputMessage.trim() || isTyping}
-                    className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
                   >
                     <Send className="h-4 w-4" />
                   </button>

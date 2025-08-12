@@ -259,7 +259,7 @@ const StarVotingPage = () => {
           {!currentUser && (
             <button
               onClick={() => window.location.href = '/signin'}
-              className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700"
+              className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700"
             >
               Log In
             </button>
@@ -293,8 +293,8 @@ const StarVotingPage = () => {
             Recognize outstanding volunteers in our community! Your vote helps highlight
             volunteers who go above and beyond in their service.
           </p>
-          <div className="mt-6 bg-blue-400 text-blue-900 inline-block px-6 py-2 rounded-full font-medium">
-            💫 Your votes contribute to the leaderboard rankings
+          <div className="mt-6 bg-indigo-400 text-indigo-900 inline-block px-6 py-2 rounded-full font-medium">
+            Your votes contribute to the leaderboard rankings
           </div>
         </div>
       </div>
@@ -351,7 +351,7 @@ const StarVotingPage = () => {
                 {/* Top ranking badge */}
                 {volunteer.starVotes > 0 && (
                   <div className="absolute top-0 right-0 bg-gradient-to-l from-yellow-400 to-orange-400 text-white px-3 py-1 rounded-bl-lg text-sm font-bold">
-                    ⭐ {volunteer.starVotes} votes
+                    {volunteer.starVotes} votes
                   </div>
                 )}
 
@@ -361,7 +361,7 @@ const StarVotingPage = () => {
                     {volunteer.avatar ? (
                       <AvatarImage src={volunteer.avatar} alt={volunteer.fullName} />
                     ) : (
-                      <AvatarFallback className="bg-blue-100 text-blue-600 text-2xl font-bold">
+                      <AvatarFallback className="bg-indigo-100 text-indigo-600 text-2xl font-bold">
                         {volunteer.fullName.charAt(0)}
                       </AvatarFallback>
                     )}
@@ -396,7 +396,7 @@ const StarVotingPage = () => {
                   {/* Vote Button */}
                   {userVotes[volunteer._id] ? (
                     <div className="space-y-3">
-                      <div className="bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-medium border border-green-200">
+                      <div className="bg-emerald-100 text-emerald-800 px-4 py-2 rounded-full text-sm font-medium border border-emerald-200">
                         You voted for this volunteer
                       </div>
                       <button
@@ -448,7 +448,7 @@ const StarVotingPage = () => {
                   {selectedVolunteer.avatar ? (
                     <AvatarImage src={selectedVolunteer.avatar} />
                   ) : (
-                    <AvatarFallback className="bg-blue-100 text-blue-600 font-bold">
+                    <AvatarFallback className="bg-indigo-100 text-indigo-600 font-bold">
                       {selectedVolunteer.fullName.charAt(0)}
                     </AvatarFallback>
                   )}

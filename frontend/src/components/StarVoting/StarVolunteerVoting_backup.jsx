@@ -95,7 +95,7 @@ const StarVolunteerVoting = () => {
                   index === 0 ? "bg-yellow-500" :
                   index === 1 ? "bg-gray-400" : "bg-orange-400"
                 }`}>
-                  {index === 0 ? "🥇 #1" : index === 1 ? "🥈 #2" : "🥉 #3"}
+                  {index === 0 ? "#1" : index === 1 ? "#2" : "#3"}
                 </div>
 
                 <div className="text-center pt-4">
@@ -129,7 +129,7 @@ const StarVolunteerVoting = () => {
 
                   {index === 0 && volunteer.starVotes > 0 && (
                     <div className="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-medium">
-                      ⭐ Top Star Volunteer
+                      Top Star Volunteer
                     </div>
                   )}
                 </div>

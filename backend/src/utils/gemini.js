@@ -1,13 +1,17 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
-import { generateRAGResponse, searchKnowledgeBase, shouldUseRAG } from './rag.js';
-import dotenv from 'dotenv';
-import { fileURLToPath } from 'url';
-import path from 'path';
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import {
+  generateRAGResponse,
+  searchKnowledgeBase,
+  shouldUseRAG,
+} from "./rag.js";
+import dotenv from "dotenv";
+import { fileURLToPath } from "url";
+import path from "path";
 
 // Load environment variables
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-dotenv.config({ path: path.join(__dirname, '..', '..', '.env') });
+dotenv.config({ path: path.join(__dirname, "..", "..", ".env") });
 
 // Initialize Gemini AI
 let genAI;
@@ -15,160 +19,134 @@ let model;
 
 try {
   if (process.env.GEMINI_API_KEY) {
-    console.log("🔑 Gemini API Key detected:", process.env.GEMINI_API_KEY.substring(0, 12) + "...");
     genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-
-    // Test the API key with a simple request
-    console.log("🧪 Testing Gemini API connection...");
-
-    // We'll test this in the actual request to avoid initialization errors
-    console.log("✅ Gemini AI initialized successfully");
-  } else {
-    console.log("⚠️ Gemini API key not found - AI features will use RAG only");
-    console.log("🔍 Available env vars:", Object.keys(process.env).filter(k => k.includes('GEMINI')));
   }
 } catch (error) {
-  console.error("❌ Gemini initialization error:", error.message);
+  console.error("Gemini initialization error:", error.message);
 }
 
-// Enhanced system prompt for volunteer management context
-const SYSTEM_PROMPT = `You are a helpful AI assistant for the Food Good Volunteer Management System (VMS).
+// Enhanced system prompt for NEET preparation NGO context
+const SYSTEM_PROMPT = `You are an AI assistant for "Lift for Upliftment" - a NEET preparation NGO based in Pune, Maharashtra, founded in 2015. You help students with NEET exam preparation and platform-related queries.
+
+IMPORTANT RESPONSE GUIDELINES:
+1. ALWAYS prioritize platform-specific information over general knowledge
+2. Keep responses under 150 words unless detailed explanation is specifically requested
+3. For non-platform queries (weather, news, general facts), politely redirect to platform topics
+4. Focus on actionable information that helps users with NEET preparation or platform usage
 
 CONTEXT: You're helping users with a platform focused on:
-- Volunteer registration and management
-- Food donation coordination
-- Community events and activities
-- User account management
-- Volunteer work opportunities
+- NEET preparation support and tutoring (FREE for underprivileged students)
+- Educational resource sharing (15,000+ practice questions, 2,400+ video lectures)
+- Study group coordination and events (mock tests, workshops)
+- Volunteer tutors and mentors (890+ active tutors)
+- Donations for educational materials (80G tax-exempt)
 
-PERSONALITY: Be friendly, helpful, and encouraging about volunteering and community service.
+PERSONALITY: Be friendly, helpful, and encouraging about education and NEET preparation support.
+
+RESPONSE STRATEGY:
+- For NEET questions: Provide study tips, exam strategies, subject guidance
+- For platform questions: Guide to registration, features, support
+- For volunteer questions: Explain how to join, requirements, benefits  
+- For donation questions: Explain impact, tax benefits, process
+- For general/irrelevant questions: Politely redirect to platform topics
 
 GUIDELINES:
 - Provide clear, actionable answers
 - Be concise but thorough
-- Encourage community participation
+- Encourage educational volunteering and NEET preparation support
 - If unsure about platform-specific details, suggest contacting support
-- Keep responses under 200 words unless more detail is specifically requested
+- Always include next steps or contact information when relevant
+- Use emojis sparingly but effectively for important points
 
-Please respond helpfully to the user's question.`;
+Please respond helpfully to the user's question with focus on our NEET preparation mission.`;
 
 /**
  * Generate AI response with RAG-first approach, Gemini fallback
  */
 export const generateAIResponse = async (message, conversationHistory = []) => {
   try {
-    console.log("🤖 Processing AI request with RAG + Gemini system");
-
     // Step 1: Check if we should use RAG for this query
     if (shouldUseRAG(message)) {
-      console.log("🔍 Query suitable for RAG - searching knowledge base first");
-
       // Search local knowledge base
       const ragResults = await searchKnowledgeBase(message);
 
       if (ragResults.found && ragResults.content.length > 0) {
-        console.log("✅ Found answer in knowledge base - generating RAG response");
         const ragResponse = generateRAGResponse(ragResults, message);
-
         if (ragResponse) {
-          console.log("🎯 Returning RAG response (cost: $0.00)");
           return ragResponse;
         }
       }
-
-      console.log("❌ RAG didn't find sufficient answer - falling back to Gemini");
-    } else {
-      console.log("🌐 General query detected - using Gemini directly");
     }
 
-    // Step 2: Use Gemini for general questions or RAG fallback
-    if (!model || process.env.GEMINI_API_KEY === 'your-actual-gemini-api-key-here' || process.env.GEMINI_API_KEY === 'your-gemini-api-key-here') {
-      // If no Gemini available or placeholder API key, try to provide a helpful RAG-only response
-      console.log("⚠️ Gemini not available or placeholder API key - attempting comprehensive RAG response");
-      const ragResults = await searchKnowledgeBase(message);
-
-      if (ragResults.found && ragResults.content.length > 0) {
-        const ragResponse = generateRAGResponse(ragResults, message);
-        if (ragResponse) {
-          console.log("✅ Generated RAG-only response successfully");
-          return ragResponse;
-        }
-      }
-
-      // Try broader search for any kind of help
-      const broadResults = await searchKnowledgeBase(message.split(' ').slice(0, 3).join(' '));
-      if (broadResults.found && broadResults.content.length > 0) {
-        const broadResponse = generateRAGResponse(broadResults, message);
-        if (broadResponse) {
-          console.log("✅ Generated broad RAG response");
-          return broadResponse + "\n\n*Note: For more specific help, please be more detailed in your question.*";
-        }
-      }
-
-      return "I can help you with platform-specific questions! Try asking about:\n\n• How to register or login\n• Becoming a volunteer\n• Making donations\n• Finding events\n• Creating posts\n• Using the star voting system\n\nWhat would you like to know?";
+    // Step 2: Fallback to Gemini for general questions or when RAG fails
+    if (!genAI || !model) {
+      throw new Error("Gemini AI service is not properly configured. Please check your API key.");
     }
 
-    // Build conversation context for Gemini
-    let conversationContext = SYSTEM_PROMPT + "\n\nCONVERSATION HISTORY:\n";
+    // Build conversation history
+    let conversationText = "";
+    if (conversationHistory && conversationHistory.length > 0) {
+      const recentHistory = conversationHistory.slice(-6); // Last 6 messages
+      conversationText = recentHistory
+        .map((msg) => `${msg.role === "user" ? "User" : "Assistant"}: ${msg.content}`)
+        .join("\n");
+    }
 
-    // Add recent conversation history (last 6 messages to keep within limits)
-    const recentHistory = conversationHistory.slice(-6);
-    recentHistory.forEach(msg => {
-      conversationContext += `${msg.role}: ${msg.content}\n`;
-    });
+    // Create the prompt
+    const fullPrompt = `${SYSTEM_PROMPT}
 
-    conversationContext += `\nUser: ${message}\nAssistant:`;
+${conversationText ? "Previous conversation:\n" + conversationText + "\n\n" : ""}Current user question: ${message}
 
-    console.log("🔄 Calling Gemini API...");
+Please provide a helpful response focused on NEET preparation and our platform features.`;
 
     // Generate response with Gemini
-    const result = await model.generateContent(conversationContext);
+    const result = await model.generateContent(fullPrompt);
     const response = await result.response;
-    const reply = response.text();
+    const aiResponse = response.text();
 
-    if (!reply || reply.trim().length === 0) {
-      throw new Error("Empty response from Gemini");
+    if (!aiResponse || aiResponse.trim().length === 0) {
+      throw new Error("Gemini returned empty response");
     }
 
-    console.log("✅ Gemini response generated successfully");
-    console.log("💰 Cost: ~$0.00007 (75x cheaper than OpenAI!)");
-    return reply.trim();
+    return aiResponse.trim();
 
   } catch (error) {
     console.error("❌ AI Response Generation Error:", error);
+    
+    // Provide helpful fallback based on query type
+    const queryLower = message.toLowerCase();
+    if (queryLower.includes("neet") || queryLower.includes("exam") || queryLower.includes("preparation")) {
+      return `I'm having trouble accessing our AI service right now, but I can help with NEET preparation! 
 
-    // Enhanced error handling with RAG fallback
-    try {
-      console.log("🔄 Attempting RAG fallback due to Gemini error...");
-      const ragResults = await searchKnowledgeBase(message);
+For immediate assistance:
+📚 Visit our center at Camp, Pune for free NEET coaching
+📱 Download our "Lift Learning" app for 2,400+ video lectures
+💬 Contact us at info@liftforupliftment.org
+📞 Call our helpline: +91-20-2612-XXXX
 
-      if (ragResults.found && ragResults.content.length > 0) {
-        const ragResponse = generateRAGResponse(ragResults, message);
-        if (ragResponse) {
-          return ragResponse + "\n\n*Note: I used our knowledge base since the AI service is temporarily unavailable.*";
-        }
-      }
-    } catch (ragError) {
-      console.error("❌ RAG fallback also failed:", ragError);
+What specific NEET topic would you like guidance on?`;
+    } else if (queryLower.includes("volunteer") || queryLower.includes("tutor")) {
+      return `Our AI service is temporarily unavailable, but you can still join our volunteer team!
+
+To become a volunteer tutor:
+📧 Email: volunteer@liftforupliftment.org
+🤝 Attend our monthly volunteer meet (first Saturday)
+📋 Requirements: Graduation in PCB subjects, passion for teaching
+🎯 Impact: Help underprivileged students crack NEET
+
+Would you like more details about volunteer opportunities?`;
+    } else {
+      return `I'm experiencing technical difficulties right now. For immediate support:
+
+📞 Call: +91-20-2612-XXXX
+📧 Email: info@liftforupliftment.org
+🌐 Visit: Our center at Camp, Pune
+💬 WhatsApp: Available during exam season
+
+How can I help you with NEET preparation or our platform features?`;
     }
-
-    // Final fallback message
-    if (error.message.includes("API_KEY_INVALID") || error.message.includes("API key not valid")) {
-      return "I can help with platform questions right now! For general questions, our AI service needs a quick setup. Try asking about registration, volunteering, donations, events, or any platform features.";
-    } else if (error.message.includes("API_KEY")) {
-      return "I'm currently unable to access the AI service due to configuration issues. However, I can still help with basic platform questions! Try asking about registration, volunteering, donations, or events.";
-    } else if (error.message.includes("quota") || error.message.includes("limit")) {
-      return "The AI service is temporarily at capacity. I can still help with platform-specific questions from our knowledge base! Try asking about how to register, volunteer opportunities, or donation processes.";
-    } else if (error.message.includes("network") || error.message.includes("timeout")) {
-      return "I'm experiencing network connectivity issues. Please try again in a moment. In the meantime, you can browse our help sections or contact support directly.";
-    }
-
-    return "I'm having trouble processing your request right now. Please try rephrasing your question or contact our support team for assistance.";
   }
 };
 
-// Export for backward compatibility
-export default {
-  generateAIResponse
-};
+export default { generateAIResponse };

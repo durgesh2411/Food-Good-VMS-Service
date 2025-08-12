@@ -31,7 +31,7 @@ export function Footer() {
                 <li className="mb-4">
                   <Link
                     className="text-base font-medium text-gray-900 hover:text-primary transition-colors"
-                    to="/#impact"
+                    to="/apply-neet"
                   >
                     NEET Coaching
                   </Link>
@@ -47,7 +47,7 @@ export function Footer() {
                 <li className="mb-4">
                   <Link
                     className="text-base font-medium text-gray-900 hover:text-primary transition-colors"
-                    to="/hallOffame"
+                    to="/hall-of-fame"
                   >
                     Success Stories
                   </Link>
@@ -72,7 +72,7 @@ export function Footer() {
                 <li className="mb-4">
                   <Link
                     className="text-base font-medium text-gray-900 hover:text-primary transition-colors"
-                    to="/#volunteer"
+                    to="/volunteer"
                   >
                     Become a Mentor
                   </Link>
@@ -96,7 +96,7 @@ export function Footer() {
                 <li>
                   <Link
                     className="text-base font-medium text-gray-900 hover:text-primary transition-colors"
-                    to="/#donate"
+                    to="/feedback"
                   >
                     Give Feedback
                   </Link>
@@ -113,7 +113,7 @@ export function Footer() {
                 <li className="mb-4">
                   <Link
                     className="text-base font-medium text-gray-900 hover:text-primary transition-colors"
-                    to="/hallOffame"
+                    to="/about"
                   >
                     Our Mission
                   </Link>
@@ -127,12 +127,12 @@ export function Footer() {
                   </Link>
                 </li>
                 <li className="mb-4">
-                  <a
+                  <Link
                     className="text-base font-medium text-gray-900 hover:text-primary transition-colors"
-                    href="mailto:contact@liftforupliftment.org"
+                    to="/contact"
                   >
                     Contact Us
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <a

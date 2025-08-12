@@ -15,6 +15,7 @@ import dashboardRouter from "./Routes/dashboard.routes.js";
 import starVoteRouter from "./Routes/starVote.routes.js";
 import genAIRouter from "./Routes/genAI.route.js";
 import authRouter from "./Routes/auth.routes.js";
+import studentApplicationRouter from "./Routes/studentApplication.routes.js";
 import { verifyJWT } from "./middlewares/auth.middleware.js";
 
 axios.defaults.withCredentials = true;
@@ -36,7 +37,6 @@ const allowedOrigins = [
 // Add production origins
 if (process.env.FRONTEND_URL) {
   allowedOrigins.push(process.env.FRONTEND_URL);
-  console.log("Added FRONTEND_URL to CORS:", process.env.FRONTEND_URL);
 }
 
 // Add common production domains
@@ -45,48 +45,48 @@ if (!isDevelopment) {
     "https://volunteer-management-frontend.onrender.com",
     "https://food-good-vms-frontend.onrender.com",
     "https://vms-frontend.netlify.app",
-    "https://vms-frontend.vercel.app"
+    "https://vms-frontend.vercel.app",
   ];
   allowedOrigins.push(...productionDomains);
-  console.log("Added production domains to CORS:", productionDomains);
 }
-
-console.log("All allowed CORS origins:", allowedOrigins);
 
 app.use(
   cors({
     origin: function (origin, callback) {
-      console.log(`🌐 CORS Request from origin: ${origin}`);
-
       // Allow requests with no origin (mobile apps, curl, postman, etc.)
       if (!origin) {
-        console.log("✅ CORS: Allowing request with no origin");
         return callback(null, true);
       }
 
       // In development, be more permissive with localhost origins
       if (isDevelopment) {
-        if (origin.startsWith("http://localhost") || origin.startsWith("http://127.0.0.1")) {
-          console.log("✅ CORS: Allowing localhost origin in development");
+        if (
+          origin.startsWith("http://localhost") ||
+          origin.startsWith("http://127.0.0.1")
+        ) {
           return callback(null, true);
         }
       }
 
       // Check if origin is in allowed origins
       if (allowedOrigins.includes(origin)) {
-        console.log("✅ CORS: Origin allowed");
         callback(null, true);
       } else {
-        console.log(`❌ CORS blocked origin: ${origin}`);
-        console.log(`📋 Allowed origins: ${JSON.stringify(allowedOrigins, null, 2)}`);
         callback(new Error(`Not allowed by CORS. Origin: ${origin}`));
       }
     },
     credentials: true,
     optionsSuccessStatus: 200,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization', 'Cookie'],
-    exposedHeaders: ['Set-Cookie']
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: [
+      "Origin",
+      "X-Requested-With",
+      "Content-Type",
+      "Accept",
+      "Authorization",
+      "Cookie",
+    ],
+    exposedHeaders: ["Set-Cookie"],
   })
 );
 
@@ -98,15 +98,17 @@ app.use(express.static("public"));
 app.use(cookieParser());
 
 // Session middleware for OAuth
-app.use(session({
-  secret: process.env.SESSION_SECRET || 'default-session-secret',
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    secure: process.env.NODE_ENV === 'production',
-    maxAge: 24 * 60 * 60 * 1000 // 24 hours
-  }
-}));
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "default-session-secret",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+    },
+  })
+);
 
 // Passport middleware
 app.use(passport.initialize());
@@ -136,6 +138,7 @@ app.use("/api/v1/volunteerWorks", volunteerWorkRouter);
 app.use("/api/v1/star-votes", starVoteRouter); // New star voting system
 app.use("/api/v1/ai", genAIRouter); // AI chat functionality
 app.use("/api/v1/auth", authRouter); // Google OAuth authentication
+app.use("/api/v1/student-applications", studentApplicationRouter); // Student application system
 
 // Health check endpoint
 app.get("/api/v1/health", (req, res) => {
@@ -143,8 +146,8 @@ app.get("/api/v1/health", (req, res) => {
     success: true,
     message: "Server is running",
     timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || 'development',
-    version: "1.0.0"
+    environment: process.env.NODE_ENV || "development",
+    version: "1.0.0",
   });
 });
 
@@ -163,7 +166,7 @@ app.get("/", (req, res) => {
     success: true,
     message: "Welcome to Volunteer Management System API",
     documentation: "/api/v1/health",
-    version: "1.0.0"
+    version: "1.0.0",
   });
 });
 
@@ -172,18 +175,18 @@ app.use("/api/*", (req, res) => {
   res.status(404).json({
     success: false,
     message: `API route ${req.originalUrl} not found`,
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   });
 });
 
 // Global error handler
 app.use((err, req, res, next) => {
-  console.error('Error:', err);
+  console.error("Error:", err);
 
   res.status(err.status || 500).json({
     success: false,
-    message: err.message || 'Internal server error',
-    ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
+    message: err.message || "Internal server error",
+    ...(process.env.NODE_ENV === "development" && { stack: err.stack }),
   });
 });
 
@@ -192,7 +195,7 @@ app.use("*", (req, res) => {
   res.status(404).json({
     success: false,
     message: "Route not found",
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   });
 });
 

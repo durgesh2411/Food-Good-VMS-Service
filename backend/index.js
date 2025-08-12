@@ -16,16 +16,8 @@ dotenv.config({ path: join(__dirname, ".env") });
 // Ensure temp directory exists for file uploads
 const tempDir = path.join(__dirname, "public", "temp");
 if (!fs.existsSync(tempDir)) {
-  console.log("Creating temp directory:", tempDir);
   fs.mkdirSync(tempDir, { recursive: true });
-} else {
-  console.log("Temp directory exists:", tempDir);
 }
-
-console.log("Environment check:");
-console.log("NODE_ENV:", process.env.NODE_ENV);
-console.log("MONGODB_URI exists:", !!process.env.MONGODB_URI);
-console.log("PORT:", process.env.PORT || 8000);
 
 // Handle graceful shutdown
 process.on('SIGTERM', () => {
@@ -48,7 +40,7 @@ connectDB()
     });
 
     const PORT = process.env.PORT || 8000;
-    const server = app.listen(PORT, '0.0.0.0', () => {
+    const server = app.listen(PORT, () => {
       console.log(`🚀 Server running on port ${PORT}`);
       console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
     });

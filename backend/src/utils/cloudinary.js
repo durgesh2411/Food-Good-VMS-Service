@@ -38,8 +38,36 @@ const uploadOnCloudinary = async (localFilePath) => {
   }
 };
 
+// Upload buffer to cloudinary (for multer memory storage)
+const uploadToCloudinary = async (buffer, filename) => {
+  try {
+    if (!buffer) return null;
+    
+    return new Promise((resolve, reject) => {
+      const uploadStream = cloudinary.uploader.upload_stream(
+        {
+          resource_type: "auto",
+          folder: "student-applications", // Organize files in a folder
+          public_id: `${Date.now()}-${filename}`,
+        },
+        (error, result) => {
+          if (error) {
+            reject(new Error("Cloudinary upload failed: " + error.message));
+          } else {
+            resolve(result);
+          }
+        }
+      );
+      
+      uploadStream.end(buffer);
+    });
+  } catch (error) {
+    throw new Error("Cloudinary upload failed: " + error.message);
+  }
+};
+
 const deleteFromCloudinary = async (publicId) => {
   await cloudinary.uploader.destroy(publicId);
 };
 
-export { uploadOnCloudinary, deleteFromCloudinary };
+export { uploadOnCloudinary, uploadToCloudinary, deleteFromCloudinary };

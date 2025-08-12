@@ -76,7 +76,7 @@ const ChatAI = () => {
       {
         id: 1,
         type: 'ai',
-        message: "Hi! I'm your Food Good VMS assistant. I can help you with volunteer registration, donations, events, and any questions about our platform. How can I assist you today?",
+        message: "Hi! I'm your Lift for Upliftment Assistant. I specialize in NEET preparation guidance, volunteer opportunities, and platform support. Ask me about our free NEET coaching, study resources, or how to get involved!",
         timestamp: new Date()
       }
     ]);
@@ -95,8 +95,8 @@ const ChatAI = () => {
       <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4 rounded-t-lg">
         <div className="flex justify-between items-center">
           <div>
-            <h2 className="text-xl font-bold">Food Good VMS Assistant</h2>
-            <p className="text-blue-100 text-sm">AI-powered support for volunteers & donors</p>
+            <h2 className="text-xl font-bold">Lift for Upliftment Assistant</h2>
+            <p className="text-blue-100 text-sm">AI-powered support for NEET prep & educational volunteers</p>
           </div>
           <button
             onClick={clearChat}

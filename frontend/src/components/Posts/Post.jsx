@@ -72,7 +72,7 @@ function Post() {
               </button>
               <button
                 onClick={handleCreatePost}
-                className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors duration-200 font-medium"
+                className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors duration-200 font-medium"
               >
                 {t("posts.create")}
               </button>
@@ -84,7 +84,7 @@ function Post() {
         </div>
 
         {error && (
-          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-6">
+          <div className="bg-rose-50 border border-rose-200 text-rose-700 px-4 py-3 rounded mb-6">
             {error}
           </div>
         )}
@@ -97,7 +97,7 @@ function Post() {
           </div>
         ) : (
                     <div className="text-center py-12">
-            <div className="text-6xl mb-4">📝</div>
+            <div className="text-6xl mb-4 text-indigo-500 font-bold">✎</div>
             <h3 className="text-2xl font-medium text-gray-800 mb-2">
               {t("posts.noPosts")}
             </h3>
@@ -106,7 +106,7 @@ function Post() {
             </p>
             <button
               onClick={handleCreatePost}
-              className="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition-colors duration-200 font-medium"
+              className="bg-indigo-600 text-white px-6 py-3 rounded-md hover:bg-indigo-700 transition-colors duration-200 font-medium"
             >
               {t("posts.create")}
             </button>

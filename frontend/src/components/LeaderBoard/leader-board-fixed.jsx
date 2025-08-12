@@ -223,7 +223,7 @@ export function LeaderBoard() {
                   index === 0 ? "bg-yellow-500" :
                   index === 1 ? "bg-gray-500" : "bg-orange-500"
                 }`}>
-                  {index === 0 ? "🥇 Champion" : index === 1 ? "🥈 Runner-up" : "🥉 Third Place"}
+                  {index === 0 ? "Champion" : index === 1 ? "Runner-up" : "Third Place"}
                 </div>
 
                 <div className="text-center pt-4">
@@ -292,7 +292,7 @@ export function LeaderBoard() {
           </div>
         ) : volunteers.length === 0 ? (
           <div className="p-8 text-center">
-            <div className="text-6xl mb-4">🌟</div>
+            <div className="text-6xl mb-4 text-yellow-500 font-bold">★</div>
             <h3 className="text-xl font-medium text-gray-800 mb-2">
               No volunteer activity yet
             </h3>
@@ -308,8 +308,8 @@ export function LeaderBoard() {
                   <TableHead className="font-semibold">Rank</TableHead>
                   <TableHead className="font-semibold">Volunteer</TableHead>
                   <TableHead className="font-semibold text-center">Hours Worked</TableHead>
-                  <TableHead className="font-semibold text-center">⭐ Star Votes</TableHead>
-                  <TableHead className="font-semibold text-center">📝 Posts</TableHead>
+                  <TableHead className="font-semibold text-center">Star Votes</TableHead>
+                  <TableHead className="font-semibold text-center">Posts</TableHead>
                   <TableHead className="font-semibold">Progress</TableHead>
                 </TableRow>
               </TableHeader>
@@ -328,9 +328,9 @@ export function LeaderBoard() {
                     }
                   >
                     <TableCell className="font-bold text-center">
-                      {index === 0 && <div className="text-2xl">🥇</div>}
-                      {index === 1 && <div className="text-2xl">🥈</div>}
-                      {index === 2 && <div className="text-2xl">🥉</div>}
+                      {index === 0 && <div className="text-2xl text-yellow-600 font-bold">#1</div>}
+                      {index === 1 && <div className="text-2xl text-gray-500 font-bold">#2</div>}
+                      {index === 2 && <div className="text-2xl text-orange-600 font-bold">#3</div>}
                       {index > 2 && <div className="text-lg font-semibold text-gray-600">#{index + 1}</div>}
                     </TableCell>
                     <TableCell className="font-medium">
@@ -350,7 +350,7 @@ export function LeaderBoard() {
                             {index === 0 && <Trophy className="text-yellow-500 h-4 w-4" />}
                             {volunteer.starVotes > 0 && (
                               <span className="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full flex items-center gap-1">
-                                ⭐ Star Volunteer
+                                Star Volunteer
                               </span>
                             )}
                           </div>
@@ -364,10 +364,10 @@ export function LeaderBoard() {
                       {volunteer.hoursWorked} hrs
                     </TableCell>
                     <TableCell className="font-bold text-lg text-yellow-600 text-center">
-                      ⭐ {volunteer.starVotes}
+                      {volunteer.starVotes}
                     </TableCell>
                     <TableCell className="font-bold text-lg text-green-600 text-center">
-                      📝 {volunteer.approvedPosts}
+                      {volunteer.approvedPosts}
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center gap-2">

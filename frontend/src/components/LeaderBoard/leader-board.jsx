@@ -320,10 +320,10 @@ export function LeaderBoard() {
               >
                 {/* Position Badge */}
                 <div className={`absolute -top-3 left-1/2 transform -translate-x-1/2 px-3 py-1 rounded-full text-white font-bold text-sm ${
-                  index === 0 ? "bg-yellow-500" :
+                  index === 0 ? "bg-amber-500" :
                   index === 1 ? "bg-gray-500" : "bg-orange-500"
                 }`}>
-                  {index === 0 ? "🥇 Champion" : index === 1 ? "🥈 Runner-up" : "🥉 Third Place"}
+                  {index === 0 ? "Champion" : index === 1 ? "Runner-up" : "Third Place"}
                 </div>
 
                 <div className="text-center pt-4">
@@ -331,7 +331,7 @@ export function LeaderBoard() {
                     {volunteer.avatar ? (
                       <AvatarImage src={volunteer.avatar} />
                     ) : (
-                      <AvatarFallback className="bg-blue-100 text-blue-600 text-xl font-bold">
+                      <AvatarFallback className="bg-indigo-100 text-indigo-600 text-xl font-bold">
                         {volunteer.fullName.charAt(0)}
                       </AvatarFallback>
                     )}
@@ -392,7 +392,7 @@ export function LeaderBoard() {
           </div>
         ) : volunteers.length === 0 ? (
           <div className="p-8 text-center">
-            <div className="text-6xl mb-4">🌟</div>
+            <div className="text-6xl mb-4 text-yellow-500 font-bold">★</div>
             <h3 className="text-xl font-medium text-gray-800 mb-2">
               No volunteer activity yet
             </h3>
@@ -408,8 +408,8 @@ export function LeaderBoard() {
                   <TableHead className="font-semibold">Rank</TableHead>
                   <TableHead className="font-semibold">Volunteer</TableHead>
                   <TableHead className="font-semibold text-center">Hours Worked</TableHead>
-                  <TableHead className="font-semibold text-center">⭐ Star Votes</TableHead>
-                  <TableHead className="font-semibold text-center">📝 Posts</TableHead>
+                  <TableHead className="font-semibold text-center">Star Votes</TableHead>
+                  <TableHead className="font-semibold text-center">Posts</TableHead>
                   <TableHead className="font-semibold">Progress</TableHead>
                 </TableRow>
               </TableHeader>
@@ -428,9 +428,9 @@ export function LeaderBoard() {
                     }
                   >
                     <TableCell className="font-bold text-center">
-                      {index === 0 && <div className="text-2xl">🥇</div>}
-                      {index === 1 && <div className="text-2xl">🥈</div>}
-                      {index === 2 && <div className="text-2xl">🥉</div>}
+                      {index === 0 && <div className="text-2xl text-yellow-600 font-bold">#1</div>}
+                      {index === 1 && <div className="text-2xl text-gray-500 font-bold">#2</div>}
+                      {index === 2 && <div className="text-2xl text-orange-600 font-bold">#3</div>}
                       {index > 2 && <div className="text-lg font-semibold text-gray-600">#{index + 1}</div>}
                     </TableCell>
                     <TableCell className="font-medium">
@@ -439,7 +439,7 @@ export function LeaderBoard() {
                           {volunteer.avatar ? (
                             <AvatarImage src={volunteer.avatar} />
                           ) : (
-                            <AvatarFallback className="bg-blue-100 text-blue-600 font-semibold">
+                            <AvatarFallback className="bg-indigo-100 text-indigo-600 font-semibold">
                               {volunteer.fullName.charAt(0)}
                             </AvatarFallback>
                           )}
@@ -449,8 +449,8 @@ export function LeaderBoard() {
                             {volunteer.fullName}
                             {index === 0 && <Trophy className="text-yellow-500 h-4 w-4" />}
                             {volunteer.starVotes > 0 && (
-                              <span className="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full flex items-center gap-1">
-                                ⭐ Star Volunteer
+                              <span className="bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-full flex items-center gap-1">
+                                Star Volunteer
                               </span>
                             )}
                           </div>
@@ -464,10 +464,10 @@ export function LeaderBoard() {
                       {volunteer.hoursWorked || volunteer.totalWorkedHours || 0} hrs
                     </TableCell>
                     <TableCell className="font-bold text-lg text-yellow-600 text-center">
-                      ⭐ {volunteer.starVotes || 0}
+                      {volunteer.starVotes || 0}
                     </TableCell>
                     <TableCell className="font-bold text-lg text-green-600 text-center">
-                      📝 {volunteer.approvedPosts || 0}
+                      {volunteer.approvedPosts || 0}
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center gap-2">
@@ -503,7 +503,7 @@ export function LeaderBoard() {
               <MessageSquare className="h-6 w-6 text-red-600" />
               User Feedback - Admin Only
             </h2>
-            <span className="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium">
+            <span className="bg-rose-100 text-rose-800 px-3 py-1 rounded-full text-sm font-medium">
               {feedbacks.length} feedbacks
             </span>
           </div>
@@ -541,7 +541,7 @@ export function LeaderBoard() {
                           className={`p-1 rounded-full transition-colors group ${
                             dismissingFeedback === feedback._id
                               ? "bg-gray-100 cursor-not-allowed"
-                              : "hover:bg-red-100"
+                              : "hover:bg-rose-100"
                           }`}
                           title={dismissingFeedback === feedback._id ? "Dismissing..." : "Dismiss this feedback (issue resolved)"}
                         >

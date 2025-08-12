@@ -122,6 +122,11 @@ import PostCard from "./components/Posts/PostCard";
 import StarVotingPage from "./components/StarVoting/StarVotingPage";
 import HallOfFame from "./components/HallOfFame/HallOfFame";
 import ChatbotWidget from "./components/ChatbotWidget";
+import StudentApplicationForm from "./components/StudentApplication/StudentApplicationForm";
+import VolunteerPage from "./components/Volunteer/VolunteerPage";
+import FeedbackPage from "./components/Feedback/FeedbackPage";
+import AboutPage from "./components/About/AboutPage";
+import ContactPage from "./components/Contact/ContactPage";
 import { toast } from "react-toastify";
 import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -143,7 +148,7 @@ function App() {
     if (oauthResult === 'success' && userParam) {
       try {
         const userData = JSON.parse(decodeURIComponent(userParam));
-        console.log('✅ OAuth success, user data:', userData);
+        console.log('OAuth success, user data:', userData);
 
         // Save user data to localStorage and state
         localStorage.setItem("user", JSON.stringify(userData));
@@ -156,11 +161,11 @@ function App() {
         window.history.replaceState({}, document.title, window.location.pathname);
 
       } catch (error) {
-        console.error('❌ Error parsing OAuth user data:', error);
+        console.error('Error parsing OAuth user data:', error);
         toast.error('Login successful but failed to parse user data');
       }
     } else if (oauthResult === 'error') {
-      console.error('❌ OAuth error:', errorMessage);
+      console.error('OAuth error:', errorMessage);
       toast.error(errorMessage || 'Google Sign-In failed');
 
       // Clean up URL parameters
@@ -229,6 +234,11 @@ function App() {
       <Route path="/" element={<Layout />}>
         {/* Public routes */}
         <Route path="" element={<Home />} />
+        <Route path="/apply-neet" element={<StudentApplicationForm />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/volunteer" element={<VolunteerPage />} />
+        <Route path="/feedback" element={<FeedbackPage />} />
 
         {/* Authentication routes - only accessible when NOT logged in */}
         <Route
@@ -315,6 +325,15 @@ function App() {
         />
         <Route
           path="/hall-of-fame"
+          element={
+            <ProtectedRoute>
+              <HallOfFame />
+            </ProtectedRoute>
+          }
+        />
+        {/* Legacy route for backward compatibility */}
+        <Route
+          path="/hallOffame"
           element={
             <ProtectedRoute>
               <HallOfFame />

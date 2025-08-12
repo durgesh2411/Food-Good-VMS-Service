@@ -1,113 +1,111 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
+import React from "react";
+import { useTranslation } from "react-i18next";
 
 function HallOfFame() {
   const { t } = useTranslation();
 
+  // Helper function to handle image loading errors
+  const handleImageError = (e) => {
+    e.target.src = "/placeholder-user.jpg";
+  };
+
   const founders = [
     {
       id: 1,
-      name: "Dr. Priya Sharma",
-      role: "Founder & CEO",
-      image: "/placeholder-user.jpg",
-      description: "A passionate advocate for child nutrition with 15+ years of experience in non-profit management."
-    },
-    {
-      id: 2,
-      name: "Rajesh Kumar",
-      role: "Co-Founder & Director",
-      image: "/placeholder-user.jpg",
-      description: "Former corporate executive who left his career to dedicate his life to fighting child hunger."
+      name: "Dr. Atul Dhakne",
+      role: "Founder & President",
+      image: "/team/dr-atul-dhakne.jpg", // Replace with actual photo
+      description: "Visionary founder and president of Lift for Upliftment, Dr. Atul Dhakne has dedicated his life to empowering economically disadvantaged students achieve their medical dreams through comprehensive NEET coaching and mentorship programs."
     }
   ];
 
   const leadVolunteers = [
     {
       id: 1,
-      name: "Anita Patel",
-      role: "Lead Volunteer Coordinator",
-      image: "/placeholder-user.jpg",
-      achievements: "Coordinated 500+ meal distributions, trained 200+ volunteers",
+      name: "Dr. Mayank Tripathi",
+      role: "Secretary",
+      image: "/team/dr-mayank-tripathi.jpg", // Replace with actual photo
+      achievements: "Strategic planning and academic program development, oversees curriculum design",
       yearsOfService: 5
     },
     {
       id: 2,
-      name: "Mohammad Ali",
-      role: "Community Outreach Lead",
-      image: "/placeholder-user.jpg",
-      achievements: "Established partnerships with 50+ schools, reached 10,000+ children",
+      name: "Dr. Tejas Ahire",
+      role: "Treasurer",
+      image: "/team/dr-tejas-ahire.jpg", // Replace with actual photo
+      achievements: "Financial management and resource optimization for student programs",
       yearsOfService: 4
     },
     {
       id: 3,
-      name: "Sneha Reddy",
-      role: "Program Manager",
-      image: "/placeholder-user.jpg",
-      achievements: "Implemented nutrition programs in 30+ locations, improved meal quality by 40%",
-      yearsOfService: 3
+      name: "Dr. Farooque Faras",
+      role: "Vice-President & Dedicated Mentor",
+      image: "/team/dr-farooque-faras.jpg", // Replace with actual photo
+      achievements: "Medical education expertise and student guidance, ensures highest standards of academic excellence",
+      yearsOfService: 6
     }
   ];
 
   const successStories = [
     {
       id: 1,
-      title: "From Hunger to NEET Success: Rahul's Journey",
-      student: "Rahul Verma",
-      achievement: "NEET AIR 245",
-      image: "/placeholder-user.jpg",
-      story: "Rahul, who once struggled with hunger, received nutritious meals through our program for 8 years. With proper nutrition fueling his studies, he cracked NEET with an All India Rank of 245 and is now pursuing MBBS at AIIMS Delhi.",
-      currentStatus: "1st Year MBBS, AIIMS Delhi"
+      title: "From Dreams to Reality: Tanishka's Medical Journey",
+      student: "Tanishka Patil",
+      achievement: "MBBS Graduate",
+      image: "/team/students/tanishka-patil.jpg", // Replace with actual photo
+      story: "Tanishka came from an economically disadvantaged background but never let circumstances define her future. Through Lift for Upliftment's comprehensive NEET coaching and mentorship, she successfully cleared the medical entrance exam and is now a practicing doctor, giving back to her community.",
+      currentStatus: "MBBS Doctor, Community Healthcare"
     },
     {
       id: 2,
-      title: "Breaking Barriers: Priya's Medical Dream",
-      student: "Priya Singh",
-      achievement: "NEET AIR 156",
-      image: "/placeholder-user.jpg",
-      story: "Coming from a family that couldn't afford proper meals, Priya benefited from our nutrition program throughout her school years. Her determination, combined with proper nutrition, helped her achieve NEET AIR 156.",
-      currentStatus: "2nd Year MBBS, Maulana Azad Medical College"
+      title: "Breaking Barriers: Pawan's Achievement",
+      student: "Pawan Dongare",
+      achievement: "NEET Qualifier",
+      image: "/team/students/pawan-dongare.jpg", // Replace with actual photo
+      story: "Pawan's determination combined with our structured coaching program helped him overcome financial constraints and academic challenges. His success story inspires hundreds of students in our program to pursue their medical dreams relentlessly.",
+      currentStatus: "Medical Student, Pursuing MBBS"
     },
     {
       id: 3,
-      title: "Against All Odds: Arjun's Triumph",
-      student: "Arjun Patel",
-      achievement: "NEET AIR 89",
-      image: "/placeholder-user.jpg",
-      story: "Arjun's family couldn't provide regular meals, but our program ensured he never went hungry. His incredible dedication and the nutritional support he received helped him secure NEET AIR 89.",
-      currentStatus: "3rd Year MBBS, King George's Medical University"
+      title: "Excellence in Adversity: Rutuja's Triumph",
+      student: "Rutuja Shinde",
+      achievement: "MBBS Graduate",
+      image: "/team/students/rutuja-shinde.jpg", // Replace with actual photo
+      story: "Rutuja exemplifies the transformative power of quality education and mentorship. Despite facing numerous socio-economic challenges, she excelled in her studies through our program and is now serving as a doctor in rural healthcare.",
+      currentStatus: "MBBS Doctor, Rural Healthcare Initiative"
     }
   ];
 
   const organizationAchievements = [
     {
-      metric: "2,50,000+",
-      description: "Total Meals Served",
-      icon: "🍽️"
-    },
-    {
-      metric: "15,000+",
-      description: "Children Supported",
-      icon: "👶"
-    },
-    {
-      metric: "200+",
-      description: "Schools Partnered",
-      icon: "🏫"
-    },
-    {
-      metric: "50+",
-      description: "NEET Qualifiers",
+      metric: "220+",
+      description: "Doctors Created",
       icon: "🎓"
     },
     {
-      metric: "8",
-      description: "Years of Service",
-      icon: "⭐"
+      metric: "101",
+      description: "MBBS Graduates",
+      icon: "👨‍⚕️"
+    },
+    {
+      metric: "2",
+      description: "Coaching Centers",
+      icon: "🏢"
     },
     {
       metric: "500+",
-      description: "Active Volunteers",
-      icon: "🤝"
+      description: "Students Mentored",
+      icon: "📚"
+    },
+    {
+      metric: "15+",
+      description: "Years of Excellence",
+      icon: "⭐"
+    },
+    {
+      metric: "100%",
+      description: "Dedicated Support",
+      icon: "💝"
     }
   ];
 
@@ -137,12 +135,14 @@ function HallOfFame() {
                 {t("hallOfFame.achievements.subtitle")}
               </p>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+            
+            {/* Professional uniform grid */}
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 max-w-6xl mx-auto">
               {organizationAchievements.map((achievement, index) => (
-                <div key={index} className="text-center p-6 bg-white rounded-lg shadow-sm">
-                  <div className="text-3xl mb-2">{achievement.icon}</div>
-                  <div className="text-2xl font-bold text-primary mb-2">{achievement.metric}</div>
-                  <div className="text-sm text-muted-foreground">{achievement.description}</div>
+                <div key={index} className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-all duration-300 border border-gray-100">
+                  <div className="text-4xl mb-4">{achievement.icon}</div>
+                  <div className="text-2xl font-bold text-[#2b3359] mb-2">{achievement.metric}</div>
+                  <div className="text-sm text-gray-600 font-medium">{achievement.description}</div>
                 </div>
               ))}
             </div>
@@ -160,19 +160,89 @@ function HallOfFame() {
                 {t("hallOfFame.founders.subtitle")}
               </p>
             </div>
-            <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-              {founders.map((founder) => (
-                <div key={founder.id} className="bg-white rounded-lg shadow-lg p-8 text-center">
-                  <img
-                    src={founder.image}
-                    alt={founder.name}
-                    className="w-32 h-32 rounded-full mx-auto mb-6 object-cover"
-                  />
-                  <h3 className="text-xl font-bold mb-2">{founder.name}</h3>
-                  <p className="text-primary font-semibold mb-4">{founder.role}</p>
-                  <p className="text-muted-foreground">{founder.description}</p>
-                </div>
-              ))}
+            
+            {/* Prominent Founder Display - Extra Large & Impactful */}
+            <div className="max-w-7xl mx-auto mb-20">
+              {founders
+                .filter(founder => founder.name === "Dr. Atul Dhakne")
+                .map((founder) => (
+                  <div key={founder.id} className="bg-gradient-to-br from-[#2b3359] via-[#1e293b] to-[#0f172a] rounded-3xl shadow-2xl overflow-hidden transform hover:scale-[1.02] transition-all duration-500 border-2 border-[#f2b705]/20">
+                    <div className="lg:flex">
+                      {/* Large Image Section */}
+                      <div className="lg:w-1/2">
+                        <img
+                          src={founder.image}
+                          alt={founder.name}
+                          className="w-full h-80 md:h-96 lg:h-[500px] object-cover"
+                          onError={handleImageError}
+                        />
+                      </div>
+                      
+                      {/* Expanded Content Section */}
+                      <div className="lg:w-1/2 p-8 md:p-12 lg:p-16 flex flex-col justify-center text-white relative">
+                        {/* Decorative Elements */}
+                        <div className="absolute top-8 right-8 w-20 h-20 bg-[#f2b705]/10 rounded-full blur-xl"></div>
+                        <div className="absolute bottom-8 left-8 w-16 h-16 bg-[#f2b705]/20 rounded-full blur-lg"></div>
+                        
+                        <div className="mb-6">
+                          <span className="bg-gradient-to-r from-[#f2b705] to-[#fbbf24] text-[#2b3359] px-6 py-3 rounded-full text-base font-bold shadow-lg">
+                            🏆 Founder & President
+                          </span>
+                        </div>
+                        
+                        <h3 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-[#f2b705] leading-tight">
+                          {founder.name}
+                        </h3>
+                        
+                        <div className="mb-6">
+                          <p className="text-[#fbbf24] text-xl md:text-2xl font-semibold">
+                            Visionary Leader & Medical Education Pioneer
+                          </p>
+                        </div>
+                        
+                        <p className="text-lg md:text-xl leading-relaxed text-gray-100 mb-8">
+                          {founder.description}
+                        </p>
+                        
+                        {/* Achievement Highlights */}
+                        <div className="grid grid-cols-2 gap-4 mb-6">
+                          <div className="bg-[#f2b705]/10 backdrop-blur-sm rounded-lg p-4 text-center">
+                            <div className="text-2xl font-bold text-[#f2b705]">15+</div>
+                            <div className="text-sm text-gray-300">Years Leading</div>
+                          </div>
+                          <div className="bg-[#f2b705]/10 backdrop-blur-sm rounded-lg p-4 text-center">
+                            <div className="text-2xl font-bold text-[#f2b705]">220+</div>
+                            <div className="text-sm text-gray-300">Doctors Created</div>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-center space-x-2 text-[#f2b705]">
+                          <span className="text-lg">✨</span>
+                          <span className="italic text-gray-300">"Empowering dreams, creating doctors, transforming lives"</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+            </div>
+
+            {/* Other Founders */}
+            <div className="grid md:grid-cols-1 gap-8 max-w-2xl mx-auto">
+              {founders
+                .filter(founder => founder.name !== "Dr. Atul Dhakne")
+                .map((founder) => (
+                  <div key={founder.id} className="bg-white rounded-lg shadow-lg p-8 text-center">
+                    <img
+                      src={founder.image}
+                      alt={founder.name}
+                      className="w-32 h-32 rounded-full mx-auto mb-6 object-cover"
+                      onError={handleImageError}
+                    />
+                    <h3 className="text-xl font-bold mb-2">{founder.name}</h3>
+                    <p className="text-primary font-semibold mb-4">{founder.role}</p>
+                    <p className="text-muted-foreground">{founder.description}</p>
+                  </div>
+                ))}
             </div>
           </div>
         </section>
@@ -188,18 +258,21 @@ function HallOfFame() {
                 {t("hallOfFame.volunteers.subtitle")}
               </p>
             </div>
-            <div className="grid md:grid-cols-3 gap-8">
+            
+            {/* Professional team layout */}
+            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
               {leadVolunteers.map((volunteer) => (
-                <div key={volunteer.id} className="bg-white rounded-lg shadow-lg p-6 text-center">
+                <div key={volunteer.id} className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-all duration-300 border border-gray-100">
                   <img
                     src={volunteer.image}
                     alt={volunteer.name}
-                    className="w-24 h-24 rounded-full mx-auto mb-4 object-cover"
+                    className="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-[#f2b705]"
+                    onError={handleImageError}
                   />
-                  <h3 className="text-lg font-bold mb-2">{volunteer.name}</h3>
-                  <p className="text-primary font-semibold mb-2">{volunteer.role}</p>
-                  <p className="text-sm text-muted-foreground mb-3">{volunteer.achievements}</p>
-                  <div className="text-xs bg-primary/10 text-primary px-3 py-1 rounded-full inline-block">
+                  <h3 className="text-xl font-bold mb-2 text-[#2b3359]">{volunteer.name}</h3>
+                  <p className="text-[#f2b705] font-semibold mb-3">{volunteer.role}</p>
+                  <p className="text-gray-600 text-sm mb-4 leading-relaxed">{volunteer.achievements}</p>
+                  <div className="bg-[#2b3359]/10 text-[#2b3359] text-xs px-3 py-1 rounded-full inline-block font-medium">
                     {volunteer.yearsOfService} years of service
                   </div>
                 </div>
@@ -219,28 +292,31 @@ function HallOfFame() {
                 {t("hallOfFame.successStories.subtitle")}
               </p>
             </div>
-            <div className="grid gap-8">
-              {successStories.map((story) => (
-                <div key={story.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
+            
+            {/* Professional success stories layout */}
+            <div className="grid gap-8 max-w-6xl mx-auto">
+              {successStories.map((story, index) => (
+                <div key={story.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100">
                   <div className="md:flex">
                     <div className="md:w-1/3">
                       <img
                         src={story.image}
                         alt={story.student}
                         className="w-full h-64 md:h-full object-cover"
+                        onError={handleImageError}
                       />
                     </div>
-                    <div className="md:w-2/3 p-8">
+                    <div className="md:w-2/3 p-6 md:p-8 flex flex-col justify-center">
                       <div className="flex items-center mb-4">
-                        <div className="bg-primary text-primary-foreground px-3 py-1 rounded-full text-sm font-semibold mr-3">
+                        <span className="bg-[#2b3359] text-white px-3 py-1 rounded-full text-sm font-semibold mr-3">
                           {story.achievement}
-                        </div>
-                        <span className="text-sm text-muted-foreground">{story.currentStatus}</span>
+                        </span>
+                        <span className="text-sm text-gray-600">{story.currentStatus}</span>
                       </div>
-                      <h3 className="text-2xl font-bold mb-4">{story.title}</h3>
-                      <p className="text-muted-foreground mb-4 leading-relaxed">{story.story}</p>
+                      <h3 className="text-2xl font-bold mb-4 text-[#2b3359]">{story.title}</h3>
+                      <p className="text-gray-600 mb-4 leading-relaxed">{story.story}</p>
                       <div className="text-right">
-                        <span className="text-lg font-semibold text-primary">- {story.student}</span>
+                        <span className="font-semibold text-[#f2b705] text-lg">- {story.student}</span>
                       </div>
                     </div>
                   </div>

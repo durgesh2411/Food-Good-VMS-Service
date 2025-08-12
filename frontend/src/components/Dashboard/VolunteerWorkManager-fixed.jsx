@@ -145,7 +145,7 @@ const VolunteerWorkManager = () => {
           <div className="space-y-4">
             {pendingWorks.length === 0 ? (
               <div className="text-center py-8">
-                <div className="text-gray-400 text-lg mb-2">✅</div>
+                <div className="text-gray-400 text-lg mb-2">✓</div>
                 <p className="text-gray-500">No pending volunteer work submissions</p>
               </div>
             ) : (
@@ -156,9 +156,9 @@ const VolunteerWorkManager = () => {
                       <h4 className="font-semibold text-gray-800 text-lg">{work.title}</h4>
                       <p className="text-gray-600 mt-1 text-sm">{work.description}</p>
                       <div className="flex items-center space-x-4 mt-3 text-sm text-gray-500">
-                        <span>⏱️ {work.numberOfHours} hours</span>
-                        <span>📅 {formatDate(work.createdAt)}</span>
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                        <span>{work.numberOfHours} hours</span>
+                        <span>{formatDate(work.createdAt)}</span>
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800">
                           Pending
                         </span>
                       </div>
@@ -170,19 +170,19 @@ const VolunteerWorkManager = () => {
                         rel="noopener noreferrer"
                         className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
                       >
-                        📄 View Report
+                        View Report
                       </a>
                       <button
                         onClick={() => rejectWork(work._id)}
-                        className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-red-600 hover:bg-red-700"
+                        className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-rose-600 hover:bg-rose-700"
                       >
-                        ❌ Reject
+                        Reject
                       </button>
                       <button
                         onClick={() => approveWork(work._id)}
-                        className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-green-600 hover:bg-green-700"
+                        className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700"
                       >
-                        ✅ Approve
+                        Approve
                       </button>
                     </div>
                   </div>
@@ -196,7 +196,7 @@ const VolunteerWorkManager = () => {
           <div className="space-y-4">
             {allWorks.length === 0 ? (
               <div className="text-center py-8">
-                <div className="text-gray-400 text-lg mb-2">📋</div>
+                <div className="text-gray-400 text-lg mb-2">□</div>
                 <p className="text-gray-500">No volunteer work submissions yet</p>
               </div>
             ) : (
@@ -207,23 +207,23 @@ const VolunteerWorkManager = () => {
                       <h4 className="font-semibold text-gray-800 text-lg">{work.title}</h4>
                       <p className="text-gray-600 mt-1 text-sm">{work.description}</p>
                       {work.rejectionReason && work.status === 'rejected' && (
-                        <div className="mt-2 p-2 bg-red-50 border border-red-200 rounded">
-                          <p className="text-sm text-red-700">
+                        <div className="mt-2 p-2 bg-rose-50 border border-rose-200 rounded">
+                          <p className="text-sm text-rose-700">
                             <strong>Rejection Reason:</strong> {work.rejectionReason}
                           </p>
                         </div>
                       )}
                       <div className="flex items-center space-x-4 mt-3 text-sm text-gray-500">
-                        <span>⏱️ {work.numberOfHours} hours</span>
-                        <span>📅 {formatDate(work.createdAt)}</span>
+                        <span>{work.numberOfHours} hours</span>
+                        <span>{formatDate(work.createdAt)}</span>
                         <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                           work.status === 'approved'
-                            ? 'bg-green-100 text-green-800'
+                            ? 'bg-emerald-100 text-emerald-800'
                             : work.status === 'rejected'
-                            ? 'bg-red-100 text-red-800'
-                            : 'bg-yellow-100 text-yellow-800'
+                            ? 'bg-rose-100 text-rose-800'
+                            : 'bg-amber-100 text-amber-800'
                         }`}>
-                          {work.status === 'approved' ? '✅ Approved' : work.status === 'rejected' ? '❌ Rejected' : '⏳ Pending'}
+                          {work.status === 'approved' ? 'Approved' : work.status === 'rejected' ? 'Rejected' : 'Pending'}
                         </span>
                       </div>
                     </div>
@@ -234,7 +234,7 @@ const VolunteerWorkManager = () => {
                         rel="noopener noreferrer"
                         className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
                       >
-                        📄 View Report
+                        View Report
                       </a>
                     </div>
                   </div>

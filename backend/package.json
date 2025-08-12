@@ -8,8 +8,7 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "build": "echo 'Build completed'",
-    "test": "echo 'No tests specified'",
-    "healthcheck": "node healthcheck.js"
+    "test": "echo 'No tests specified'"
   },
   "engines": {
     "node": ">=18.0.0"
