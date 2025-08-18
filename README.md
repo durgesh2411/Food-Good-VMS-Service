@@ -1,4 +1,4 @@
-# Volunteer Management System (VMS)
+# Volunteer Management System (RAG client-suport-agent)
 
 A comprehensive full-stack web application for managing volunteers, events, donations, and community engagement with modern features like AI integration, payment processing, and real-time notifications.
 
