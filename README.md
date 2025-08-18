@@ -1,79 +1,80 @@
-# 🌟 Volunteer Management System (VMS)
+# Volunteer Management System (VMS)
 
 A comprehensive full-stack web application for managing volunteers, events, donations, and community engagement with modern features like AI integration, payment processing, and real-time notifications.
 
-## ✨ Features
+## Features
 
-### 🔐 **Authentication & Authorization**
+### **Authentication & Authorization**
 - Role-based access control (Admin, Volunteer, User)
 - JWT-based authentication
 - Secure session management
 
-### 📊 **Dashboard & Analytics**
+### **Dashboard & Analytics**
 - Real-time statistics and charts
 - Role-specific dashboards
 - Data visualization with interactive charts
 
-### 🎯 **Event Management**
+### **Event Management**
 - Create and manage volunteer events
 - Event registration and tracking
 - Event analytics and reporting
 
-### 💰 **Donation System**
+### **Donation System**
 - Razorpay payment gateway integration
 - Donation tracking and receipts
 - Automated thank-you emails
 
-### ⭐ **Volunteer Features**
+### **Volunteer Features**
 - Star voting system for volunteers
 - Leaderboard rankings
 - Volunteer work hour tracking
 - Post creation and management
 
-### 📢 **Communication**
+### **Communication**
 - Announcement system
 - Email notifications (Nodemailer)
 - SMS notifications (Twilio)
 - Feedback management
 
-### 🤖 **AI Integration**
+### **AI Integration**
 - OpenAI-powered chat assistance
 - Intelligent content generation
 - Smart recommendations
 
-### 🎨 **Modern UI/UX**
+### **Modern UI/UX**
 - Responsive design with Tailwind CSS
 - Smooth animations and transitions
 - Mobile-first approach
 - Dark/light theme support
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### **Frontend**
-- ⚛️ React 18
-- 🎨 Tailwind CSS
-- 📱 Responsive Design
-- 🚀 Vite (Build Tool)
-- 🔗 React Router
-- 📊 Chart.js/Recharts
-- 🌐 Axios
+- React 18
+- Tailwind CSS
+- Responsive Design
+- Vite (Build Tool)
+- React Router
+- Chart.js/Recharts
+- Axios
 
 ### **Backend**
-- 🟢 Node.js
-- ⚡ Express.js
-- 🍃 MongoDB with Mongoose
-- 🔐 JWT Authentication
-- 📁 Multer (File Upload)
-- ☁️ Cloudinary (Media Storage)
+- RAG support system
+- Node.js
+- Express.js
+- MongoDB with Mongoose
+- JWT Authentication
+- Multer (File Upload)
+- Cloudinary (Media Storage)
 
 ### **Services & Integrations**
-- 💳 Razorpay (Payment Gateway)
-- 📧 Nodemailer (Email Service)
-- 📱 Twilio (SMS Service)
-- 🤖 OpenAI API
-- ☁️ Cloudinary (Image Storage)
+- Razorpay (Payment Gateway)
+- Nodemailer (Email Service)
+- Twilio (SMS Service)
+- OpenAI API
+- Cloudinary (Image Storage)
 
-## 🚀 Getting Started
+## Getting Started
 
 ### **Prerequisites**
 - Node.js (v16 or higher)
@@ -154,7 +155,7 @@ A comprehensive full-stack web application for managing volunteers, events, dona
    - Frontend: http://localhost:5173
    - Backend API: http://localhost:8000
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 volunteer-management-system/
@@ -183,9 +184,9 @@ volunteer-management-system/
 └── LICENSE
 ```
 
-## 🎯 User Roles & Permissions
+## User Roles & Permissions
 
-### **👑 Admin**
+### ** Admin**
 - Full system access
 - Manage users and volunteers
 - View all analytics
@@ -193,20 +194,20 @@ volunteer-management-system/
 - Manage events and donations
 - Send announcements
 
-### **🙋‍♀️ Volunteer**
+### ** Volunteer**
 - Create posts for approval
 - Track volunteer hours
 - Participate in events
 - View leaderboards
 - Submit volunteer work
 
-### **👤 Regular User**
+### ** Regular User**
 - Make donations
 - Vote for star volunteers
 - View events and volunteer opportunities
 - Receive announcements
 
-## 🔧 API Endpoints
+## API Endpoints
 
 ### **Authentication**
 - `POST /api/v1/users/register` - User registration
@@ -236,7 +237,7 @@ volunteer-management-system/
 - `POST /api/v1/star-votes` - Submit vote
 - `GET /api/v1/star-votes/leaderboard` - Get leaderboard
 
-## 🔒 Security Features
+## Security Features
 
 - Password hashing with bcrypt
 - JWT token-based authentication
@@ -245,7 +246,7 @@ volunteer-management-system/
 - CORS configuration
 - Environment variable protection
 
-## 🚀 Deployment
+## Deployment
 
 ### **Frontend (Vercel/Netlify)**
 1. Build the frontend: `npm run build`
@@ -256,7 +257,7 @@ volunteer-management-system/
 2. Configure MongoDB connection
 3. Deploy the backend code
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
@@ -264,28 +265,22 @@ volunteer-management-system/
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 📝 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 👥 Team
+## Team
 
-- **Developer**: [Your Name]
-- **Email**: your.email@example.com
-- **GitHub**: [@your-username](https://github.com/your-username)
+- **Developer**: Durgesh Kumar Singh
+- **Email**: durgesh.vns24@gmail.com
+- **GitHub**: [durgesh2411](https://github.com//durgesh2411)
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - React community for excellent documentation
 - Node.js ecosystem for powerful tools
 - MongoDB for reliable database solutions
 - All contributors and testers
-
-## 📞 Support
-
-If you have any questions or need help, please:
-- Open an issue on GitHub
-- Contact: your.email@example.com
 
 ---
 
