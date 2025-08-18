@@ -1,4 +1,4 @@
-# Volunteer Management System (RAG client-suport-agent)
+# Volunteer Management System (RAG client-support-agent)
 
 A comprehensive full-stack web application for managing volunteers, events, donations, and community engagement with modern features like AI integration, payment processing, and real-time notifications.
 
